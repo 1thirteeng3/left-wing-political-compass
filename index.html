@@ -426,7 +426,7 @@ yourRes:'Seu resultado',sharedMsg:'Você está vendo um resultado compartilhado.
 copySumB:'Copiar resumo',copyLinkB:'Copiar link',dlImgB:'Baixar imagem',reviewB:'Revisar respostas',redoB:'Refazer do zero',
 copiedSum:'Resumo copiado.',copiedLink:'Link copiado. Compartilhe para comparar resultados.',copyFailAddr:'Não foi possível copiar. Copie da barra de endereços: ',copyFailSum:'Não foi possível copiar automaticamente. O resumo está no texto abaixo.',
 imgDone:'Imagem baixada. Compartilhe nas suas redes.',imgFail:'Não foi possível gerar a imagem neste navegador.',
-noResult:'Nenhum movimento encontrado para essa busca.',prov6:'Responda 6 afirmações para ver seu ponto',provP:'Posição provisória',provF:'Resultado final',
+noResult:'Nenhum movimento encontrado para essa busca.',fixB:'Sugerir correção',prov6:'Responda 6 afirmações para ver seu ponto',provP:'Posição provisória',provF:'Resultado final',
 sumName:'Bússola da Esquerda',sumOct:'Octante',sumNear:'Correntes mais próximas',
 trBadge:'Nomes e descrições em português — tradução em progresso.',siteName:'Bússola da Esquerda',youW:'Você',youProv:'Você (provisório)',privL:'Privacidade: o que medimos e o que não medimos',skipL:'Pular para o questionário'},
 en:{scale:['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'],
@@ -456,7 +456,7 @@ yourRes:'Your result',sharedMsg:'You are viewing a shared result.',takeTest:'Tak
 copySumB:'Copy summary',copyLinkB:'Copy link',dlImgB:'Download image',reviewB:'Review answers',redoB:'Start over',
 copiedSum:'Summary copied.',copiedLink:'Link copied. Share it to compare results.',copyFailAddr:'Could not copy. Copy from the address bar: ',copyFailSum:'Could not copy automatically. The summary is in the text below.',
 imgDone:'Image downloaded. Share it on your networks.',imgFail:'Could not generate the image in this browser.',
-noResult:'No movement found for this search.',prov6:'Answer 6 statements to see your dot',provP:'Provisional position',provF:'Final result',
+noResult:'No movement found for this search.',fixB:'Suggest a fix',prov6:'Answer 6 statements to see your dot',provP:'Provisional position',provF:'Final result',
 sumName:'Left-Wing Compass',sumOct:'Octant',sumNear:'Closest currents',
 trBadge:'Names and descriptions in Portuguese — translation in progress.',siteName:'Left-Wing Compass',youW:'You',youProv:'You (provisional)',privL:'Privacy: what we measure and what we don’t',skipL:'Skip to the quiz'},
 es:{scale:['Muy en desacuerdo','En desacuerdo','Neutral','De acuerdo','Muy de acuerdo'],
@@ -486,7 +486,7 @@ yourRes:'Tu resultado',sharedMsg:'Estás viendo un resultado compartido.',takeTe
 copySumB:'Copiar resumen',copyLinkB:'Copiar enlace',dlImgB:'Descargar imagen',reviewB:'Revisar respuestas',redoB:'Empezar de cero',
 copiedSum:'Resumen copiado.',copiedLink:'Enlace copiado. Compártelo para comparar resultados.',copyFailAddr:'No se pudo copiar. Copia desde la barra de direcciones: ',copyFailSum:'No se pudo copiar automáticamente. El resumen está en el texto siguiente.',
 imgDone:'Imagen descargada. Compártela en tus redes.',imgFail:'No se pudo generar la imagen en este navegador.',
-noResult:'Ningún movimiento encontrado para esta búsqueda.',prov6:'Responde 6 afirmaciones para ver tu punto',provP:'Posición provisional',provF:'Resultado final',
+noResult:'Ningún movimiento encontrado para esta búsqueda.',fixB:'Sugerir corrección',prov6:'Responde 6 afirmaciones para ver tu punto',provP:'Posición provisional',provF:'Resultado final',
 sumName:'Brújula de la Izquierda',sumOct:'Octante',sumNear:'Corrientes más cercanas',
 trBadge:'Nombres y descripciones en portugués — traducción en progreso.',siteName:'Brújula de la Izquierda',youW:'Tú',youProv:'Tú (provisional)',privL:'Privacidad: qué medimos y qué no',skipL:'Saltar al cuestionario'}
 };
@@ -498,6 +498,282 @@ function octL(i){ var L = LANG(); var O = (I18N[L] && I18N[L].oct) ? I18N[L].oct
 function projL(i){ var L = LANG(); return (I18N[L] && I18N[L].proj[i] !== undefined) ? I18N[L].proj[i] : I18N.pt.proj[i]; }
 function W(k){ var L = LANG(); return (I18N[L] && I18N[L].words[k] !== undefined) ? I18N[L].words[k] : I18N.pt.words[k]; }
 function qText(q){ var L = LANG(); if(L !== 'pt' && TR[L] && TR[L][q.g] && TR[L][q.g][q.gi] !== undefined) return TR[L][q.g][q.gi]; return q.t; }
+
+/* Traduções do catálogo EN (ordem idêntica à do ARCH; fallback para PT se faltar). */
+var ARCH_TR_EN = [
+{n:'Social liberalism',d:'Liberalism that accepts the welfare state and market-failure correction, without changing ownership of the means of production.'},
+{n:'Classical and modern social democracy',d:'Universal welfare state, strong unions and collective bargaining within regulated capitalism.'},
+{n:'Third Way / Blairism',d:'Social democracy repositioned for the market: public-private partnerships, flexibilization and targeted social policy.'},
+{n:'Labourism / Brizolismo',d:'Union-linked party, popular nationalism and labor rights. In Brazil, the legacy of Vargas and Brizola.'},
+{n:'Democratic Socialism',d:'Universal social rights, union power and public ownership of key sectors, through elections and mass movements.'},
+{n:'Progressivism',d:'Gradual civil-rights and social-justice reforms, stressing equality and diversity within the existing order.'},
+{n:'Christian Left / Liberation Theology / Christian Socialism',d:'Preferential option for the poor, base ecclesial communities and structural critique of capitalism from faith.'},
+{n:'Greens / Eco-social democracy',d:'Ecological transition within social democracy: green taxes, public services and participation.'},
+{n:'Latin Developmental Socioliberalism',d:'State-led growth with social inclusion and regulated market openness, as in Latin American neodevelopmentalism.'},
+{n:'National developmentalism',d:'State-led industrialization, economic sovereignty and a pact between productive capital and labor.'},
+{n:'New Left',d:'1960s left that shifted focus from the factory to students, culture and autonomy, criticizing Soviet bureaucratism.'},
+{n:'Frankfurt School / Critical Theory / Cultural Neo-Marxism',d:'Critique of culture, instrumental reason and the culture industry, with no defined party program.'},
+{n:'Gramscianism / Eurocommunism',d:'Contesting hegemony in civil society and a mass party accepting pluralism and parliament as transition terrain.'},
+{n:'Socialist / Marxist / Intersectional Feminism',d:'Gender, class and care work as parts of the same system, with rupture from social reproduction.'},
+{n:'Radical anti-racism / Socialist Pan-Africanism / Decolonial',d:'Racism and colonialism as structures of capitalism, with sovereignty and liberation of the Global South and racialized peoples.'},
+{n:'Left queer / LGBT abolitionism',d:'Sexual and gender liberation tied to critique of the state, police and capital, with autonomy and mutual aid.'},
+{n:'Ecosocialism',d:'Ecological planning and social ownership to halt climate collapse and redistribute wealth.'},
+{n:'Degrowth / Eco-Marxism / Buen Vivir',d:'Planned reduction of material production and consumption, harmony with nature and critique of developmentalism.'},
+{n:'Municipalism / Communalism / Democratic Confederalism',d:'Local councils and assemblies federated in confederation, with communal economy and gender-parity leadership (Rojava).'},
+{n:'Zapatismo',d:'Indigenous autonomy, caracoles and mandar obedeciendo, without taking state power.'},
+{n:'Alter-globalization / Anti-globalization movement',d:'Global network of movements against corporate and financial-institution power, gathered at the World Social Forum.'},
+{n:'Orthodox / Classical Marxism',d:'Marx and Engels’ critique of political economy: class struggle, proletarian revolution and supersession of state and capital.'},
+{n:'Utopian Socialism',d:'Pre-Marx socialist projects based on model communities and moral persuasion instead of class struggle.'},
+{n:'Leninism',d:'Vanguard party takes power and leads the transition through the council state.'},
+{n:'Marxism-Leninism / Stalinism',d:'Total centralized planning and a single-command party-state.'},
+{n:'Trotskyism',d:'Permanent revolution, international vanguard party and planning under workers’ councils.'},
+{n:'Luxemburgism / Left Communism',d:'Mass strike and class spontaneity, criticizing party Jacobinism, but with rupture.'},
+{n:'Councilism (Council Communism)',d:'Workers’ councils take over production and dissolve party and state.'},
+{n:'Bordigism (Italian Communist Left)',d:'The invariant historic party as guardian of the communist program, against democratism and self-management.'},
+{n:'De Leonism / Impossibilism / Marxist syndicalism',d:'Industrial unions as future administration of production, combined with political action to take the state.'},
+{n:'Maoism / Mao Zedong Thought',d:'Prolonged people’s war and mass mobilization, with the party leading a peasant revolution.'},
+{n:'Hoxhaism / Anti-revisionist Marxism-Leninism',d:'Albanian Marxism-Leninism, hostile to Tito, Mao and Khrushchev, with rigid party and state.'},
+{n:'Titoism / Yugoslav self-management',d:'Workers’ councils run firms operating in the market within a socialist state.'},
+{n:'Juche / Songun',d:'National self-reliance, hereditary leadership and military priority in a one-party state.'},
+{n:'Castroism / Guevarism / Foquismo',d:'Insurrectionary guerrilla foco and the making of the new man, led by an armed vanguard.'},
+{n:'Sandinismo / FSLN',d:'1979 Nicaraguan revolution, with mixed economy, literacy campaign and popular participation.'},
+{n:'Chavismo / Bolivarianism / 21st-Century Socialism',d:'Strong state distributing natural-resource rents and fostering communes around a mobilizing leadership.'},
+{n:'Mariateguismo / Socialist Indo-Americanism',d:'Andean indigenous communities as the basis of a distinctly Peruvian socialism, not copying the European model.'},
+{n:'Sankarism / Nkrumahism / African Socialism',d:'African sovereignty, Pan-Africanism, developmental state and anti-imperialist popular mobilization.'},
+{n:'Nasserism / Left Baathism / Arab Socialism',d:'Arab nationalism with land reform, nationalizations and a strong party-or-leader state.'},
+{n:'Operaismo / Italian Autonomia / Post-operaismo',d:'Autonomous class struggles, refusal of work and networks outside parties and unions.'},
+{n:'Situationism',d:'Critique of the society of the spectacle, dérive and subversion of everyday life, with workers’ councils as horizon.'},
+{n:'Analytical / Academic Marxism',d:'Marxism rebuilt with analytic-philosophy and economics rigor: Cohen, Elster, Roemer, Wright.'},
+{n:'Regulation School / Economic Neo-Gramscianism',d:'Analysis of accumulation regimes and modes of regulation of capitalism, with institutional-reform proposals.'},
+{n:'Communization / Contemporary insurrectionalism / Tiqqun / Invisible Committee',d:'Revolution as the immediate abolition of value, money and labor, with no transition phase.'},
+{n:'Posadism',d:'Trotskyist current combining world revolution and planning with belief in a socialist extraterrestrial civilization.'},
+{n:'Mutualism (Proudhon)',d:'Mutual credit and exchange among associated, federated producers, with neither state nor capital.'},
+{n:'Anarcho-collectivism (Bakunin)',d:'Collective ownership of the means of production, pay by work, social revolt and federalism.'},
+{n:'Anarcho-communism (Kropotkin, Malatesta, Emma Goldman)',d:'Federated communes, abolition of state, money and property, distribution by need.'},
+{n:'Anarcho-syndicalism',d:'Direct-action unions and general strike becoming the organs of the new society.'},
+{n:'Anarcho-individualism',d:'Sovereignty of the individual against state, morals and collectivisms, with free associations and producers’ market.'},
+{n:'Illegalism / Insurrectionary anarchism',d:'Direct and illegal action against state and capital, affinity organization and refusal of work.'},
+{n:'Platformism / Especifismo',d:'Anarchism organized in federation, with tactical and theoretical unity. In the Global South, especifismo.'},
+{n:'Anarcha-feminism / Anarcho-queer',d:'Patriarchy and gender norms treated as hierarchies to abolish along with state and capital.'},
+{n:'Anarcho-ecology / Social Ecology / Anarcho-primitivism',d:'Social hierarchy and ecological degradation as parts of the same problem, from municipalism to rewilding.'},
+{n:'Anarcho-pacifism / Christian anarchism',d:'Rejection of state and violence through nonviolence and the Gospel, in Tolstoy’s line.'},
+{n:'Agorism (leftist)',d:'Counter-economy and markets free of state privilege, with anti-authoritarian, anti-corporate orientation.'},
+{n:'Libertarian Municipalism',d:'Neighborhood popular assemblies federated in confederation, hollowing out the nation-state (Bookchin).'},
+{n:'Babouvism / Neo-Babouvism',d:'Conspiracy of the Equals: real equality, common property and insurrection led by a secret core.'},
+{n:'Diggers / Levellers / Münster millenarianism',d:'Egalitarian, communitarian movements of the Reformation and English Revolution, with common land and millenarian hope.'},
+{n:'Blanquism',d:'Insurrectionary coup by a disciplined revolutionary minority, followed by a provisional dictatorship.'},
+{n:'Chartism',d:'British workers’ movement for universal male suffrage and political reforms (1838–1850).'},
+{n:'Owenism',d:'Cooperative villages, consumer cooperatives and labor bonuses, inspired by Robert Owen.'},
+{n:'Fourierism / Phalanstère',d:'Communities called phalanstères, attractive labor and women’s liberation, rewarding capital, labor and talent.'},
+{n:'Saint-Simonianism',d:'Industrialists, scientists and engineers directing planned production for the most numerous, poorest class.'},
+{n:'Icarianism / Cabetism',d:'Egalitarian community of goods with elected leadership, described in Cabet’s Voyage to Icaria.'},
+{n:'Lassallism',d:'State socialism: universal suffrage and state-financed producer cooperatives.'},
+{n:'Austromarxism',d:'Social democracy, factory councils and workers’ education combined with the parliamentary road.'},
+{n:'Menshevism',d:'Russian social-democratic wing defending a bourgeois revolution before socialism and legal workers’ action.'},
+{n:'Narodism / Socialist-Revolutionaries (SRs)',d:'Russian agrarian socialism based on the peasant commune, with direct action and revolutionary terrorism.'},
+{n:'Bernsteinism / Revisionism',d:'Socialism as movement: gradual reform, democracy and unions instead of revolutionary catastrophe.'},
+{n:'Kautskyism / Marxist centrism',d:'Orthodox mass-party Marxism awaiting ripened contradictions, rejecting both reformism and putschism.'},
+{n:'Fabianism',d:'Technocratic gradualism: experts, facts and permeation of elites.'},
+{n:'Guild Socialism',d:'Producer guilds run industries, with the state representing consumers.'},
+{n:'Impossibilism / SPGB',d:'Refusal of reforms and intermediate programs, with moneyless socialism by will of a conscious majority.'},
+{n:'Bundism',d:'Secular diasporic Jewish socialism: national cultural autonomy and workers’ organization.'},
+{n:'Socialist / Kibbutz Zionism',d:'Voluntary communities of common ownership and assembly decision, the kibbutzim.'},
+{n:'Humanist Marxism / Praxis',d:'Emphasis on alienation, individual emancipation and self-management, as in the Yugoslav Praxis school.'},
+{n:'Freudo-Marxism',d:'Reich and Marcuse: psychic repression and social domination linked, with sexual and political liberation.'},
+{n:'Open Marxism / Open autonomist Marxism',d:'Critique of categories as forms of struggle, with class as open antagonism and no teleology.'},
+{n:'Dependency Theory / World-Systems',d:'Underdevelopment as product of world capitalism, and super-exploitation of the Global South as the center’s condition.'},
+{n:'Academic Market Socialism',d:'Social or cooperative firms compete in the market, and the state distributes dividends and investment (Roemer, Schweickart).'},
+{n:'Dubčekism / Socialism with a Human Face',d:'Internal reform of state socialism: press freedom, pluralism and economic decentralization (Prague, 1968).'},
+{n:'Kádárism / Goulash Communism',d:'One-party state trading political support for consumption and small market spaces.'},
+{n:'Gorbachevism / Glasnost-Perestroika',d:'Political opening and economic restructuring within the Soviet system.'},
+{n:'Dengism / Socialism with Chinese Characteristics',d:'Single party directs the economy and uses the market as a development instrument.'},
+{n:'Ho Chi Minh Thought',d:'National liberation and socialism under party leadership, with market opening from Đổi mới.'},
+{n:'Naxalism',d:'Maoist peasant and adivasi insurgency in India, with people’s war and parallel-government areas.'},
+{n:'Shining Path / Gonzaloism',d:'Peruvian Maoism of people’s war, led by Chairman Gonzalo and marked by violence against civilians.'},
+{n:'Prachanda Path / Nepalese Maoism',d:'People’s war in Nepal that moved to the electoral road and the republic (1996–2006).'},
+{n:'Pol-Potism / Khmer Rouge',d:'Radical agrarian communism in Cambodia (1975–1979), with emptied cities and genocide.'},
+{n:'Cabralism / Lusophone MPLA-FRELIMO-PAIGC',d:'Lusophone African national liberation: Cabral, anti-colonial struggle and building socialist states.'},
+{n:'Ujamaa / Ubuntu Socialism / Consciencism / Zambian Humanism',d:'Community-based African socialisms, with cooperative villages and humanism as ethical foundation.'},
+{n:'Lumumbism',d:'Congo’s independence and sovereignty over resources, Pan-African nationalism and non-alignment.'},
+{n:'Islamic Socialism / Islamo-leftism',d:'Social justice, zakat and common property read from Islam, in dialogue with anti-imperialism.'},
+{n:'Gaddafism / Jamahiriya / Third Universal Theory',d:'Direct democracy by popular committees in discourse, with personalist leadership in practice.'},
+{n:'Buddhist Socialism',d:'Simplicity, compassion and cooperation as economic basis.'},
+{n:'Camilismo / Christians for Socialism',d:'Christian radicalization joining revolutionary struggle, like Camilo Torres, or the Chilean road.'},
+{n:'Ambedkarism / Left Dalit-Buddhism',d:'Annihilation of caste, constitutional democracy and Buddhist conversion, with welfare state.'},
+{n:'Periyarism / Socialist Dravidianism',d:'Rationalism, anti-Brahminism and caste and gender equality in South India.'},
+{n:'Magonismo',d:'Pre-revolutionary Mexican anarchism of the Partido Liberal Mexicano: land, liberty and insurrection.'},
+{n:'Original Zapatismo / Ayala Agrarism',d:'Mexican peasant agrarian revolution, with communal land and village autonomy (Plan de Ayala).'},
+{n:'Cardenismo',d:'Land reform, ejidos and oil nationalization under Mexico’s Lázaro Cárdenas.'},
+{n:'Original Aprismo / Indoamérica',d:'Anti-imperialist class front, with reformist state and Latin-Americanism.'},
+{n:'Velasquismo',d:'Reformist military government in Peru (1968–1975): land reform, nationalizations and labor communities.'},
+{n:'Left Peronism / Montoneros',d:'Revolutionary Peronism combining popular nationalism and armed struggle in the 1970s.'},
+{n:'Allendismo / Chilean Road',d:'Transition to socialism by legal, electoral means, with copper nationalization and land reform.'},
+{n:'Tupamaros / MLN Uruguay / Mujiquismo',d:'Uruguayan urban guerrilla that later moved to elections, with austerity and popular ecology.'},
+{n:'Marighellismo / Brazilian Armed New Left 1964–73',d:'Brazilian urban guerrilla against the military dictatorship, anchored in the Minimanual of the Urban Guerrilla.'},
+{n:'Katarismo / Indianismo / Communitarian Evismo',d:'Indigenous peoples as political subject: plurinationality, Andean communitarianism and state control of resources.'},
+{n:'Left Populism (Laclau-Mouffe)',d:'Hegemonic construction of a people against elites, by articulating demands and leadership.'},
+{n:'New Municipalism / Rebel Cities',d:'Citizen platforms radicalizing local democracy, with remunicipalization and urban commons, like Barcelona en Comú.'},
+{n:'Left Accelerationism',d:'Full automation and heavy technology to abolish work, appropriating what capitalism developed.'},
+{n:'Xenofeminism / Cyberfeminism',d:'Technology as instrument of gender emancipation and world-rebuilding, against essentialism.'},
+{n:'Fully Automated Luxury Communism / Post-scarcity',d:'Automation, abundant energy and universal services for a luxury life accessible to all.'},
+{n:'Cyber-socialism / Cybersyn',d:'Planning with real-time information and participation, without breaking the legal order (Cybersyn, Chile, 1971–1973).'},
+{n:'Post-workism / Abolition of Work',d:'Refusal and abolition of work: basic income, radical shorter hours and end of job centrality.'},
+{n:'Socialist Ecomodernism',d:'Abundant clean energy and technology — nuclear, renewables, intensive farming — under public ownership.'},
+{n:'Commons Economy / P2P / Parecon',d:'Commons, peer production and planning by worker and consumer councils, without market.'},
+{n:'Economic Democracy / Meidner / Mondragon Cooperativism / Solidarity Economy',d:'Wage-earner funds, federated cooperatives and solidarity economy as paths of gradual transfer of economic power.'},
+{n:'Sewer Socialism / Municipal Socialism',d:'Competent public management of water, sewage, transit and housing in cities, as in Milwaukee and Red Vienna.'},
+{n:'Left MMT / Radical Post-Keynesianism',d:'Sovereign currency, state-guaranteed full employment and active fiscal policy.'},
+{n:'Left Georgism / Geo-socialism',d:'Tax on land and natural-resource rents, with a market free of rentiers.'},
+{n:'Left Solarpunk',d:'Future of decentralized communities, renewable energy and care, between aesthetics and program.'},
+{n:'Convivialism',d:'Convivialist manifesto: pact of nonviolence, cooperation and ecological limits, with no party program.'},
+{n:'Eroding capitalism (Wright)',d:'Real utopias: expanding niches of social and democratic economy until capitalist logic erodes.'},
+{n:'Post-anarchism',d:'Anarchism in dialogue with post-structuralism: diffuse power, subjectivity and critique of essentialism.'},
+{n:'Post-left / Post-left anarchy',d:'Critique of the organized left itself, of moralism and activism-as-role, stressing immediate life and freedom.'},
+{n:'Anarcho-nihilism / Green insurrectionalism',d:'Total refusal of industrial civilization and all mediation, with insurrectionary action against the technological order.'},
+{n:'Anarcho-transhumanism / Anarcho-futurism',d:'Radical bodily and technological autonomy, with decentralized networks and emancipation from the biological condition.'},
+{n:'Veganarchism / Total Liberation',d:'Human, animal and earth liberation as inseparable struggles, refusing all domination.'},
+{n:'Anarcho-naturism / Anarcho-surrealism',d:'Natural life, nudism, vegetarianism and poetic imagination as instruments of social transformation.'},
+{n:'Sorelian Revolutionary Syndicalism',d:'General strike as mobilizing myth and direct action, with the union as moral core of a new civilization (Sorel).'},
+{n:'Left Agorism / Crypto-anarchism',d:'Cryptography, currencies and networks as tools of a counter-economy escaping state and corporations.'}
+];
+
+/* Traduções do catálogo ES (ordem idêntica à do ARCH; fallback para PT se faltar). */
+var ARCH_TR_ES = [
+{n:'Social-liberalismo / Liberalismo social',d:'Liberalismo que acepta el Estado de bienestar y la corrección de fallos del mercado, sin cambiar la propiedad de los medios de producción.'},
+{n:'Socialdemocracia clásica y moderna',d:'Estado de bienestar universal, sindicatos fuertes y negociación colectiva en un capitalismo regulado.'},
+{n:'Tercera Vía / Blairismo',d:'Socialdemocracia reposicionada para el mercado: alianzas público-privadas, flexibilización y política social focalizada.'},
+{n:'Laborismo / Brizolismo',d:'Partido ligado a los sindicatos, nacionalismo popular y derechos laborales. En Brasil, el legado de Vargas y Brizola.'},
+{n:'Socialismo Democrático',d:'Derechos sociales universales, poder sindical y propiedad pública de sectores clave, por elecciones y movimientos de masas.'},
+{n:'Progresismo',d:'Reformas graduales de derechos civiles y justicia social, con énfasis en igualdad y diversidad dentro del orden existente.'},
+{n:'Izquierda Cristiana / Teología de la Liberación / Socialismo Cristiano',d:'Opción preferencial por los pobres, comunidades eclesiales de base y crítica estructural al capitalismo desde la fe.'},
+{n:'Verde / Ecosocial-democracia',d:'Transición ecológica dentro de la democracia social: impuestos verdes, servicios públicos y participación.'},
+{n:'Socioliberalismo Desarrollista Latino',d:'Crecimiento impulsado por el Estado con inclusión social y apertura regulada al mercado, como en el neodesarrollismo latinoamericano.'},
+{n:'Nacional-desarrollismo',d:'Industrialización conducida por el Estado, soberanía económica y pacto entre capital productivo y trabajo.'},
+{n:'Nueva Izquierda (New Left)',d:'Izquierda de los años 1960 que desplazó el foco de la fábrica hacia estudiantes, cultura y autonomía, y criticó el burocratismo soviético.'},
+{n:'Escuela de Fráncfort / Teoría Crítica / Neomarxismo cultural',d:'Crítica de la cultura, de la razón instrumental y de la industria cultural, sin programa partidario definido.'},
+{n:'Gramscismo / Eurocomunismo',d:'Disputa de hegemonía en la sociedad civil y partido de masas que acepta el pluralismo y el parlamento como terreno de la transición.'},
+{n:'Feminismo Socialista / Marxista / Interseccional',d:'Género, clase y trabajo de cuidado como partes del mismo sistema, con ruptura desde la reproducción social.'},
+{n:'Antirracismo radical / Panafricanismo socialista / Decolonial',d:'Racismo y colonialismo como estructuras del capitalismo, con soberanía y liberación del Sur global y de las poblaciones racializadas.'},
+{n:'Queer de izquierda / Abolicionismo LGBT',d:'Liberación sexual y de género ligada a la crítica del Estado, de la policía y del capital, con autonomía y apoyo mutuo.'},
+{n:'Ecosocialismo',d:'Planificación ecológica y propiedad social para frenar el colapso climático y redistribuir riqueza.'},
+{n:'Decrecimiento / Ecomarxismo / Buen Vivir',d:'Reducción planificada de la producción y del consumo material, armonía con la naturaleza y crítica al desarrollismo.'},
+{n:'Municipalismo / Comunalismo / Confederalismo Democrático',d:'Consejos y asambleas locales federados en confederación, con economía comunal y liderazgo paritario de género (Rojava).'},
+{n:'Zapatismo',d:'Autonomía indígena, caracoles y mandar obedeciendo, sin tomar el poder de Estado.'},
+{n:'Altermundismo / Movimiento antiglobalización',d:'Red global de movimientos contra el poder de las corporaciones y las instituciones financieras, reunida en el Foro Social Mundial.'},
+{n:'Marxismo Ortodoxo / Marxismo Clásico',d:'Crítica de la economía política de Marx y Engels: lucha de clases, revolución proletaria y superación del Estado y del capital.'},
+{n:'Socialismo Utópico',d:'Proyectos socialistas anteriores a Marx, basados en comunidades modelo y persuasión moral en vez de lucha de clases.'},
+{n:'Leninismo',d:'Partido de vanguardia toma el poder y dirige la transición por medio del Estado de los consejos.'},
+{n:'Marxismo-Leninismo / Stalinismo',d:'Planificación centralizada total y partido-Estado de mando único.'},
+{n:'Trotskismo',d:'Revolución permanente, partido de vanguardia internacional y planificación bajo consejos obreros.'},
+{n:'Luxemburguismo / Comunismo de Izquierda',d:'Huelga de masas y espontaneidad de la clase, con crítica al jacobinismo del partido, pero con ruptura.'},
+{n:'Consejismo (Comunismo de Consejos)',d:'Consejos obreros asumen la producción y disuelven el partido y el Estado.'},
+{n:'Bordiguismo (Izquierda Comunista Italiana)',d:'El partido histórico invariante como guardián del programa comunista, contra el democratismo y contra la autogestión.'},
+{n:'De Leonismo / Imposibilismo / Sindicalismo marxista',d:'Sindicatos industriales como futura administración de la producción, combinados con acción política para tomar el Estado.'},
+{n:'Maoísmo / Pensamiento Mao Zedong',d:'Guerra popular prolongada y movilización de masas, con el partido dirigiendo una revolución campesina.'},
+{n:'Hoxhaismo / Marxismo-Leninismo antirrevisionista',d:'Marxismo-leninismo albanés, hostil a Tito, a Mao y a Jrushchov, con partido y Estado rígidos.'},
+{n:'Titoísmo / Autogestión Yugoslava',d:'Consejos de trabajadores dirigen empresas que operan en el mercado dentro de un Estado socialista.'},
+{n:'Juche / Songun',d:'Autosuficiencia nacional, liderazgo hereditario y prioridad militar en un Estado de partido único.'},
+{n:'Castrismo / Guevarismo / Foquismo',d:'Foco guerrillero insurreccional y la formación del hombre nuevo, guiados por una vanguardia armada.'},
+{n:'Sandinismo / FSLN',d:'Revolución nicaragüense de 1979, con economía mixta, campaña de alfabetización y participación popular.'},
+{n:'Chavismo / Bolivarianismo / Socialismo del Siglo XXI',d:'Estado fuerte que distribuye la renta de los recursos naturales y estimula comunas en torno a un liderazgo movilizador.'},
+{n:'Mariateguismo / Indoamericanismo socialista',d:'Comunidades indígenas andinas como base de un socialismo peruano propio, sin copiar el modelo europeo.'},
+{n:'Sankarismo / Nkrumahismo / Socialismo Africano',d:'Soberanía africana, panafricanismo, Estado desarrollista y movilización popular antiimperialista.'},
+{n:'Nasserismo / Baazismo de izquierda / Socialismo Árabe',d:'Nacionalismo árabe con reforma agraria, nacionalizaciones y Estado fuerte de partido o de líder.'},
+{n:'Operaismo / Autonomía Italiana / Posoperaísmo',d:'Luchas autónomas de la clase, rechazo del trabajo y redes fuera de partidos y sindicatos.'},
+{n:'Situacionismo',d:'Crítica de la sociedad del espectáculo, deriva y subversión de la vida cotidiana, con consejos obreros como horizonte.'},
+{n:'Marxismo Analítico / Marxismo Académico',d:'Marxismo reconstruido con rigor de la filosofía analítica y de la economía: Cohen, Elster, Roemer, Wright.'},
+{n:'Escuela de la Regulación / Neogramscianismo económico',d:'Análisis de los regímenes de acumulación y de los modos de regulación del capitalismo, con propuestas de reforma institucional.'},
+{n:'Comunización / Insurreccionalismo contemporáneo / Tiqqun / Comité Invisible',d:'La revolución como abolición inmediata del valor, del dinero y del trabajo, sin fase de transición.'},
+{n:'Posadismo',d:'Vertiente trotskista que combina revolución mundial y planificación con la apuesta por una civilización extraterrestre socialista.'},
+{n:'Mutualismo (Proudhon)',d:'Crédito mutuo e intercambios entre productores asociados y federados, sin Estado ni capital.'},
+{n:'Anarco-colectivismo (Bakunin)',d:'Propiedad colectiva de los medios de producción, remuneración por el trabajo, revuelta social y federalismo.'},
+{n:'Anarco-comunismo (Kropotkin, Malatesta, Emma Goldman)',d:'Comunas federadas, abolición del Estado, del dinero y de la propiedad, y distribución por necesidad.'},
+{n:'Anarco-sindicalismo',d:'Sindicatos de acción directa y huelga general que se convierten en los órganos de la nueva sociedad.'},
+{n:'Anarco-individualismo',d:'Soberanía del individuo contra el Estado, la moral y los colectivismos, con asociaciones libres y mercado de productores.'},
+{n:'Ilegalismo / Anarquismo insurreccional',d:'Acción directa e ilegal contra el Estado y el capital, organización por afinidad y rechazo del trabajo.'},
+{n:'Plataformismo / Especifismo',d:'Anarquismo organizado en federación, con unidad táctica y teórica. En el Sur global, el especifismo.'},
+{n:'Anarco-feminismo / Anarco-queer',d:'Patriarcado y normas de género tratados como jerarquías a abolir junto con el Estado y el capital.'},
+{n:'Anarco-ecología / Ecología Social / Anarco-primitivismo',d:'Jerarquía social y degradación ecológica como partes del mismo problema, del municipalismo al rewilding.'},
+{n:'Anarco-pacifismo / Anarco-cristiano',d:'Rechazo del Estado y de la violencia desde la no violencia y el Evangelio, en la línea de Tolstói.'},
+{n:'Agorismo (de izquierda)',d:'Contraeconomía y mercados libres de privilegios estatales, con orientación antiautoritaria y anticorporativa.'},
+{n:'Municipalismo Libertario',d:'Asambleas populares de barrio federadas en confederación, vaciando el Estado nacional (Bookchin).'},
+{n:'Babuvismo / Neo-babuvismo',d:'Conspiración de los Iguales: igualdad real, propiedad común e insurrección conducida por un núcleo secreto.'},
+{n:'Diggers / Levellers / Milenarismo de Münster',d:'Movimientos igualitarios y comunitarios de la Reforma y de la Revolución Inglesa, con tierra común y esperanza milenarista.'},
+{n:'Blanquismo',d:'Golpe insurreccional de una minoría revolucionaria disciplinada, seguido de una dictadura provisional.'},
+{n:'Cartismo / Chartism',d:'Movimiento obrero británico por el sufragio universal masculino y por reformas políticas (1838–1850).'},
+{n:'Owenismo',d:'Aldeas cooperativas, cooperativas de consumo y bonos de trabajo, inspirados por Robert Owen.'},
+{n:'Fourierismo / Falansterio',d:'Comunidades llamadas falansterios, trabajo atractivo y liberación de las mujeres, con remuneración a capital, trabajo y talento.'},
+{n:'Saint-simonianismo',d:'Industriales, científicos e ingenieros dirigiendo una producción planificada en beneficio de la clase más numerosa y más pobre.'},
+{n:'Icarianismo / Cabetismo',d:'Comunidad igualitaria de bienes y dirección electa, descrita en el Viaje a Icaria de Étienne Cabet.'},
+{n:'Lassallismo',d:'Socialismo de Estado: sufragio universal y cooperativas de producción financiadas por el Estado.'},
+{n:'Austromarxismo',d:'Democracia social, consejos de fábrica y educación obrera combinados con la vía parlamentaria.'},
+{n:'Menchevismo',d:'Ala socialdemócrata rusa que defendía una revolución burguesa antes del socialismo y la acción legal del movimiento obrero.'},
+{n:'Narodnismo / Socialismo-Revolucionario (SRs)',d:'Socialismo agrario ruso basado en la comuna campesina, con acción directa y terrorismo revolucionario.'},
+{n:'Bernsteinismo / Revisionismo',d:'El socialismo como movimiento: reforma gradual, democracia y sindicatos en lugar de la catástrofe revolucionaria.'},
+{n:'Kautskismo / Centrismo marxista',d:'Marxismo ortodoxo de partido de masas, que espera la maduración de las contradicciones y rechaza tanto el reformismo como el putschismo.'},
+{n:'Fabianismo',d:'Gradualismo tecnocrático: especialistas, hechos e infiltración de las élites.'},
+{n:'Socialismo Gremial / Gildismo',d:'Gremios de productores administran las industrias, con el Estado representando a los consumidores.'},
+{n:'Imposibilismo / SPGB',d:'Rechazo de reformas y programas intermedios, con socialismo sin dinero por voluntad de una mayoría consciente.'},
+{n:'Bundismo',d:'Socialismo judío secular y diaspórico: autonomía cultural nacional y organización obrera.'},
+{n:'Sionismo Socialista / Kibutziano',d:'Comunidades voluntarias de propiedad común y decisión en asamblea, los kibutzim.'},
+{n:'Marxismo Humanista / Praxis',d:'Énfasis en la alienación, en la emancipación individual y en la autogestión, como en la escuela Praxis yugoslava.'},
+{n:'Freudo-marxismo',d:'Reich y Marcuse: represión psíquica y dominación social ligadas, con liberación sexual y política.'},
+{n:'Marxismo Abierto / Marxismo Autonomista Abierto',d:'Crítica de las categorías como formas de lucha, con la clase como antagonismo abierto y sin teleología.'},
+{n:'Teoría de la Dependencia / Sistema-Mundo',d:'El subdesarrollo como producto del capitalismo mundial, y la superexplotación del Sur global como condición del centro.'},
+{n:'Socialismo de Mercado Académico',d:'Empresas sociales o cooperativas compiten en el mercado, y el Estado distribuye dividendos e inversión (Roemer, Schweickart).'},
+{n:'Dubcekismo / Socialismo de Rostro Humano',d:'Reforma interna del socialismo de Estado: libertad de prensa, pluralismo y descentralización económica (Praga, 1968).'},
+{n:'Kadarismo / Comunismo Goulash',d:'Estado de partido único que intercambia apoyo político por consumo y pequeños espacios de mercado.'},
+{n:'Gorbachovismo / Glásnost-Perestroika',d:'Apertura política y reestructuración económica dentro del sistema soviético.'},
+{n:'Denguismo / Socialismo con Características Chinas',d:'Partido único dirige la economía y usa el mercado como instrumento de desarrollo.'},
+{n:'Pensamiento Ho Chi Minh',d:'Liberación nacional y socialismo bajo dirección del partido, con apertura de mercado desde el Đổi mới.'},
+{n:'Naxalismo',d:'Insurgencia maoísta campesina y adivasi en India, con guerra popular y zonas de gobierno paralelo.'},
+{n:'Sendero Luminoso / Gonzaloismo',d:'Maoísmo peruano de guerra popular, dirigido por el presidente Gonzalo y marcado por la violencia contra civiles.'},
+{n:'Camino Prachanda / Maoísmo Nepalés',d:'Guerra popular en Nepal que migró a la vía electoral y a la república (1996–2006).'},
+{n:'Pol-Potismo / Jemer Rojo',d:'Comunismo agrario radical en Camboya (1975–1979), con vaciamiento de las ciudades y genocidio.'},
+{n:'Cabralismo / MPLA-FRELIMO-PAIGC Lusófono',d:'Liberación nacional africana lusófona: Cabral, la lucha anticolonial y la construcción de Estados socialistas.'},
+{n:'Ujamaa / Socialismo Ubuntu / Conciencismo / Humanismo Zambiano',d:'Socialismos africanos de base comunitaria, con aldeas cooperativas y humanismo como fundamento ético.'},
+{n:'Lumumbismo',d:'Independencia y soberanía sobre los recursos del Congo, nacionalismo panafricano y no alineamiento.'},
+{n:'Socialismo Islámico / Islamo-izquierdismo',d:'Justicia social, zakat y propiedad común leídas desde el Islam, en diálogo con el antiimperialismo.'},
+{n:'Gadafismo / Yamahiriya / Tercera Teoría Universal',d:'Democracia directa por comités populares en el discurso, con liderazgo personalista en la práctica.'},
+{n:'Socialismo Budista',d:'Simplicidad, compasión y cooperación como base económica.'},
+{n:'Camilismo / Cristianos por el Socialismo',d:'Radicalización cristiana que adhirió a la lucha revolucionaria, como Camilo Torres, o a la vía chilena.'},
+{n:'Ambedkarismo / Dalit-Budismo de Izquierda',d:'Aniquilación de las castas, democracia constitucional y conversión budista, con Estado de bienestar.'},
+{n:'Periyarismo / Dravidianismo Socialista',d:'Racionalismo, antibrahmanismo e igualdad de castas y de género en el sur de India.'},
+{n:'Magonismo',d:'Anarquismo mexicano prerrevolucionario del Partido Liberal Mexicano: tierra, libertad e insurrección.'},
+{n:'Zapatismo Original / Ayala Agrarista',d:'Revolución agraria campesina mexicana, con tierra comunal y autonomía de las aldeas (Plan de Ayala).'},
+{n:'Cardenismo',d:'Reforma agraria, ejidos y nacionalización del petróleo en el México de Lázaro Cárdenas.'},
+{n:'Aprismo Original / Indoamérica',d:'Frente de clases antiimperialista, con Estado reformista y latinoamericanismo.'},
+{n:'Velasquismo',d:'Gobierno militar reformista en Perú (1968–1975): reforma agraria, nacionalizaciones y comunidades laborales.'},
+{n:'Peronismo de Izquierda / Montoneros',d:'Peronismo revolucionario que combinó nacionalismo popular y lucha armada en los años 1970.'},
+{n:'Allendismo / Vía Chilena',d:'Transición al socialismo por medios legales y electorales, con nacionalización del cobre y reforma agraria.'},
+{n:'Tupamaros / MLN Uruguay / Mujiquismo',d:'Guerrilla urbana uruguaya que luego migró a la vía electoral, con austeridad y ecología popular.'},
+{n:'Marighellismo / Nueva Izquierda Armada Brasileña 1964-73',d:'Guerrilla urbana brasileña contra la dictadura militar, anclada en el Minimanual del Guerrillero Urbano.'},
+{n:'Katarismo / Indianismo / Evismo Comunitario',d:'Pueblos indígenas como sujeto político: plurinacionalidad, comunitarismo andino y control estatal de recursos.'},
+{n:'Populismo de Izquierda Laclau-Mouffe',d:'Construcción hegemónica de un pueblo contra las élites, mediante la articulación de demandas y de liderazgo.'},
+{n:'Municipalismo Nuevo / Ciudades Rebeldes',d:'Plataformas ciudadanas que radicalizan la democracia local, con remunicipalización y comunes urbanos, como Barcelona en Comú.'},
+{n:'Aceleracionismo de Izquierda',d:'Automatización plena y tecnología pesada para abolir el trabajo, apropiándose de lo que el capitalismo desarrolló.'},
+{n:'Xenofeminismo / Ciberfeminismo',d:'Tecnología como instrumento de emancipación de género y de reconstrucción del mundo, contra el esencialismo.'},
+{n:'Comunismo de Lujo Automatizado / Posescasez',d:'Automatización, energía abundante y servicios universales para una vida de lujo accesible a todos.'},
+{n:'Ciber-socialismo / Cybersyn',d:'Planificación con información en tiempo real y participación, sin romper el orden legal (Cybersyn, Chile, 1971–1973).'},
+{n:'Postrabajismo / Abolicionismo del Trabajo',d:'Rechazo y abolición del trabajo: renta básica, reducción radical de la jornada y fin de la centralidad del empleo.'},
+{n:'Ecomodernismo Socialista',d:'Energía limpia abundante y tecnología, como nuclear, renovables y agricultura intensiva, bajo propiedad pública.'},
+{n:'Economía de los Comunes / P2P / Parecon',d:'Bienes comunes, producción entre pares y planificación por consejos de trabajadores y de consumidores, sin mercado.'},
+{n:'Democracia Económica / Meidner / Cooperativismo Mondragón / Economía Solidaria',d:'Fondos de asalariados, cooperativas federadas y economía solidaria como caminos de transferencia gradual del poder económico.'},
+{n:'Socialismo de Alcantarillado / Socialismo Municipal',d:'Gestión pública competente de agua, alcantarillado, transporte y vivienda en las ciudades, como en Milwaukee y en la Viena Roja.'},
+{n:'MMT de Izquierda / Poskeynesianismo Radical',d:'Moneda soberana, pleno empleo garantizado por el Estado y política fiscal activa.'},
+{n:'Georgismo de Izquierda / Geo-socialismo',d:'Impuesto sobre la renta de la tierra y de los recursos naturales, con mercado libre de rentistas.'},
+{n:'Solarpunk de Izquierda',d:'Futuro de comunidades descentralizadas, energía renovable y cuidado, entre estética y programa.'},
+{n:'Convivialismo',d:'Manifiesto convivialista: pacto de no violencia, cooperación y límites ecológicos, sin programa partidario.'},
+{n:'Erosión del capitalismo (Wright)',d:'Utopías reales: ampliar nichos de economía social y democrática hasta erosionar la lógica capitalista.'},
+{n:'Posanarquismo',d:'Anarquismo que dialoga con el posestructuralismo: poder difuso, subjetividad y crítica del esencialismo.'},
+{n:'Posizquierda / Anarquía Posizquierda',d:'Crítica de la propia izquierda organizada, del moralismo y del activismo como papel, con énfasis en la vida y en la libertad inmediata.'},
+{n:'Anarco-nihilismo / Insurreccionalismo Verde',d:'Rechazo total de la civilización industrial y de toda mediación, con acción insurreccional contra el orden tecnológico.'},
+{n:'Anarco-transhumanismo / Anarco-futurismo',d:'Autonomía corporal y tecnológica radical, con redes descentralizadas y emancipación de la condición biológica.'},
+{n:'Veganarquismo / Liberación Total',d:'Liberación humana, animal y de la tierra como luchas inseparables, con rechazo de toda dominación.'},
+{n:'Anarco-naturismo / Anarco-surrealismo',d:'Vida natural, nudismo, vegetarianismo e imaginación poética como instrumentos de transformación social.'},
+{n:'Sindicalismo Revolucionario Soreliano',d:'Huelga general como mito movilizador y acción directa, con el sindicato como núcleo moral de una nueva civilización (Sorel).'},
+{n:'Agorismo de Izquierda / Cripto-anarquismo',d:'Criptografía, monedas y redes como herramientas de una contraeconomía que escapa del Estado y de las corporaciones.'}
+];
 
 /* Ordem intercalada: X, Y, Z, C, S, X, Y, Z... para que o eixo de cada pergunta não seja óbvio. */
 var QUESTIONS = (function(){
@@ -675,6 +951,17 @@ var ARCH = [
   {n:'Agorismo de Esquerda / Cripto-anarquismo',x:62,y:88,z:-92,c:35,s:45,d:'Criptografia, moedas e redes como ferramentas de uma contraeconomia que escapa do Estado e das corporações.'}
 ];
 
+function tA(a, f){
+  try{
+    var L = LANG();
+    if(L !== 'pt'){
+      var T = (L === 'en') ? ARCH_TR_EN : ARCH_TR_ES;
+      if(typeof T !== 'undefined' && T[a._ix] && T[a._ix][f]) return T[a._ix][f];
+    }
+  }catch(e){}
+  return a[f];
+}
+
 var OCT = [
   {n:'Socialdemocracia estatista', t:'Reforma · Centralista · Economia mista'},
   {n:'Marxismo-leninismo de mercado', t:'Ruptura · Centralista · Economia mista'},
@@ -685,6 +972,8 @@ var OCT = [
   {n:'Erosão do capitalismo', t:'Reforma · Autogestão · Desmercantilizada'},
   {n:'Comunismo libertário', t:'Ruptura · Autogestão · Desmercantilizada'}
 ];
+
+ARCH.forEach(function(a, i){ a._ix = i; });
 
 function octIndex(p){ return (p.x>=0?1:0) + (p.y>=0?2:0) + (p.z>=0?4:0); }
 
@@ -1192,7 +1481,7 @@ function shapeText(s){
       + 'Y '+axn('Y','name')+': '+sign(p.y)+' ('+axisText('Y',p.y)+')\n'
       + 'Z '+axn('Z','name')+': '+sign(p.z)+' ('+axisText('Z',p.z)+')\n'
       + t('legC1a')+': '+colorText(p.c)+' ('+p.c+'/100) · '+t('legF1a')+': '+shapeText(p.s)+' ('+p.s+'/100)\n'
-      + t('sumNear')+': '+near.slice(0,3).map(function(r){ return r.a.n+' '+r.pct+'%'; }).join(', ');
+      + t('sumNear')+': '+near.slice(0,3).map(function(r){ return tA(r.a,'n')+' '+r.pct+'%'; }).join(', ');
   }
   function renderResult(){
     var sharedView = !!(SHARED && answeredCount() === 0);
@@ -1208,12 +1497,12 @@ function shapeText(s){
     h += '<div class="meter"><div class="ml"><span>'+W('clas')+'</span><span>'+W('inter')+'</span></div><div class="ladder">'+ladder(lvl,col)+'</div><div class="mv"><b>'+p.s+'</b> · '+shapeText(p.s)+'</div></div></div>';
     h += '<div><h3 style="margin-bottom:8px">'+t('closestH')+'</h3><ol class="top3">';
     for(var i=0;i<3;i++){
-      h += '<li><span class="pct">'+near[i].pct+'%</span><span class="nm">'+near[i].a.n+'</span><span class="ds">'+near[i].a.d+'</span></li>';
+      h += '<li><span class="pct">'+near[i].pct+'%</span><span class="nm">'+tA(near[i].a,'n')+'</span><span class="ds">'+tA(near[i].a,'d')+'</span></li>';
     }
     h += '</ol>'+(LANG()!=='pt'?'<p class="muted" style="font-size:12px;margin:6px 0 0">'+t('trBadge')+'</p>':'')+'</div>';
     h += '<details class="all"><summary>'+t('seeAllW')+' '+ARCH.length+' '+t('withArch')+'</summary><ol class="rank">';
     for(var j=0;j<near.length;j++){
-      h += '<li><span class="rp">'+near[j].pct+'%</span><span>'+near[j].a.n+'</span><span class="mono">d '+Math.round(near[j].d)+'</span></li>';
+      h += '<li><span class="rp">'+near[j].pct+'%</span><span>'+tA(near[j].a,'n')+'</span><span class="mono">d '+Math.round(near[j].d)+'</span></li>';
     }
     h += '</ol></details>';
     h += '<div class="actions"><button class="btn primary" id="copy" type="button">'+t('copySumB')+'</button><button class="btn primary" id="copylink" type="button">'+t('copyLinkB')+'</button>'+(!sharedView?'<button class="btn" id="cmp" type="button">'+t('cmpBtn')+'</button>':'')+'<button class="btn" id="dlcard" type="button">'+t('dlImgB')+'</button><button class="btn" id="review" type="button">'+t('reviewB')+'</button><button class="btn" id="redo" type="button">'+t('redoB')+'</button></div>';
@@ -1278,7 +1567,7 @@ function shapeText(s){
     var namesB = {};
     for(var j=0;j<3;j++) namesB[nearB[j].a.n] = true;
     var common = [];
-    for(var i=0;i<3;i++) if(namesB[nearA[i].a.n]) common.push(nearA[i].a.n);
+    for(var i=0;i<3;i++) if(namesB[nearA[i].a.n]) common.push(tA(nearA[i].a,'n'));
     var h = '<div class="card res">';
     h += '<div><p class="kicker">'+t('cmpTitle')+'</p></div>';
     h += '<div class="two">'
@@ -1293,9 +1582,9 @@ function shapeText(s){
       + cmpDeltaRow('S', t('legF1a'), a.s, b.s, true)
       + '<div class="mv" style="margin-top:8px"><b>'+dist+'</b> · '+t('cmpDist')+'</div></div>';
     h += '<div class="two"><div><h3 style="margin-bottom:8px">'+t('cmpA')+' — '+t('closestH')+'</h3><ol class="top3">';
-    for(var ci=0;ci<3;ci++) h += '<li><span class="pct">'+nearA[ci].pct+'%</span><span class="nm">'+nearA[ci].a.n+'</span></li>';
+    for(var ci=0;ci<3;ci++) h += '<li><span class="pct">'+nearA[ci].pct+'%</span><span class="nm">'+tA(nearA[ci].a,'n')+'</span></li>';
     h += '</ol></div><div><h3 style="margin-bottom:8px">'+t('cmpB')+' — '+t('closestH')+'</h3><ol class="top3">';
-    for(var cj=0;cj<3;cj++) h += '<li><span class="pct">'+nearB[cj].pct+'%</span><span class="nm">'+nearB[cj].a.n+'</span></li>';
+    for(var cj=0;cj<3;cj++) h += '<li><span class="pct">'+nearB[cj].pct+'%</span><span class="nm">'+tA(nearB[cj].a,'n')+'</span></li>';
     h += '</ol></div></div>';
     h += '<p class="muted" style="margin:0;font-size:13.5px"><b>'+t('cmpCommon')+':</b> '+(common.length ? common.join(' · ') : t('cmpNone'))+'</p>';
     h += '<div class="actions"><button class="btn primary" id="copycmp" type="button">'+t('cmpLink')+'</button><button class="btn" id="take2" type="button">'+t('takeTest')+'</button><button class="btn" id="redo2" type="button">'+t('redoB')+'</button></div>';
@@ -1354,7 +1643,7 @@ function shapeText(s){
       ctx.font = '400 25px "Public Sans",sans-serif';
       var ty = 272;
       for(var j=0;j<3;j++){
-        var nm = near[j].a.n;
+        var nm = tA(near[j].a,'n');
         if(nm.length > 34) nm = nm.slice(0,34)+'…';
         ctx.fillStyle = lensColor(p.c, dark); ctx.font = '800 30px Archivo,Arial,sans-serif';
         ctx.fillText(near[j].pct+'%', 740, ty);
@@ -1480,7 +1769,7 @@ function shapeText(s){
     for(k=0;k<order.length;k++){
       var o2 = order[k];
       if(showAll.checked || near.indexOf(o2.a)>=0 || cubeS.hover===o2.i){
-        label(o2.a.n, o2.p.x+7, o2.p.y-8, 'left', fg);
+        label(tA(o2.a,'n'), o2.p.x+7, o2.p.y-8, 'left', fg);
       }
     }
     /* Ponto do usuário */
@@ -1606,8 +1895,8 @@ function shapeText(s){
     for(var i=0;i<ARCH.length;i++){
       var a = ARCH[i], px = X(a[pr.hx]), py = Y(a[pr.hy]), isN = near.indexOf(a) >= 0;
       var anchor = px > cxm+60 ? 'end' : 'start', tx = anchor==='end' ? -7 : 7;
-      s += '<g class="pd" tabindex="0"><title>'+esc(a.n)+'</title><circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isN?4.6:3.3)+'" fill="'+(isN?'var(--fg)':'var(--dot)')+'" fill-opacity="'+(isN?1:.85)+'"/>';
-      s += '<text class="'+(isN?'t3':'')+'" x="'+(px+tx).toFixed(1)+'" y="'+(py-6).toFixed(1)+'" text-anchor="'+anchor+'">'+esc(a.n)+'</text></g>';
+      s += '<g class="pd" tabindex="0"><title>'+esc(tA(a,'n'))+'</title><circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isN?4.6:3.3)+'" fill="'+(isN?'var(--fg)':'var(--dot)')+'" fill-opacity="'+(isN?1:.85)+'"/>';
+      s += '<text class="'+(isN?'t3':'')+'" x="'+(px+tx).toFixed(1)+'" y="'+(py-6).toFixed(1)+'" text-anchor="'+anchor+'">'+esc(tA(a,'n'))+'</text></g>';
     }
     if(u && !f){
       var ux = X(u[pr.hx]), uy = Y(u[pr.hy]), n = SIDES[shapeLevel(u.s)], col = lensColor(u.c, dark), shape;
@@ -1667,6 +1956,14 @@ function shapeText(s){
       return m ? m[1] : null;
     }catch(e){ return null; }
   }
+  function contestURL(a){
+    try{
+      var title = '[coordenada] ' + a.n;
+      var body = 'Corrente: ' + a.n + '\nSlug: ' + slug(a.n) + '\nAtuais: X ' + a.x + ' · Y ' + a.y + ' · Z ' + a.z + ' · C ' + a.c + ' · S ' + a.s
+        + '\n\nProposta:\n- X: \n- Y: \n- Z: \n\nJustificativa (autor/obra/período):\n';
+      return 'https://github.com/1thirteeng3/left-wing-political-compass/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
+    }catch(e){ return 'https://github.com/1thirteeng3/left-wing-political-compass/issues/new'; }
+  }
   function renderCat(){
     var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
     var qEl = document.getElementById('catq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
@@ -1678,10 +1975,10 @@ function shapeText(s){
     for(var s=0;s<seq.length;s++){
       var g = seq[s], go = octL(g);
       if(!groups[g].length) continue;
-      h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div>'+(LANG()!=='pt'?'<div class="tags">'+t('trBadge')+'</div>':'')+'<ul>';
+      h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div><ul>';
       for(i=0;i<groups[g].length;i++){
         var a = groups[g][i], sl = slug(a.n);
-        h += '<li id="c-'+sl+'">'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an"><a href="#c='+sl+'" style="color:inherit;text-decoration:none" title="Link para esta corrente">'+a.n+'</a></span><span class="ad">'+a.d+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span></li>';
+        h += '<li id="c-'+sl+'">'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an"><a href="#c='+sl+'" style="color:inherit;text-decoration:none" title="Link para esta corrente">'+tA(a,'n')+'</a></span><span class="ad">'+tA(a,'d')+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span><span class="ac" style="grid-column:2"><a href="'+contestURL(a)+'" target="_blank" rel="noopener" style="color:inherit">↗ '+t('fixB')+'</a></span></li>';
       }
       h += '</ul></div>';
     }
@@ -1711,7 +2008,7 @@ function shapeText(s){
         var rows = ['X ' + axn('X','name') + ': ' + sign(u.x), 'Y ' + axn('Y','name') + ': ' + sign(u.y), 'Z ' + axn('Z','name') + ': ' + sign(u.z)];
         var extra = '';
         if(state.done || u.shared){
-          var nn = nearest(u).slice(0,3).map(function(r){ return r.a.n + ' ' + r.pct + '%'; }).join('; ');
+          var nn = nearest(u).slice(0,3).map(function(r){ return tA(r.a,'n') + ' ' + r.pct + '%'; }).join('; ');
           extra = ' ' + t('closestH') + ': ' + nn + '.';
         }
         ct.textContent = rows.join('. ') + '.' + extra;
