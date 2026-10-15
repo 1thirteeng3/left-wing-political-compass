@@ -1,9 +1,26 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Bússola da Esquerda</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bússola da Esquerda — Mapa das correntes da esquerda</title>
+<meta name="description" content="Responda 60 afirmações e descubra sua posição entre 134 correntes da esquerda em 3 eixos: estratégia, coordenação e economia.">
+<meta name="theme-color" content="#EDEFEC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1113" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://left-wing-political-compass.vercel.app/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232339C7'/%3E%3Cpath d='M16 5l9 16H7z' fill='none' stroke='white' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='19' r='3' fill='white'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bússola da Esquerda">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://left-wing-political-compass.vercel.app/">
+<meta property="og:title" content="Bússola da Esquerda — Mapa das correntes da esquerda">
+<meta property="og:description" content="60 afirmações, 134 correntes, 3 eixos + 2 lentes. Descubra sua posição no campo da esquerda e compartilhe.">
+<meta property="og:image" content="https://left-wing-political-compass.vercel.app/api/card">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bússola da Esquerda — Mapa das correntes da esquerda">
+<meta name="twitter:description" content="60 afirmações, 134 correntes, 3 eixos + 2 lentes. Descubra sua posição e compartilhe.">
+<meta name="twitter:image" content="https://left-wing-political-compass.vercel.app/api/card">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <style>
 /* Layout: quiz à esquerda e cubo 3D fixo à direita; projeções 2D e catálogo de correntes abaixo. */
 :root{
@@ -192,53 +209,60 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
 
 <div class="wrap">
   <header class="top">
-    <p class="kicker">Mapa de correntes da esquerda · 3 eixos + 2 lentes · 60 afirmações · 134 correntes</p>
-    <h1>Bússola da Esquerda</h1>
-    <p class="lead">Um mapa só do campo da esquerda. Em vez de dividir entre economia e costumes, ele mede como você quer chegar lá, como a sociedade se coordena e o que acontece com o mercado. Duas lentes, a cor e a forma do seu ponto, mostram o horizonte produtivo e o sujeito político.</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <p class="kicker" id="kicker" style="margin:0">Mapa de correntes da esquerda · 3 eixos + 2 lentes · 60 afirmações · 134 correntes</p>
+      <div role="group" aria-label="Idioma / Language / Idioma" style="display:flex;gap:6px">
+        <button class="btn small" data-lang="pt" type="button">PT</button>
+        <button class="btn small" data-lang="en" type="button">EN</button>
+        <button class="btn small" data-lang="es" type="button">ES</button>
+      </div>
+    </div>
+    <h1 id="siteTitle">Bússola da Esquerda</h1>
+    <p class="lead" id="lead">Um mapa só do campo da esquerda. Em vez de dividir entre economia e costumes, ele mede como você quer chegar lá, como a sociedade se coordena e o que acontece com o mercado. Duas lentes, a cor e a forma do seu ponto, mostram o horizonte produtivo e o sujeito político.</p>
     <div class="spec" role="list">
-      <div role="listitem"><span class="tag">Eixo X · Estratégia</span><b>Reforma ↔ Ruptura</b><span class="poles">Disputar o Estado por dentro ou superar o sistema.</span></div>
-      <div role="listitem"><span class="tag">Eixo Y · Coordenação</span><b>Centralismo ↔ Autogestão</b><span class="poles">Vanguarda e planejamento central ou conselhos e democracia direta.</span></div>
-      <div role="listitem"><span class="tag">Eixo Z · Economia</span><b>Mercado socializado ↔ Desmercantilização</b><span class="poles">Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.</span></div>
-      <div role="listitem"><span class="tag">Lente · Cor</span><b>Produtivista ↔ Pós-crescimento</b><span class="poles">Do vermelho-laranja ao verde.</span></div>
-      <div role="listitem"><span class="tag">Lente · Forma</span><b>Classista ↔ Interseccional</b><span class="poles">Do triângulo, somando lados, até o círculo.</span></div>
+      <div role="listitem"><span class="tag" id="spXt">Eixo X · Estratégia</span><b id="spXb">Reforma ↔ Ruptura</b><span class="poles" id="spXd">Disputar o Estado por dentro ou superar o sistema.</span></div>
+      <div role="listitem"><span class="tag" id="spYt">Eixo Y · Coordenação</span><b id="spYb">Centralismo ↔ Autogestão</b><span class="poles" id="spYd">Vanguarda e planejamento central ou conselhos e democracia direta.</span></div>
+      <div role="listitem"><span class="tag" id="spZt">Eixo Z · Economia</span><b id="spZb">Mercado socializado ↔ Desmercantilização</b><span class="poles" id="spZd">Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.</span></div>
+      <div role="listitem"><span class="tag" id="spCt">Lente · Cor</span><b id="spCb">Produtivista ↔ Pós-crescimento</b><span class="poles" id="spCd">Do vermelho-laranja ao verde.</span></div>
+      <div role="listitem"><span class="tag" id="spSt">Lente · Forma</span><b id="spSb">Classista ↔ Interseccional</b><span class="poles" id="spSd">Do triângulo, somando lados, até o círculo.</span></div>
     </div>
   </header>
 
   <main class="layout">
-    <section id="pane" aria-live="polite"></section>
+    <section id="pane" aria-label="Questionário"></section>
 
     <aside class="viz" aria-label="Cubo 3D">
       <div class="card vizcard">
         <div class="vizhead">
-          <h2 style="margin:0">O cubo</h2>
+          <h2 style="margin:0" id="cubeH">O cubo</h2>
           <span class="prov" id="prov"></span>
         </div>
         <div class="cubewrap"><canvas id="cube" role="img" aria-label="Cubo tridimensional com as correntes da esquerda e a sua posição"></canvas></div>
         <div class="ctrls">
-          <label for="tilt">Inclinação <input type="range" id="tilt" min="-80" max="80" value="22"></label>
-          <label for="showall"><input type="checkbox" id="showall"> Nomear todas as correntes</label>
-          <button class="btn small" id="reset" type="button">Resetar vista</button>
+          <label for="tilt"><span id="tiltL">Inclinação</span> <input type="range" id="tilt" min="-80" max="80" value="22"></label>
+          <label for="showall"><input type="checkbox" id="showall"> <span id="showAllL">Nomear todas as correntes</span></label>
+          <button class="btn small" id="reset" type="button" aria-pressed="false" title="Resetar rotação do cubo (atalho: tecla R quando o cubo tem foco)">Resetar vista</button>
         </div>
         <div class="legend">
-          <div class="lg"><div class="ml"><span>Cor · Produtivista</span><span>Pós-crescimento</span></div><div class="track lens" id="legTrack"></div></div>
-          <div class="lg"><div class="ml"><span>Forma · Classista</span><span>Interseccional</span></div><div class="ladder" id="legLadder"></div></div>
-          <div class="ml" style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.</span></div>
+          <div class="lg"><div class="ml"><span id="legC1a">Cor · Produtivista</span><span id="legC1b">Pós-crescimento</span></div><div class="track lens" id="legTrack"></div></div>
+          <div class="lg"><div class="ml"><span id="legF1a">Forma · Classista</span><span id="legF1b">Interseccional</span></div><div class="ladder" id="legLadder"></div></div>
+          <div class="ml" style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span id="dragH">Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.</span></div>
         </div>
       </div>
     </aside>
   </main>
 
   <section class="block">
-    <h2>Projeções 2D</h2>
-    <p>O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.</p>
+    <h2 id="projH">Projeções 2D</h2>
+    <p id="projP">O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.</p>
     <div class="projs" id="projs"></div>
   </section>
 
   <section class="block">
-    <h2>As correntes do mapa</h2>
-    <p>Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.</p>
+    <h2 id="catH">As correntes do mapa</h2>
+    <p id="catP">Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.</p>
     <div class="catbar">
-      <label class="sr-only" for="catq">Buscar movimento ou vertente</label>
+      <label class="sr-only" for="catq" id="catqL">Buscar movimento ou vertente</label>
       <input id="catq" type="search" placeholder="Buscar movimento ou vertente" autocomplete="off">
       <span class="muted mono" id="catn" style="font-size:12px"></span>
     </div>
@@ -246,8 +270,8 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
   </section>
 
   <footer class="note">
-    <p><b>Como o resultado é calculado.</b> Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.</p>
-    <p>É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.</p>
+    <p><b id="note1a">Como o resultado é calculado.</b><span id="note1b"> Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.</span></p>
+    <p id="note2">É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.</p>
   </footer>
 </div>
 
@@ -333,6 +357,108 @@ var RAW = {
   ]
 };
 
+/* Dicionário de interface. PT é o idioma de referência; ARCH (nomes/descrições) segue em PT com selo. */
+var I18N = {
+pt:{scale:['Discordo muito','Discordo','Neutro','Concordo','Concordo muito'],
+axis:{X:{name:'Estratégia',neg:'Reforma',pos:'Ruptura'},Y:{name:'Coordenação',neg:'Centralismo',pos:'Autogestão'},Z:{name:'Economia',neg:'Mercado socializado',pos:'Desmercantilização'}},
+oct:[{n:'Socialdemocracia estatista',t:'Reforma · Centralista · Economia mista'},{n:'Marxismo-leninismo de mercado',t:'Ruptura · Centralista · Economia mista'},{n:'Democracia econômica',t:'Reforma · Autogestão · Mercado socializado'},{n:'Mutualismo e autogestão de mercado',t:'Ruptura · Autogestão · Mercado socializado'},{n:'Planejamento democrático',t:'Reforma · Centralista · Desmercantilizada'},{n:'Marxismo-leninismo clássico',t:'Ruptura · Centralista · Desmercantilizada'},{n:'Erosão do capitalismo',t:'Reforma · Autogestão · Desmercantilizada'},{n:'Comunismo libertário',t:'Ruptura · Autogestão · Desmercantilizada'}],
+proj:['Estratégia × Coordenação','Estratégia × Economia','Coordenação × Economia'],
+words:{prod:'Produtivista',dev:'Desenvolvimentista',mid:'Intermediário',eco:'Ecossocialista',post:'Pós-crescimento',clas:'Classista',clasA:'Classista com abertura',plur:'Pluralista',inter:'Interseccional',eq:'equilibrado',leve:'leve',mod:'moderado',forte:'forte',extr:'extremo'},
+kicker:'Mapa de correntes da esquerda · 3 eixos + 2 lentes · 60 afirmações · 134 correntes',
+lead:'Um mapa só do campo da esquerda. Em vez de dividir entre economia e costumes, ele mede como você quer chegar lá, como a sociedade se coordena e o que acontece com o mercado. Duas lentes, a cor e a forma do seu ponto, mostram o horizonte produtivo e o sujeito político.',
+spX_t:'Eixo X · Estratégia',spX_b:'Reforma ↔ Ruptura',spX_d:'Disputar o Estado por dentro ou superar o sistema.',
+spY_t:'Eixo Y · Coordenação',spY_b:'Centralismo ↔ Autogestão',spY_d:'Vanguarda e planejamento central ou conselhos e democracia direta.',
+spZ_t:'Eixo Z · Economia',spZ_b:'Mercado socializado ↔ Desmercantilização',spZ_d:'Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.',
+spC_t:'Lente · Cor',spC_b:'Produtivista ↔ Pós-crescimento',spC_d:'Do vermelho-laranja ao verde.',
+spS_t:'Lente · Forma',spS_b:'Classista ↔ Interseccional',spS_d:'Do triângulo, somando lados, até o círculo.',
+cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',
+legC1a:'Cor · Produtivista',legC1b:'Pós-crescimento',legF1a:'Forma · Classista',legF1b:'Interseccional',
+dragH:'Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.',
+projH:'Projeções 2D',projP:'O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.',
+catH:'As correntes do mapa',catP:'Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.',
+searchPh:'Buscar movimento ou vertente',
+note1a:'Como o resultado é calculado.',note1b:' Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.',
+note2:'É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.',
+startK:'Começar',startH:'Escolha o tamanho do teste',fullH:'Completo · 60 afirmações',fullD:'O mapa completo, ~8 minutos. Resultado mais estável.',fullB:'Fazer completo',fastH:'Expresso · 15 afirmações',fastD:'Só o essencial, ~2 minutos. Mesmos eixos e correntes.',fastB:'Fazer expresso',shuffleL:'Embaralhar a ordem das afirmações',
+disL:'← Discordo',agreeR:'Concordo →',afferm:'Afirmação',of1:'de',backB:'Voltar',nextB:'Próxima página',seeResB:'Ver resultado',pageW:'Página',answeredW:'respondidas',missingW:'Faltam',inPageW:'nesta página',pageDoneW:'Página completa',gotoPage:'Ir para a página',
+modeFastL:'Modo expresso · 15 afirmações',modeFullL:'Modo completo · 60 afirmações',changeModeB:'Trocar de modo',confirmMode:'Trocar de modo apaga as respostas atuais. Continuar?',
+yourRes:'Seu resultado',sharedMsg:'Você está vendo um resultado compartilhado.',takeTest:'Fazer meu teste',closestH:'Correntes mais próximas',seeAllW:'Ver a afinidade com as',withArch:'correntes',
+copySumB:'Copiar resumo',copyLinkB:'Copiar link',dlImgB:'Baixar imagem',reviewB:'Revisar respostas',redoB:'Refazer do zero',
+copiedSum:'Resumo copiado.',copiedLink:'Link copiado. Compartilhe para comparar resultados.',copyFailAddr:'Não foi possível copiar. Copie da barra de endereços: ',copyFailSum:'Não foi possível copiar automaticamente. O resumo está no texto abaixo.',
+imgDone:'Imagem baixada. Compartilhe nas suas redes.',imgFail:'Não foi possível gerar a imagem neste navegador.',
+noResult:'Nenhum movimento encontrado para essa busca.',prov6:'Responda 6 afirmações para ver seu ponto',provP:'Posição provisória',provF:'Resultado final',
+sumName:'Bússola da Esquerda',sumOct:'Octante',sumNear:'Correntes mais próximas',
+trBadge:'Nomes e descrições em português — tradução em progresso.',siteName:'Bússola da Esquerda',youW:'Você',youProv:'Você (provisório)'},
+en:{scale:['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'],
+axis:{X:{name:'Strategy',neg:'Reform',pos:'Rupture'},Y:{name:'Coordination',neg:'Centralism',pos:'Self-management'},Z:{name:'Economy',neg:'Socialized market',pos:'Decommodification'}},
+oct:[{n:'Statist social democracy',t:'Reform · Centralist · Mixed economy'},{n:'Market Marxism-Leninism',t:'Rupture · Centralist · Mixed economy'},{n:'Economic democracy',t:'Reform · Self-managed · Socialized market'},{n:'Mutualism and market self-management',t:'Rupture · Self-managed · Socialized market'},{n:'Democratic planning',t:'Reform · Centralist · Decommodified'},{n:'Classical Marxism-Leninism',t:'Rupture · Centralist · Decommodified'},{n:'Erosion of capitalism',t:'Reform · Self-managed · Decommodified'},{n:'Libertarian communism',t:'Rupture · Self-managed · Decommodified'}],
+proj:['Strategy × Coordination','Strategy × Economy','Coordination × Economy'],
+words:{prod:'Productivist',dev:'Developmentalist',mid:'Middle',eco:'Ecosocialist',post:'Post-growth',clas:'Classist',clasA:'Classist with openness',plur:'Pluralist',inter:'Intersectional',eq:'balanced',leve:'mild',mod:'moderate',forte:'strong',extr:'extreme'},
+kicker:'Map of left currents · 3 axes + 2 lenses · 60 statements · 134 currents',
+lead:'A map of the left field only. Instead of splitting economy and customs, it measures how you want to get there, how society coordinates, and what happens to the market. Two lenses — your dot’s color and shape — show the productive horizon and the political subject.',
+spX_t:'X axis · Strategy',spX_b:'Reform ↔ Rupture',spX_d:'Contesting the state from within or overcoming the system.',
+spY_t:'Y axis · Coordination',spY_b:'Centralism ↔ Self-management',spY_d:'Vanguard and central planning or councils and direct democracy.',
+spZ_t:'Z axis · Economy',spZ_b:'Socialized market ↔ Decommodification',spZ_d:'Competing cooperatives or the end of commodity, money and wages.',
+spC_t:'Lens · Color',spC_b:'Productivist ↔ Post-growth',spC_d:'From red-orange to green.',
+spS_t:'Lens · Shape',spS_b:'Classist ↔ Intersectional',spS_d:'From the triangle, adding sides, to the circle.',
+cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',
+legC1a:'Color · Productivist',legC1b:'Post-growth',legF1a:'Shape · Classist',legF1b:'Intersectional',
+dragH:'Drag the cube to rotate. Hover a gray dot to see the current.',
+projH:'2D projections',projP:'The cube impresses but measures poorly. These three flat views show the same points with no perspective. Hover a gray dot to see the name.',
+catH:'The currents on the map',catP:'Movements and strands placed on three axes and grouped into eight octants. Coordinates are interpretive: they vary by author and period, and several entries gather neighboring traditions under one point. The icon next to each name shows the current’s position on the two lenses: color runs productivist to post-growth, shape runs classist to intersectional.',
+searchPh:'Search a movement or strand',
+note1a:'How the result is computed.',note1b:' Each statement weighs on a single axis, on a five-point scale. Each axis scores −100 to +100. The closest currents are those with the smallest Euclidean distance in the three-axis space, and affinity falls with distance. The lenses are not part of the distance.',
+note2:'It is an instrument for reflection, not a diagnosis. Positions that look close on the map may diverge in history, method and practice.',
+startK:'Start',startH:'Choose the test size',fullH:'Full · 60 statements',fullD:'The complete map, ~8 minutes. More stable result.',fullB:'Take the full test',fastH:'Express · 15 statements',fastD:'Just the essentials, ~2 minutes. Same axes and currents.',fastB:'Take the express test',shuffleL:'Shuffle the statement order',
+disL:'← Disagree',agreeR:'Agree →',afferm:'Statement',of1:'of',backB:'Back',nextB:'Next page',seeResB:'See result',pageW:'Page',answeredW:'answered',missingW:'Missing',inPageW:'on this page',pageDoneW:'Page complete',gotoPage:'Go to page',
+modeFastL:'Express mode · 15 statements',modeFullL:'Full mode · 60 statements',changeModeB:'Switch mode',confirmMode:'Switching modes erases current answers. Continue?',
+yourRes:'Your result',sharedMsg:'You are viewing a shared result.',takeTest:'Take my test',closestH:'Closest currents',seeAllW:'See affinity with all',withArch:'currents',
+copySumB:'Copy summary',copyLinkB:'Copy link',dlImgB:'Download image',reviewB:'Review answers',redoB:'Start over',
+copiedSum:'Summary copied.',copiedLink:'Link copied. Share it to compare results.',copyFailAddr:'Could not copy. Copy from the address bar: ',copyFailSum:'Could not copy automatically. The summary is in the text below.',
+imgDone:'Image downloaded. Share it on your networks.',imgFail:'Could not generate the image in this browser.',
+noResult:'No movement found for this search.',prov6:'Answer 6 statements to see your dot',provP:'Provisional position',provF:'Final result',
+sumName:'Left-Wing Compass',sumOct:'Octant',sumNear:'Closest currents',
+trBadge:'Names and descriptions in Portuguese — translation in progress.',siteName:'Left-Wing Compass',youW:'You',youProv:'You (provisional)'},
+es:{scale:['Muy en desacuerdo','En desacuerdo','Neutral','De acuerdo','Muy de acuerdo'],
+axis:{X:{name:'Estrategia',neg:'Reforma',pos:'Ruptura'},Y:{name:'Coordinación',neg:'Centralismo',pos:'Autogestión'},Z:{name:'Economía',neg:'Mercado socializado',pos:'Desmercantilización'}},
+oct:[{n:'Socialdemocracia estatista',t:'Reforma · Centralista · Economía mixta'},{n:'Marxismo-leninismo de mercado',t:'Ruptura · Centralista · Economía mixta'},{n:'Democracia económica',t:'Reforma · Autogestión · Mercado socializado'},{n:'Mutualismo y autogestión de mercado',t:'Ruptura · Autogestión · Mercado socializado'},{n:'Planificación democrática',t:'Reforma · Centralista · Desmercantilizada'},{n:'Marxismo-leninismo clásico',t:'Ruptura · Centralista · Desmercantilizada'},{n:'Erosión del capitalismo',t:'Reforma · Autogestión · Desmercantilizada'},{n:'Comunismo libertario',t:'Ruptura · Autogestión · Desmercantilizada'}],
+proj:['Estrategia × Coordinación','Estrategia × Economía','Coordinación × Economía'],
+words:{prod:'Productivista',dev:'Desarrollista',mid:'Intermedio',eco:'Ecosocialista',post:'Postcrecimiento',clas:'Clasista',clasA:'Clasista con apertura',plur:'Pluralista',inter:'Interseccional',eq:'equilibrado',leve:'leve',mod:'moderado',forte:'fuerte',extr:'extremo'},
+kicker:'Mapa de corrientes de la izquierda · 3 ejes + 2 lentes · 60 afirmaciones · 134 corrientes',
+lead:'Un mapa solo del campo de la izquierda. En vez de dividir entre economía y costumbres, mide cómo quieres llegar, cómo se coordina la sociedad y qué pasa con el mercado. Dos lentes, el color y la forma de tu punto, muestran el horizonte productivo y el sujeto político.',
+spX_t:'Eje X · Estrategia',spX_b:'Reforma ↔ Ruptura',spX_d:'Disputar el Estado desde dentro o superar el sistema.',
+spY_t:'Eje Y · Coordinación',spY_b:'Centralismo ↔ Autogestión',spY_d:'Vanguardia y planificación central o consejos y democracia directa.',
+spZ_t:'Eje Z · Economía',spZ_b:'Mercado socializado ↔ Desmercantilización',spZ_d:'Cooperativas compitiendo o fin de la mercancía, del dinero y del salario.',
+spC_t:'Lente · Color',spC_b:'Productivista ↔ Postcrecimiento',spC_d:'Del rojo-naranja al verde.',
+spS_t:'Lente · Forma',spS_b:'Clasista ↔ Interseccional',spS_d:'Del triángulo, sumando lados, hasta el círculo.',
+cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',
+legC1a:'Color · Productivista',legC1b:'Postcrecimiento',legF1a:'Forma · Clasista',legF1b:'Interseccional',
+dragH:'Arrastra el cubo para girar. Pasa el cursor sobre un punto gris para ver la corriente.',
+projH:'Proyecciones 2D',projP:'El cubo impresiona pero mide mal. Estas tres vistas planas muestran los mismos puntos sin perspectiva. Pasa el cursor sobre un punto gris para ver el nombre.',
+catH:'Las corrientes del mapa',catP:'Movimientos y vertientes ubicados en tres ejes y agrupados en ocho octantes. Las coordenadas son interpretativas: varían según autor y período, y varias entradas reúnen tradiciones vecinas bajo un mismo punto. El icono junto a cada nombre muestra la posición de la corriente en las dos lentes: el color va de productivista a postcrecimiento y la forma, de clasista a interseccional.',
+searchPh:'Buscar movimiento o vertiente',
+note1a:'Cómo se calcula el resultado.',note1b:' Cada afirmación pesa en un único eje, en escala de cinco puntos. Cada eje puntúa de −100 a +100. Las corrientes más cercanas son las de menor distancia euclidiana en el espacio de tres ejes, y la afinidad cae con la distancia. Las lentes no entran en la distancia.',
+note2:'Es un instrumento de reflexión, no un diagnóstico. Posiciones cercanas en el mapa pueden divergir en historia, método y práctica.',
+startK:'Comenzar',startH:'Elige el tamaño del test',fullH:'Completo · 60 afirmaciones',fullD:'El mapa completo, ~8 minutos. Resultado más estable.',fullB:'Hacer completo',fastH:'Exprés · 15 afirmaciones',fastD:'Solo lo esencial, ~2 minutos. Mismos ejes y corrientes.',fastB:'Hacer exprés',shuffleL:'Mezclar el orden de las afirmaciones',
+disL:'← En desacuerdo',agreeR:'De acuerdo →',afferm:'Afirmación',of1:'de',backB:'Atrás',nextB:'Página siguiente',seeResB:'Ver resultado',pageW:'Página',answeredW:'respondidas',missingW:'Faltan',inPageW:'en esta página',pageDoneW:'Página completa',gotoPage:'Ir a la página',
+modeFastL:'Modo exprés · 15 afirmaciones',modeFullL:'Modo completo · 60 afirmaciones',changeModeB:'Cambiar de modo',confirmMode:'Cambiar de modo borra las respuestas actuales. ¿Continuar?',
+yourRes:'Tu resultado',sharedMsg:'Estás viendo un resultado compartido.',takeTest:'Hacer mi test',closestH:'Corrientes más cercanas',seeAllW:'Ver la afinidad con las',withArch:'corrientes',
+copySumB:'Copiar resumen',copyLinkB:'Copiar enlace',dlImgB:'Descargar imagen',reviewB:'Revisar respuestas',redoB:'Empezar de cero',
+copiedSum:'Resumen copiado.',copiedLink:'Enlace copiado. Compártelo para comparar resultados.',copyFailAddr:'No se pudo copiar. Copia desde la barra de direcciones: ',copyFailSum:'No se pudo copiar automáticamente. El resumen está en el texto siguiente.',
+imgDone:'Imagen descargada. Compártela en tus redes.',imgFail:'No se pudo generar la imagen en este navegador.',
+noResult:'Ningún movimiento encontrado para esta búsqueda.',prov6:'Responde 6 afirmaciones para ver tu punto',provP:'Posición provisional',provF:'Resultado final',
+sumName:'Brújula de la Izquierda',sumOct:'Octante',sumNear:'Corrientes más cercanas',
+trBadge:'Nombres y descripciones en portugués — traducción en progreso.',siteName:'Brújula de la Izquierda',youW:'Tú',youProv:'Tú (provisional)'}
+};
+function LANG(){ return window.__LANG || 'pt'; }
+function t(k){ var L = LANG(); return (I18N[L] && I18N[L][k] !== undefined) ? I18N[L][k] : I18N.pt[k]; }
+function lab(i){ var L = LANG(); return (I18N[L] && I18N[L].scale[i] !== undefined) ? I18N[L].scale[i] : I18N.pt.scale[i]; }
+function axn(k, side){ var L = LANG(); var A = (I18N[L] && I18N[L].axis) ? I18N[L].axis : I18N.pt.axis; return A[k][side]; }
+function octL(i){ var L = LANG(); var O = (I18N[L] && I18N[L].oct) ? I18N[L].oct : I18N.pt.oct; return O[i]; }
+function projL(i){ var L = LANG(); return (I18N[L] && I18N[L].proj[i] !== undefined) ? I18N[L].proj[i] : I18N.pt.proj[i]; }
+function W(k){ var L = LANG(); return (I18N[L] && I18N[L].words[k] !== undefined) ? I18N[L].words[k] : I18N.pt.words[k]; }
+function qText(q){ var L = LANG(); if(L !== 'pt' && TR[L] && TR[L][q.g] && TR[L][q.g][q.gi] !== undefined) return TR[L][q.g][q.gi]; return q.t; }
+
 /* Ordem intercalada: X, Y, Z, C, S, X, Y, Z... para que o eixo de cada pergunta não seja óbvio. */
 var QUESTIONS = (function(){
   var order = ['X','Y','Z','C','S'], idx = {X:0,Y:0,Z:0,C:0,S:0}, out = [], n = 0, added = true;
@@ -341,9 +467,10 @@ var QUESTIONS = (function(){
     for(var k=0;k<order.length;k++){
       var g = order[k];
       if(idx[g] < RAW[g].length){
-        var it = RAW[g][idx[g]++];
+        var it = RAW[g][idx[g]];
+        var gi = idx[g]++;
         n++;
-        out.push({id:'q'+n, g:g, t:it[0], dir:it[1]});
+        out.push({id:'q'+n, g:g, gi:gi, t:it[0], dir:it[1]});
         added = true;
       }
     }
@@ -521,6 +648,140 @@ var OCT = [
 
 function octIndex(p){ return (p.x>=0?1:0) + (p.y>=0?2:0) + (p.z>=0?4:0); }
 
+/* Traduções das 60 afirmações (mesma ordem do RAW por grupo). PT é o original em RAW. */
+var TR = {
+en:{X:[
+'The capitalist state cannot be reformed from within. In the end, transformation requires a rupture.',
+'Elections, strong unions and gradual public policies are the most realistic path to socialism.',
+'A general strike with workplace occupations transforms more than any electoral victory.',
+'Expanding labor rights and regulating capital already shifts the balance of power in a lasting way.',
+'Every gain within the current order tends to be rolled back when capital feels threatened.',
+'Social pacts between workers, companies and government are legitimate instruments of the left.',
+'A period of dual power, with parallel workers’ institutions, is necessary before any deep change.',
+'Even if imperfect, representative democracy must be defended and deepened, not overcome.',
+'Expropriating large companies without compensation must be on the agenda of any serious project.',
+'Left governments should prioritize institutional stability, even if it delays change.',
+'History’s greatest social changes were won by revolutions, not reforms.',
+'Deep social transformation is possible without a revolutionary crisis, through accumulated reforms.',
+'Taking part in parliament serves, at most, to denounce the system and build forces for the break.',
+'Rejecting the institutional path abandons millions of people who live under current rules.'],
+Y:[
+'A company’s central decisions should be made in assembly by those who work there.',
+'An organized vanguard party is indispensable to lead the struggle.',
+'Grassroots councils, with recallable delegates, should replace state bureaucracy.',
+'A complex economy needs a centralized planning core to coordinate production.',
+'Every permanent hierarchy, even well-intentioned, tends to become a new ruling class.',
+'In war or under external threat, unified command and discipline matter more than participation.',
+'Communities should directly decide what to produce and how, without ministries deciding from above.',
+'Technicians and experts should carry decisive weight in planning, because most people lack expertise.',
+'A federation of autonomous communes is better than a strong nation-state.',
+'A strong state is necessary to stop capital and reaction from retaking power.',
+'Leadership posts should be allotted or rotated and recallable at any time.',
+'Party discipline and democratic centralism are necessary to win.',
+'Ideally, the state should gradually dissolve into society’s own organizations.',
+'Ministries and planning algorithms can coordinate the economy better than assemblies.'],
+Z:[
+'In the long run, money and wages must disappear.',
+'Regulated markets, with cooperatives competing against each other, are compatible with socialism.',
+'All basic goods should be provided free of charge, without price.',
+'Market prices carry useful information that no planning fully replaces.',
+'Wage labor must be abolished, not merely humanized.',
+'A mixed economy, with a strong public sector and regulated private sector, would already be a good endpoint.',
+'Commodity, profit and competition are forms to overcome, not merely to tame.',
+'Small businesses and cooperatives selling on the market have a permanent place in a socialist society.',
+'Each person should give according to ability and receive according to need, with no individual accounting of labor.',
+'Some differentiated pay for effort or contribution is needed to sustain productivity.',
+'No firm, not even a cooperative, should sell on the market: production must be planned for use.',
+'Worker-owned firms should be able to compete and grow in the market.',
+'Exchange for monetary equivalents is itself a form of domination that must be extinguished.',
+'Attempts to abolish the market all at once have historically led to scarcity and authoritarianism.'],
+C:[
+'Only by accelerating productive forces and technology can scarcity be overcome.',
+'Endless economic growth is incompatible with planetary limits. We must degrow.',
+'Large state works, abundant energy and heavy industrialization are central to the socialist project.',
+'Indigenous Buen Vivir and agroecology point to a better path than industrialization.',
+'Total automation and artificial intelligence should be accelerated to free people from work.',
+'Rich countries should reduce their material consumption and production in a planned way.',
+'A country’s industrial and energy sovereignty is a condition for social justice.',
+'Climate justice requires limiting mining and extraction, even at the cost of jobs in the short term.',
+'A materially smaller economy, with more free time, care and culture, should be the priority even with lower GDP.'],
+S:[
+'The contradiction between capital and labor is the central one. Other oppressions derive from it.',
+'Race, gender and sexuality are forms of oppression as structural as class.',
+'Identity politics fragments the working class and benefits capital.',
+'Anti-racist and anti-colonial struggle must carry the same weight as union struggle in left strategy.',
+'Wages, jobs and national sovereignty should anchor the program, ahead of cultural issues.',
+'Changing culture, language and everyday relations is part of political struggle, not a distraction.',
+'Workers’ unions and parties are the main political subject. Other movements are allies.',
+'There is no liberation of the working class without the liberation of women, Black people and LGBTQIA+ people in the same process.',
+'The left must give their own voice to groups historically left out of class organizations.']},
+es:{X:[
+'El Estado capitalista no puede reformarse desde dentro. Al final, la transformación exige una ruptura.',
+'Elecciones, sindicatos fuertes y políticas públicas graduales son el camino más realista hacia el socialismo.',
+'Una huelga general con ocupación de los lugares de trabajo transforma más que cualquier victoria electoral.',
+'Ampliar derechos laborales y regular el capital ya cambia la correlación de fuerzas de modo duradero.',
+'Toda conquista dentro del orden vigente tiende a revertirse cuando el capital se siente amenazado.',
+'Los pactos sociales entre trabajadores, empresas y gobierno son instrumentos legítimos de la izquierda.',
+'Un período de poder dual, con instituciones paralelas de los trabajadores, es necesario antes de cualquier cambio profundo.',
+'Aun imperfecta, la democracia representativa debe defenderse y profundizarse, no superarse.',
+'La expropiación de grandes empresas sin indemnización debe estar en la agenda de cualquier proyecto serio.',
+'Los gobiernos de izquierda deben priorizar la estabilidad institucional, aunque eso retrase los cambios.',
+'Los mayores cambios sociales de la historia se conquistaron con revoluciones, no con reformas.',
+'Una transformación social profunda es posible sin crisis revolucionaria, mediante la acumulación de reformas.',
+'Participar en el parlamento sirve, como máximo, para denunciar el sistema y acumular fuerzas para la ruptura.',
+'Quien rechaza la vía institucional abandona a millones de personas que viven bajo las reglas actuales.'],
+Y:[
+'Las decisiones centrales de una empresa deben tomarse en asamblea por quienes trabajan en ella.',
+'Un partido de vanguardia organizado es indispensable para conducir la lucha.',
+'Los consejos de base, con delegados revocables, deben sustituir a la burocracia estatal.',
+'Una economía compleja necesita un núcleo de planificación centralizada que coordine la producción.',
+'Toda jerarquía permanente, aun bienintencionada, tiende a convertirse en una nueva clase dominante.',
+'En guerra o bajo amenaza externa, el mando unificado y la disciplina valen más que la participación.',
+'Las comunidades deben decidir directamente qué producir y cómo, sin ministerios decidiendo desde arriba.',
+'Técnicos y especialistas deben tener peso decisivo en la planificación, porque la mayoría no domina estos temas.',
+'Una federación de comunas autónomas es mejor que un Estado nacional fuerte.',
+'Un Estado fuerte es necesario para impedir que el capital y la reacción retomen el poder.',
+'Los cargos de dirección deben sortearse o rotarse y ser revocables en cualquier momento.',
+'La disciplina partidaria y el centralismo democrático son necesarios para vencer.',
+'Lo ideal es que el Estado se disuelva poco a poco en las organizaciones de la propia sociedad.',
+'Ministerios y algoritmos de planificación pueden coordinar la economía mejor que las asambleas.'],
+Z:[
+'A largo plazo, el dinero y el salario deben desaparecer.',
+'Mercados regulados, con cooperativas compitiendo entre sí, son compatibles con el socialismo.',
+'Todos los bienes básicos deben proveerse gratis, sin precio.',
+'Los precios de mercado aportan información útil que ninguna planificación sustituye por completo.',
+'El trabajo asalariado debe abolirse, no solo humanizarse.',
+'Una economía mixta, con sector público fuerte y sector privado regulado, ya sería un buen punto de llegada.',
+'Mercancía, lucro y competencia son formas a superar, no solo a domesticar.',
+'Pequeños negocios y cooperativas que venden en el mercado tienen un lugar permanente en una sociedad socialista.',
+'Cada persona debe dar según su capacidad y recibir según su necesidad, sin contabilidad individual del trabajo.',
+'Alguna remuneración diferenciada por esfuerzo o aporte es necesaria para sostener la productividad.',
+'Ninguna empresa, ni siquiera cooperativa, debería vender en el mercado: la producción debe planificarse para el uso.',
+'Las empresas de los propios trabajadores deben poder competir y crecer en el mercado.',
+'El intercambio por equivalentes monetarios es, en sí, una forma de dominación que debe extinguirse.',
+'Intentar abolir el mercado de una sola vez llevó, históricamente, a la escasez y al autoritarismo.'],
+C:[
+'Solo acelerando las fuerzas productivas y la tecnología será posible superar la escasez.',
+'El crecimiento económico sin fin es incompatible con los límites del planeta. Hay que decrecer.',
+'Grandes obras estatales, energía abundante e industrialización pesada son parte central del proyecto socialista.',
+'El Buen Vivir indígena y la agroecología señalan un camino mejor que la industrialización.',
+'La automatización total y la inteligencia artificial deben acelerarse para librar a las personas del trabajo.',
+'Los países ricos deben reducir de forma planificada su consumo y su producción material.',
+'La soberanía industrial y energética de un país es condición para la justicia social.',
+'La justicia climática exige limitar la minería y la extracción, aunque cueste empleos a corto plazo.',
+'Una economía material menor, con más tiempo libre, cuidado y cultura, debe ser prioridad aun con menor PIB.'],
+S:[
+'La contradicción entre capital y trabajo es la central. Las demás opresiones derivan de ella.',
+'Raza, género y sexualidad son formas de opresión tan estructurales como la clase.',
+'La política identitaria fragmenta a la clase trabajadora y favorece al capital.',
+'La lucha antirracista y anticolonial debe tener el mismo peso que la lucha sindical en la estrategia de la izquierda.',
+'Salario, empleo y soberanía nacional deben ocupar el centro del programa, antes que las agendas culturales.',
+'Cambiar la cultura, el lenguaje y las relaciones cotidianas es parte de la lucha política, no una distracción.',
+'Sindicatos y partidos de trabajadores son el sujeto político principal. Los demás movimientos son aliados.',
+'No hay liberación de la clase trabajadora sin la liberación de las mujeres, la población negra y LGBTQIA+ en el mismo proceso.',
+'La izquierda debe dar voz propia a grupos históricamente excluidos de las organizaciones de clase.']}
+};
+
 function score(answers){
   var acc = {X:[0,0],Y:[0,0],Z:[0,0],C:[0,0],S:[0,0]};
   for(var i=0;i<QUESTIONS.length;i++){
@@ -568,24 +829,96 @@ function lensColor(c, dark){
   return 'hsl('+hueAt(c).toFixed(0)+',80%,'+(dark?60:46)+'%)';
 }
 
-function degree(v){ var a=Math.abs(v); return a<15?'equilibrado':a<40?'leve':a<70?'moderado':a<90?'forte':'extremo'; }
+function degree(v){ var a=Math.abs(v); return a<15?W('eq'):a<40?W('leve'):a<70?W('mod'):a<90?W('forte'):W('extr'); }
 function axisText(k, v){
-  if(Math.abs(v) < 15) return 'Equilibrado entre '+AXIS[k].neg+' e '+AXIS[k].pos;
-  return (v<0?AXIS[k].neg:AXIS[k].pos)+' ('+degree(v)+')';
+  if(Math.abs(v) < 15) return balancedText(k);
+  return (v<0?axn(k,'neg'):axn(k,'pos'))+' ('+degree(v)+')';
 }
+function balancedText(k){ var L = LANG(); if(L==='en') return 'Balanced between '+axn(k,'neg')+' and '+axn(k,'pos'); if(L==='es') return 'Equilibrado entre '+axn(k,'neg')+' y '+axn(k,'pos'); return 'Equilibrado entre '+axn(k,'neg')+' e '+axn(k,'pos'); }
 function colorText(c){
-  return c<20?'Produtivista':c<40?'Desenvolvimentista':c<60?'Intermediário':c<80?'Ecossocialista':'Pós-crescimento';
+  return c<20?W('prod'):c<40?W('dev'):c<60?W('mid'):c<80?W('eco'):W('post');
 }
 function shapeText(s){
-  return s<20?'Classista':s<40?'Classista com abertura':s<60?'Intermediário':s<80?'Pluralista':'Interseccional';
+  return s<20?W('clas'):s<40?W('clasA'):s<60?W('mid'):s<80?W('plur'):W('inter');
 }
 /*CORE-END*/
 
 (function(){
-  var KEY = 'bussola-esquerda-v1';
-  var PAGE = 10, PAGES = Math.ceil(QUESTIONS.length/PAGE);
+  var KEY = 'bussola-esquerda-v2', OLDKEY = 'bussola-esquerda-v1';
+  var PAGE_FULL = 10, PAGE_FAST = 5;
   var LABELS = ['Discordo muito','Discordo','Neutro','Concordo','Concordo muito'];
-  var state = {page:0, answers:{}, done:false};
+  /* Modo expresso: 3 primeiras afirmações de cada grupo (15 no total) */
+  var FASTSET = (function(){
+    var want = {X:3,Y:3,Z:3,C:3,S:3}, seen = {X:0,Y:0,Z:0,C:0,S:0}, set = {};
+    for(var i=0;i<QUESTIONS.length;i++){
+      var g = QUESTIONS[i].g;
+      if(seen[g] < want[g]){ set[QUESTIONS[i].id] = true; seen[g]++; }
+    }
+    return set;
+  })();
+  function mulberry(seed){ return function(){ seed|=0; seed = seed+0x6D2B79F5|0; var t = Math.imul(seed^seed>>>15, 1|seed); t = t+Math.imul(t^t>>>7, 61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  var state = {page:0, answers:{}, done:false, mode:'full', picked:false, shuffle:false, seed:1};
+  function QS(){
+    var qs = state.mode === 'fast' ? QUESTIONS.filter(function(q){ return FASTSET[q.id]; }) : QUESTIONS.slice();
+    if(state.shuffle){
+      var rnd = mulberry(state.seed), arr = qs.slice(), i, j, t;
+      for(i=arr.length-1;i>0;i--){ j = Math.floor(rnd()*(i+1)); t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+      return arr;
+    }
+    return qs;
+  }
+  function pageSize(){ return state.mode === 'fast' ? PAGE_FAST : PAGE_FULL; }
+  function pageCount(){ return Math.max(1, Math.ceil(QS().length / pageSize())); }
+  var SHARED = null; /* resultado vindo da URL (?v=1&x&y&z&c&s&m&lang) — modo somente-leitura */
+  function clampInt(v,a,b){ v = parseInt(v,10); if(isNaN(v)) return null; return Math.max(a, Math.min(b, v)); }
+  function parseResultURL(){
+    try{
+      var q = new URLSearchParams(window.location.search);
+      if(q.get('v') !== '1') return null;
+      var x = clampInt(q.get('x'),-100,100), y = clampInt(q.get('y'),-100,100), z = clampInt(q.get('z'),-100,100);
+      var c = clampInt(q.get('c'),0,100), s = clampInt(q.get('s'),0,100);
+      if(x===null||y===null||z===null||c===null||s===null) return null;
+      var m = q.get('m'); if(m!=='fast'&&m!=='full') m = 'full';
+      var lang = (q.get('lang')||'pt').toLowerCase(); if(['pt','en','es'].indexOf(lang)<0) lang = 'pt';
+      return {x:x,y:y,z:z,c:c,s:s,m:m,lang:lang,prov:false,shared:true};
+    }catch(e){ return null; }
+  }
+  function resultURL(p){
+    try{
+      var u = new URL(window.location.href);
+      u.searchParams.set('v','1');
+      u.searchParams.set('x',p.x); u.searchParams.set('y',p.y); u.searchParams.set('z',p.z);
+      u.searchParams.set('c',p.c); u.searchParams.set('s',p.s);
+      u.searchParams.set('m', state.mode || p.m || 'full');
+      u.searchParams.set('lang', window.__LANG || p.lang || 'pt');
+      return u.toString();
+    }catch(e){ return window.location.href; }
+  }
+  function cardURL(p){
+    try{
+      var u = new URL('/api/card', window.location.origin);
+      u.searchParams.set('v','1');
+      u.searchParams.set('x',p.x); u.searchParams.set('y',p.y); u.searchParams.set('z',p.z);
+      u.searchParams.set('c',p.c); u.searchParams.set('s',p.s);
+      u.searchParams.set('lang', window.__LANG || p.lang || 'pt');
+      return u.toString();
+    }catch(e){ return '/api/card'; }
+  }
+  function syncURL(p){
+    try{
+      history.replaceState(null,'',resultURL(p));
+      var og = document.querySelector('meta[property="og:image"]'), tw = document.querySelector('meta[name="twitter:image"]');
+      if(og) og.setAttribute('content', cardURL(p));
+      if(tw) tw.setAttribute('content', cardURL(p));
+    }catch(e){}
+  }
+  function clearURLParams(){
+    try{
+      var u = new URL(window.location.href);
+      ['v','x','y','z','c','s'].forEach(function(k){ u.searchParams.delete(k); });
+      history.replaceState(null,'',u.toString());
+    }catch(e){}
+  }
   var root = document.documentElement;
   var pane = document.getElementById('pane');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -593,20 +926,28 @@ function shapeText(s){
   function load(){
     try{
       var s = JSON.parse(localStorage.getItem(KEY));
+      if(!s) s = JSON.parse(localStorage.getItem(OLDKEY)); /* migração v1 → v2 */
       if(s && s.answers && typeof s.answers === 'object'){
         state.answers = s.answers;
-        state.page = Math.min(Math.max(parseInt(s.page,10)||0,0),PAGES-1);
-        state.done = !!s.done && answeredCount() === QUESTIONS.length;
+        state.mode = s.mode === 'fast' ? 'fast' : 'full';
+        state.picked = !!s.picked || !!s.done || answeredCount() > 0;
+        state.shuffle = !!s.shuffle;
+        state.seed = parseInt(s.seed,10) || 1;
+        state.page = Math.min(Math.max(parseInt(s.page,10)||0,0),pageCount()-1);
+        state.done = !!s.done && answeredCount() === QS().length;
+      } else {
+        state.picked = false;
       }
     }catch(e){}
   }
   function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
   function answeredCount(){
-    var n=0; for(var i=0;i<QUESTIONS.length;i++){ if(typeof state.answers[QUESTIONS[i].id]==='number') n++; } return n;
+    var qs = QS(), n=0; for(var i=0;i<qs.length;i++){ if(typeof state.answers[qs[i].id]==='number') n++; } return n;
   }
   function isDark(){ return String(getComputedStyle(root).getPropertyValue('--is-dark')).trim()==='1'; }
   function cssv(n){ return String(getComputedStyle(root).getPropertyValue(n)).trim(); }
   function user(){
+    if(SHARED && answeredCount() === 0) return SHARED;
     if(answeredCount() < 6) return null;
     var p = score(state.answers); p.prov = !state.done; return p;
   }
@@ -634,25 +975,52 @@ function shapeText(s){
     root.style.setProperty('--lens-grad','linear-gradient(90deg,'+stops.join(',')+')');
   }
 
+  /* ---------- Escolha do modo ---------- */
+  function renderModePick(){
+    var h = '<div class="card"><p class="kicker">'+t('startK')+'</p><h2 style="margin-bottom:10px">'+t('startH')+'</h2>'
+      + '<div class="two">'
+      + '<div><h3>'+t('fullH')+'</h3><p class="muted" style="font-size:13.5px">'+t('fullD')+'</p><button class="btn primary" id="modeFull" type="button">'+t('fullB')+'</button></div>'
+      + '<div><h3>'+t('fastH')+'</h3><p class="muted" style="font-size:13.5px">'+t('fastD')+'</p><button class="btn primary" id="modeFast" type="button">'+t('fastB')+'</button></div>'
+      + '</div>'
+      + '<p style="margin:14px 0 0"><label class="muted" style="font-size:13.5px;display:flex;gap:8px;align-items:center"><input type="checkbox" id="modeShuffle" style="accent-color:var(--accent)"> '+t('shuffleL')+'</label></p>'
+      + '</div>';
+    pane.innerHTML = h;
+    pane.onchange = null;
+    function pick(mode){
+      var sh = document.getElementById('modeShuffle');
+      state.mode = mode; state.picked = true; state.page = 0; state.done = false;
+      state.shuffle = !!(sh && sh.checked);
+      state.seed = (Date.now() % 100000) + 1;
+      save(); renderQuiz(); updateViz(); scrollTop();
+    }
+    document.getElementById('modeFull').onclick = function(){ pick('full'); };
+    document.getElementById('modeFast').onclick = function(){ pick('fast'); };
+  }
+
   /* ---------- Painel: quiz ---------- */
   function renderQuiz(){
-    var start = state.page*PAGE, qs = QUESTIONS.slice(start, start+PAGE), h = '';
-    h += '<div class="card"><div class="progress"><div class="row"><span id="pgTxt"></span><span id="anTxt"></span></div><div class="bar"><i id="bar"></i></div></div>';
-    h += '<p class="scalehint"><span>← Discordo</span><span>Concordo →</span></p>';
+    var all = QS(), ps = pageSize(), pcs = pageCount();
+    state.page = Math.min(state.page, pcs-1);
+    var start = state.page*ps, qs = all.slice(start, start+ps), h = '';
+    h += '<div class="card"><div class="progress"><div class="row"><span id="pgTxt" aria-live="polite"></span><span id="anTxt"></span></div><div class="bar" role="progressbar" aria-label="Progresso do questionário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barWrap"><i id="bar"></i></div><div class="row" id="pageJumps" style="gap:6px"></div><div class="row"><span class="mono muted" id="modeTag" style="font-size:11px"></span></div></div>';
+    h += '<p class="scalehint"><span>'+t('disL')+'</span><span>'+t('agreeR')+'</span></p>';
     for(var i=0;i<qs.length;i++){
       var q = qs[i], cur = state.answers[q.id], opts = '';
       for(var v=-2; v<=2; v++){
         var id = q.id+'_'+(v+2);
-        opts += '<input type="radio" name="'+q.id+'" id="'+id+'" value="'+v+'"'+(cur===v?' checked':'')+'><label for="'+id+'">'+LABELS[v+2]+'</label>';
+        opts += '<input type="radio" name="'+q.id+'" id="'+id+'" value="'+v+'"'+(cur===v?' checked':'')+'><label for="'+id+'">'+lab(v+2)+'</label>';
       }
-      h += '<fieldset class="q"><legend><span class="qn">Afirmação '+pad(start+i+1)+' de '+QUESTIONS.length+'</span><span class="qt">'+q.t+'</span></legend><div class="scale">'+opts+'</div></fieldset>';
+      h += '<fieldset class="q"><legend><span class="qn">'+t('afferm')+' '+pad(start+i+1)+' '+t('of1')+' '+all.length+'</span><span class="qt">'+qText(q)+'</span></legend><div class="scale">'+opts+'</div></fieldset>';
     }
-    h += '<div class="nav"><button class="btn" id="back" type="button">Voltar</button><span class="hint" id="hint"></span><button class="btn primary" id="next" type="button"></button></div></div>';
+    h += '<div class="nav"><button class="btn" id="back" type="button">'+t('backB')+'</button><span class="hint" id="hint" aria-live="polite"></span><button class="btn primary" id="next" type="button"></button></div></div>';
     pane.innerHTML = h;
+    /* Foco no início do painel para leitores de tela + teclado */
+    var firstLegend = pane.querySelector('fieldset.q legend .qt');
+    if(firstLegend){ firstLegend.setAttribute('tabindex','-1'); try{ firstLegend.focus({preventScroll:true}); }catch(e){} }
     updateMeta();
     document.getElementById('back').onclick = function(){ goPage(state.page-1); };
     document.getElementById('next').onclick = function(){
-      if(state.page === PAGES-1){ state.done = true; save(); renderResult(); updateViz(); scrollTop(); }
+      if(state.page === pageCount()-1){ state.done = true; save(); renderResult(); updateViz(); scrollTop(); }
       else goPage(state.page+1);
     };
     pane.onchange = function(e){
@@ -664,23 +1032,48 @@ function shapeText(s){
     };
   }
   function pageAnswered(){
-    var start = state.page*PAGE, qs = QUESTIONS.slice(start,start+PAGE), n=0;
+    var all = QS(), ps = pageSize(), start = Math.min(state.page, pageCount()-1)*ps, qs = all.slice(start,start+ps), n=0;
     for(var i=0;i<qs.length;i++) if(typeof state.answers[qs[i].id]==='number') n++;
     return {n:n, total:qs.length};
   }
   function updateMeta(){
-    var pa = pageAnswered(), total = answeredCount();
-    document.getElementById('pgTxt').textContent = 'Página '+(state.page+1)+' de '+PAGES;
-    document.getElementById('anTxt').textContent = total+' de '+QUESTIONS.length+' respondidas';
-    document.getElementById('bar').style.width = (total/QUESTIONS.length*100)+'%';
+    var pa = pageAnswered(), total = answeredCount(), all = QS(), pcs = pageCount();
+    document.getElementById('pgTxt').textContent = t('pageW')+' '+(state.page+1)+' '+t('of1')+' '+pcs;
+    document.getElementById('anTxt').textContent = total+' '+t('of1')+' '+all.length+' '+t('answeredW');
+    document.getElementById('bar').style.width = (total/all.length*100)+'%';
+    var barWrap = document.getElementById('barWrap');
+    if(barWrap) barWrap.setAttribute('aria-valuenow', String(Math.round(total/all.length*100)));
+    var jumps = document.getElementById('pageJumps');
+    if(jumps){
+      var jh = '';
+      for(var pgi=0;pgi<pcs;pgi++){
+        jh += '<button class="btn small" data-pg="'+pgi+'" type="button" style="'+(pgi===state.page?'font-weight:800;text-decoration:underline':'')+'" aria-label="'+t('gotoPage')+' '+(pgi+1)+'">'+(pgi+1)+'</button>';
+      }
+      jumps.innerHTML = jh;
+      jumps.onclick = function(e){ var b = e.target; if(b && b.getAttribute){ var pg = parseInt(b.getAttribute('data-pg'),10); if(!isNaN(pg)) goPage(pg); } };
+    }
     var next = document.getElementById('next'), back = document.getElementById('back'), hint = document.getElementById('hint');
+    var modeTag = document.getElementById('modeTag');
+    if(modeTag){
+      modeTag.innerHTML = '';
+      var mt = document.createElement('span');
+      mt.textContent = state.mode === 'fast' ? t('modeFastL') : t('modeFullL');
+      var ch = document.createElement('button');
+      ch.type = 'button'; ch.className = 'btn small'; ch.style.marginLeft = '8px'; ch.textContent = t('changeModeB');
+      ch.onclick = function(){
+        if(answeredCount() > 0 && !window.confirm(t('confirmMode'))) return;
+        state.answers = {}; state.done = false; state.page = 0; state.picked = false;
+        save(); renderModePick(); updateViz();
+      };
+      modeTag.appendChild(mt); modeTag.appendChild(ch);
+    }
     back.disabled = state.page===0;
-    next.textContent = state.page===PAGES-1 ? 'Ver resultado' : 'Próxima página';
+    next.textContent = state.page===pageCount()-1 ? t('seeResB') : t('nextB');
     next.disabled = pa.n < pa.total;
-    hint.textContent = pa.n < pa.total ? 'Faltam '+(pa.total-pa.n)+' nesta página' : 'Página completa';
+    hint.textContent = pa.n < pa.total ? t('missingW')+' '+(pa.total-pa.n)+' '+t('inPageW') : t('pageDoneW');
   }
   function goPage(p){
-    state.page = Math.max(0, Math.min(PAGES-1, p)); save(); renderQuiz(); scrollTop();
+    state.page = Math.max(0, Math.min(pageCount()-1, p)); save(); renderQuiz(); scrollTop();
   }
   function scrollTop(){
     var top = pane.getBoundingClientRect().top + window.scrollY - 12;
@@ -690,52 +1083,126 @@ function shapeText(s){
   /* ---------- Painel: resultado ---------- */
   function meterAxis(k, v){
     var left = (v+100)/200*100, w = Math.abs(v)/2, l0 = v<0 ? 50-w : 50;
-    return '<div class="meter"><div class="ml"><span>'+AXIS[k].neg+'</span><span>'+AXIS[k].pos+'</span></div>'
+    return '<div class="meter"><div class="ml"><span>'+axn(k,'neg')+'</span><span>'+axn(k,'pos')+'</span></div>'
       + '<div class="track"><i class="mid"></i><i class="fill" style="left:'+l0+'%;width:'+w+'%"></i><b class="mk" style="left:'+left+'%"></b></div>'
       + '<div class="mv"><b>'+sign(v)+'</b> · '+axisText(k,v)+'</div></div>';
   }
   function summaryText(p, near){
-    var o = OCT[octIndex(p)];
-    return 'Bússola da Esquerda\n'
-      + 'Octante: '+o.n+' ('+o.t+')\n'
-      + 'X Estratégia: '+sign(p.x)+' ('+axisText('X',p.x)+')\n'
-      + 'Y Coordenação: '+sign(p.y)+' ('+axisText('Y',p.y)+')\n'
-      + 'Z Economia: '+sign(p.z)+' ('+axisText('Z',p.z)+')\n'
-      + 'Cor: '+colorText(p.c)+' ('+p.c+'/100) · Forma: '+shapeText(p.s)+' ('+p.s+'/100)\n'
-      + 'Correntes mais próximas: '+near.slice(0,3).map(function(r){ return r.a.n+' '+r.pct+'%'; }).join(', ');
+    var o = octL(octIndex(p));
+    return t('sumName')+'\n'
+      + t('sumOct')+': '+o.n+' ('+o.t+')\n'
+      + 'X '+axn('X','name')+': '+sign(p.x)+' ('+axisText('X',p.x)+')\n'
+      + 'Y '+axn('Y','name')+': '+sign(p.y)+' ('+axisText('Y',p.y)+')\n'
+      + 'Z '+axn('Z','name')+': '+sign(p.z)+' ('+axisText('Z',p.z)+')\n'
+      + t('legC1a')+': '+colorText(p.c)+' ('+p.c+'/100) · '+t('legF1a')+': '+shapeText(p.s)+' ('+p.s+'/100)\n'
+      + t('sumNear')+': '+near.slice(0,3).map(function(r){ return r.a.n+' '+r.pct+'%'; }).join(', ');
   }
   function renderResult(){
-    var p = score(state.answers), near = nearest(p), o = OCT[octIndex(p)], dark = isDark();
+    var sharedView = !!(SHARED && answeredCount() === 0);
+    var p = sharedView ? SHARED : score(state.answers), near = nearest(p), o = octL(octIndex(p)), dark = isDark();
+    if(!sharedView) syncURL(p);
     var col = lensColor(p.c, dark), lvl = shapeLevel(p.s), h = '';
     h += '<div class="card res">';
-    h += '<div><p class="kicker">Seu resultado</p><p class="oct">'+o.n+'</p><div class="tags">'+o.t+'</div></div>';
+    h += '<div><p class="kicker">'+t('yourRes')+'</p><p class="oct">'+o.n+'</p><div class="tags">'+o.t+'</div></div>';
+    if(sharedView) h += '<p class="muted" style="margin:0;font-size:13px">'+t('sharedMsg')+' <button class="btn small" id="take" type="button">'+t('takeTest')+'</button></p>';
     h += meterAxis('X',p.x)+meterAxis('Y',p.y)+meterAxis('Z',p.z);
-    h += '<div class="two"><div class="meter"><div class="ml"><span>Produtivista</span><span>Pós-crescimento</span></div><div class="track lens" style="position:relative"><b class="mk" style="left:'+p.c+'%"></b></div><div class="mv"><b>'+p.c+'</b> · '+colorText(p.c)+'</div></div>';
-    h += '<div class="meter"><div class="ml"><span>Classista</span><span>Interseccional</span></div><div class="ladder">'+ladder(lvl,col)+'</div><div class="mv"><b>'+p.s+'</b> · '+shapeText(p.s)+'</div></div></div>';
-    h += '<div><h3 style="margin-bottom:8px">Correntes mais próximas</h3><ol class="top3">';
+    h += '<div class="two"><div class="meter"><div class="ml"><span>'+W('prod')+'</span><span>'+W('post')+'</span></div><div class="track lens" style="position:relative"><b class="mk" style="left:'+p.c+'%"></b></div><div class="mv"><b>'+p.c+'</b> · '+colorText(p.c)+'</div></div>';
+    h += '<div class="meter"><div class="ml"><span>'+W('clas')+'</span><span>'+W('inter')+'</span></div><div class="ladder">'+ladder(lvl,col)+'</div><div class="mv"><b>'+p.s+'</b> · '+shapeText(p.s)+'</div></div></div>';
+    h += '<div><h3 style="margin-bottom:8px">'+t('closestH')+'</h3><ol class="top3">';
     for(var i=0;i<3;i++){
       h += '<li><span class="pct">'+near[i].pct+'%</span><span class="nm">'+near[i].a.n+'</span><span class="ds">'+near[i].a.d+'</span></li>';
     }
-    h += '</ol></div>';
-    h += '<details class="all"><summary>Ver a afinidade com as '+ARCH.length+' correntes</summary><ol class="rank">';
+    h += '</ol>'+(LANG()!=='pt'?'<p class="muted" style="font-size:12px;margin:6px 0 0">'+t('trBadge')+'</p>':'')+'</div>';
+    h += '<details class="all"><summary>'+t('seeAllW')+' '+ARCH.length+' '+t('withArch')+'</summary><ol class="rank">';
     for(var j=0;j<near.length;j++){
       h += '<li><span class="rp">'+near[j].pct+'%</span><span>'+near[j].a.n+'</span><span class="mono">d '+Math.round(near[j].d)+'</span></li>';
     }
     h += '</ol></details>';
-    h += '<div class="actions"><button class="btn primary" id="copy" type="button">Copiar resumo</button><button class="btn" id="review" type="button">Revisar respostas</button><button class="btn" id="redo" type="button">Refazer do zero</button></div>';
+    h += '<div class="actions"><button class="btn primary" id="copy" type="button">'+t('copySumB')+'</button><button class="btn primary" id="copylink" type="button">'+t('copyLinkB')+'</button><button class="btn" id="dlcard" type="button">'+t('dlImgB')+'</button><button class="btn" id="review" type="button">'+t('reviewB')+'</button><button class="btn" id="redo" type="button">'+t('redoB')+'</button></div>';
     h += '<p class="muted" style="margin:0;font-size:13px" id="copyMsg" aria-live="polite"></p>';
     h += '</div>';
     pane.innerHTML = h;
     pane.onchange = null;
     document.getElementById('copy').onclick = function(){
       var txt = summaryText(p, near), msg = document.getElementById('copyMsg');
-      function fb(){ msg.textContent = 'Não foi possível copiar automaticamente. O resumo está no texto abaixo.'; var pre=document.createElement('pre'); pre.style.cssText='white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;margin:8px 0 0;user-select:all'; pre.textContent=txt; msg.appendChild(pre); }
+      function fb(){ msg.textContent = t('copyFailSum'); var pre=document.createElement('pre'); pre.style.cssText='white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;margin:8px 0 0;user-select:all'; pre.textContent=txt; msg.appendChild(pre); }
       try{
-        navigator.clipboard.writeText(txt).then(function(){ msg.textContent='Resumo copiado.'; }, fb);
+        navigator.clipboard.writeText(txt).then(function(){ msg.textContent=t('copiedSum'); }, fb);
       }catch(e){ fb(); }
     };
-    document.getElementById('review').onclick = function(){ state.done=false; state.page=0; save(); renderQuiz(); updateViz(); scrollTop(); };
-    document.getElementById('redo').onclick = function(){ state.answers={}; state.done=false; state.page=0; save(); renderQuiz(); updateViz(); scrollTop(); };
+    document.getElementById('review').onclick = function(){ SHARED = null; state.done=false; state.page=0; save(); renderQuiz(); updateViz(); scrollTop(); };
+    document.getElementById('redo').onclick = function(){ SHARED = null; state.answers={}; state.done=false; state.page=0; save(); clearURLParams(); renderQuiz(); updateViz(); scrollTop(); };
+    var takeBtn = document.getElementById('take');
+    if(takeBtn) takeBtn.onclick = function(){ var m = SHARED ? SHARED.m : 'full'; SHARED = null; state.answers={}; state.done=false; state.page=0; state.mode=(m==='fast'?'fast':'full'); state.picked=true; save(); clearURLParams(); renderQuiz(); updateViz(); scrollTop(); };
+    document.getElementById('copylink').onclick = function(){
+      var msg = document.getElementById('copyMsg'), link = resultURL(p);
+      function ok(){ msg.textContent=t('copiedLink'); }
+      function fb(){ msg.textContent=t('copyFailAddr')+link; }
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok, fb);
+        else fb();
+      }catch(e){ fb(); }
+    };
+    document.getElementById('dlcard').onclick = function(){ downloadCard(p, near, o); };
+  }
+
+  /* ---------- Card compartilhável (1200x630) ---------- */
+  function downloadCard(p, near, o){
+    try{
+      var W = 1200, H = 630, cv = document.createElement('canvas');
+      cv.width = W; cv.height = H;
+      var ctx = cv.getContext('2d'), dark = isDark();
+      var bg = dark ? '#0E1113' : '#EDEFEC', fg = dark ? '#E8ECEB' : '#14181B', mut = dark ? '#99A4A9' : '#586268';
+      ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = fg; ctx.fillRect(0,0,W,10);
+      ctx.fillStyle = mut; ctx.font = '500 24px "IBM Plex Mono",monospace';
+      ctx.fillText(t('siteName').toUpperCase()+' · X'+sign(p.x)+' Y'+sign(p.y)+' Z'+sign(p.z), 60, 70);
+      ctx.fillStyle = fg; ctx.font = '800 64px Archivo,Arial,sans-serif';
+      var title = o.n.toUpperCase();
+      ctx.fillText(title.length > 30 ? title.slice(0,30)+'…' : title, 60, 145);
+      ctx.fillStyle = mut; ctx.font = '400 26px "Public Sans",sans-serif';
+      ctx.fillText(o.t, 60, 185);
+      /* Barras X/Y/Z */
+      var bars = [['X',p.x],['Y',p.y],['Z',p.z]], by = 230;
+      for(var i=0;i<bars.length;i++){
+        var v = bars[i][1], bx = 60, bw = 620;
+        ctx.fillStyle = mut; ctx.font = '500 22px "IBM Plex Mono",monospace';
+        ctx.fillText(bars[i][0]+'  '+sign(v), bx, by-8);
+        ctx.strokeStyle = mut; ctx.lineWidth = 2; ctx.strokeRect(bx, by, bw, 22);
+        var half = bw/2, fillW = Math.abs(v)/100*half;
+        ctx.fillStyle = lensColor(p.c, dark);
+        ctx.fillRect(v<0 ? half+bx-fillW : half+bx, by, fillW, 22);
+        ctx.fillStyle = fg; ctx.fillRect(half+bx-1, by-6, 2, 34);
+        by += 78;
+      }
+      /* Top 3 */
+      ctx.fillStyle = fg; ctx.font = '700 28px "Public Sans",sans-serif';
+      ctx.fillText(t('closestH'), 740, 230);
+      ctx.font = '400 25px "Public Sans",sans-serif';
+      var ty = 272;
+      for(var j=0;j<3;j++){
+        var nm = near[j].a.n;
+        if(nm.length > 34) nm = nm.slice(0,34)+'…';
+        ctx.fillStyle = lensColor(p.c, dark); ctx.font = '800 30px Archivo,Arial,sans-serif';
+        ctx.fillText(near[j].pct+'%', 740, ty);
+        ctx.fillStyle = fg; ctx.font = '400 25px "Public Sans",sans-serif';
+        ctx.fillText(nm, 850, ty);
+        ty += 48;
+      }
+      ctx.fillStyle = mut; ctx.font = '400 22px "Public Sans",sans-serif';
+      ctx.fillText('left-wing-political-compass.vercel.app', 60, H-40);
+      ctx.fillText('Cor '+p.c+' · Forma '+p.s, 740, H-40);
+      var a = document.createElement('a');
+      a.download = 'bussola-da-esquerda.png';
+      a.href = cv.toDataURL('image/png');
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ document.body.removeChild(a); }, 500);
+      var msg = document.getElementById('copyMsg');
+      if(msg) msg.textContent = t('imgDone');
+    }catch(e){
+      var m2 = document.getElementById('copyMsg');
+      if(m2) m2.textContent = t('imgFail');
+    }
   }
 
   /* ---------- Cubo 3D ---------- */
@@ -802,9 +1269,9 @@ function shapeText(s){
     ctx.globalAlpha = 1;
     /* Eixos */
     var ax = [
-      {a:[-1,0,0], b:[1,0,0], l:['Reforma','Ruptura']},
-      {a:[0,-1,0], b:[0,1,0], l:['Centralismo','Autogestão']},
-      {a:[0,0,-1], b:[0,0,1], l:['Mercado','Desmercantilização']}
+      {a:[-1,0,0], b:[1,0,0], l:[axn('X','neg'),axn('X','pos')]},
+      {a:[0,-1,0], b:[0,1,0], l:[axn('Y','neg'),axn('Y','pos')]},
+      {a:[0,0,-1], b:[0,0,1], l:[axn('Z','neg'),axn('Z','pos')]}
     ];
     ctx.setLineDash([]);
     for(i=0;i<ax.length;i++){
@@ -816,7 +1283,7 @@ function shapeText(s){
       label(ax[i].l[1], qb.x, qb.y, qb.x < cx ? 'right' : 'left', muted);
     }
     /* Correntes */
-    var u = user(), near = u && state.done ? nearest(u).slice(0,3).map(function(r){ return r.a; }) : [];
+    var u = user(), near = u && (state.done || u.shared) ? nearest(u).slice(0,3).map(function(r){ return r.a; }) : [];
     var pts = [], k;
     for(k=0;k<ARCH.length;k++){
       var a = ARCH[k], pr = P(a.x/100, a.y/100, a.z/100);
@@ -846,7 +1313,7 @@ function shapeText(s){
       ctx.beginPath(); ctx.arc(fl.x, fl.y, 2.4, 0, Math.PI*2); ctx.fillStyle = fg; ctx.fill();
       drawShape(ctx, up.x, up.y, rr+1.5, shapeLevel(u.s), bg, bg, 4);
       drawShape(ctx, up.x, up.y, rr, shapeLevel(u.s), col, fg, 2);
-      label(u.prov ? 'Você (provisório)' : 'Você', up.x + rr + 6, up.y + 1, 'left', fg);
+      label(u.prov ? t('youProv') : t('youW'), up.x + rr + 6, up.y + 1, 'left', fg);
     }
   }
   function tickAuto(){
@@ -889,24 +1356,31 @@ function shapeText(s){
 
   /* ---------- Projeções 2D ---------- */
   var PROJ = [
-    {t:'Estratégia × Coordenação', k:'X · Y', hx:'x', hy:'y', l:'Reforma', r:'Ruptura', b:'Centralismo', tp:'Autogestão'},
-    {t:'Estratégia × Economia', k:'X · Z', hx:'x', hy:'z', l:'Reforma', r:'Ruptura', b:'Mercado', tp:'Desmercantilização'},
-    {t:'Coordenação × Economia', k:'Y · Z', hx:'y', hy:'z', l:'Centralismo', r:'Autogestão', b:'Mercado', tp:'Desmercantilização'}
+    {pi:0, k:'X · Y', hx:'x', hy:'y'},
+    {pi:1, k:'X · Z', hx:'x', hy:'z'},
+    {pi:2, k:'Y · Z', hx:'y', hy:'z'}
   ];
+  function projWord(pr, which){
+    if(which==='t') return projL(pr.pi);
+    if(which==='l') return axn(pr.hx.toUpperCase(),'neg');
+    if(which==='r') return axn(pr.hx.toUpperCase(),'pos');
+    if(which==='b') return axn(pr.hy.toUpperCase(),'neg');
+    return axn(pr.hy.toUpperCase(),'pos');
+  }
   function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function projSvg(pr, u, near, dark){
     var W = 300, x0 = 12, x1 = 288, y0 = 12, y1 = 288, cxm = (x0+x1)/2, cym = (y0+y1)/2;
     function X(v){ return x0 + (v+100)/200*(x1-x0); }
     function Y(v){ return y1 - (v+100)/200*(y1-y0); }
-    var s = '<svg viewBox="0 0 '+W+' '+W+'" role="img" aria-label="Projeção '+esc(pr.t)+'">';
+    var s = '<svg viewBox="0 0 '+W+' '+W+'" role="img" aria-label="'+esc(projWord(pr,'t'))+'">';
     s += '<rect x="'+x0+'" y="'+y0+'" width="'+(x1-x0)+'" height="'+(y1-y0)+'" fill="var(--bg)" stroke="var(--line)"/>';
     s += '<rect x="'+x0+'" y="'+y0+'" width="'+(cxm-x0)+'" height="'+(cym-y0)+'" fill="var(--tint)"/>';
     s += '<rect x="'+cxm+'" y="'+cym+'" width="'+(x1-cxm)+'" height="'+(y1-cym)+'" fill="var(--tint)"/>';
     s += '<line x1="'+cxm+'" y1="'+y0+'" x2="'+cxm+'" y2="'+y1+'" stroke="var(--grid)"/><line x1="'+x0+'" y1="'+cym+'" x2="'+x1+'" y2="'+cym+'" stroke="var(--grid)"/>';
-    s += '<text x="'+(x0+5)+'" y="'+(cym-6)+'">'+esc(pr.l)+'</text>';
-    s += '<text x="'+(x1-5)+'" y="'+(cym-6)+'" text-anchor="end">'+esc(pr.r)+'</text>';
-    s += '<text x="'+cxm+'" y="'+(y0+13)+'" text-anchor="middle">'+esc(pr.tp)+'</text>';
-    s += '<text x="'+cxm+'" y="'+(y1-7)+'" text-anchor="middle">'+esc(pr.b)+'</text>';
+    s += '<text x="'+(x0+5)+'" y="'+(cym-6)+'">'+esc(projWord(pr,'l'))+'</text>';
+    s += '<text x="'+(x1-5)+'" y="'+(cym-6)+'" text-anchor="end">'+esc(projWord(pr,'r'))+'</text>';
+    s += '<text x="'+cxm+'" y="'+(y0+13)+'" text-anchor="middle">'+esc(projWord(pr,'tp'))+'</text>';
+    s += '<text x="'+cxm+'" y="'+(y1-7)+'" text-anchor="middle">'+esc(projWord(pr,'b'))+'</text>';
     for(var i=0;i<ARCH.length;i++){
       var a = ARCH[i], px = X(a[pr.hx]), py = Y(a[pr.hy]), isN = near.indexOf(a) >= 0;
       var anchor = px > cxm+60 ? 'end' : 'start', tx = anchor==='end' ? -7 : 7;
@@ -918,14 +1392,14 @@ function shapeText(s){
       if(!n) shape = '<circle cx="'+ux.toFixed(1)+'" cy="'+uy.toFixed(1)+'" r="10"';
       else shape = '<polygon points="'+polyPts(ux,uy,10,n)+'"';
       s += '<g>'+shape+' fill="'+col+'" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/>';
-      s += '<text class="you" x="'+(ux > cxm+60 ? ux-15 : ux+15).toFixed(1)+'" y="'+(uy+4).toFixed(1)+'" text-anchor="'+(ux > cxm+60 ? 'end' : 'start')+'">Você</text></g>';
+      s += '<text class="you" x="'+(ux > cxm+60 ? ux-15 : ux+15).toFixed(1)+'" y="'+(uy+4).toFixed(1)+'" text-anchor="'+(ux > cxm+60 ? 'end' : 'start')+'">'+esc(t('youW'))+'</text></g>';
     }
     return s + '</svg>';
   }
   function renderProj(){
-    var u = user(), dark = isDark(), near = u && state.done ? nearest(u).slice(0,3).map(function(r){ return r.a; }) : [], h = '';
+    var u = user(), dark = isDark(), near = u && (state.done || u.shared) ? nearest(u).slice(0,3).map(function(r){ return r.a; }) : [], h = '';
     for(var i=0;i<PROJ.length;i++){
-      h += '<div class="proj"><h3>'+PROJ[i].t+'<span>'+PROJ[i].k+'</span></h3>'+projSvg(PROJ[i], u, near, dark)+'</div>';
+      h += '<div class="proj"><h3>'+projWord(PROJ[i],'t')+'<span>'+PROJ[i].k+'</span></h3>'+projSvg(PROJ[i], u, near, dark)+'</div>';
     }
     document.getElementById('projs').innerHTML = h;
   }
@@ -940,18 +1414,18 @@ function shapeText(s){
     }
     var seq = [0,2,4,6,1,3,5,7];
     for(var s=0;s<seq.length;s++){
-      var g = seq[s];
+      var g = seq[s], go = octL(g);
       if(!groups[g].length) continue;
-      h += '<div class="oc"><h3>'+OCT[g].n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+OCT[g].t+'</div><ul>';
+      h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div>'+(LANG()!=='pt'?'<div class="tags">'+t('trBadge')+'</div>':'')+'<ul>';
       for(i=0;i<groups[g].length;i++){
         var a = groups[g][i];
         h += '<li>'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an">'+a.n+'</span><span class="ad">'+a.d+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span></li>';
       }
       h += '</ul></div>';
     }
-    if(!shown) h = '<p class="oc empty" style="border-top:0">Nenhum movimento encontrado para essa busca.</p>';
+    if(!shown) h = '<p class="oc empty" style="border-top:0">'+t('noResult')+'</p>';
     document.getElementById('cat').innerHTML = h;
-    document.getElementById('catn').textContent = q ? shown+' de '+ARCH.length : ARCH.length+' correntes';
+    document.getElementById('catn').textContent = q ? shown+' '+t('of1')+' '+ARCH.length : ARCH.length+' '+t('withArch');
   }
   function updateLensTokens(){
     var dark = isDark();
@@ -966,7 +1440,7 @@ function shapeText(s){
     tr.innerHTML = u ? '<b class="mk" style="left:'+u.c+'%"></b>' : '';
     document.getElementById('legLadder').innerHTML = ladder(u ? shapeLevel(u.s) : -1, u ? lensColor(u.c,dark) : 'none');
     var pv = document.getElementById('prov');
-    pv.textContent = !u ? 'Responda 6 afirmações para ver seu ponto' : (u.prov ? 'Posição provisória' : 'Resultado final');
+    pv.textContent = !u ? t('prov6') : (u.prov ? t('provP') : t('provF'));
   }
   function updateViz(){ renderLegend(); drawCube(); renderProj(); }
   function refreshTheme(){
@@ -974,12 +1448,80 @@ function shapeText(s){
     if(state.done) renderResult();
   }
 
+  /* ---------- Idioma ---------- */
+  function detectLang(){
+    try{
+      var q = new URLSearchParams(window.location.search).get('lang');
+      if(q) q = q.toLowerCase();
+      if(q === 'pt' || q === 'en' || q === 'es') return q;
+      var stored = null;
+      try{ stored = localStorage.getItem('bussola-lang'); }catch(e){}
+      if(stored === 'pt' || stored === 'en' || stored === 'es') return stored;
+      var nav = (navigator.language || 'pt').toLowerCase();
+      if(nav.indexOf('es') === 0) return 'es';
+      if(nav.indexOf('en') === 0) return 'en';
+    }catch(e){}
+    return 'pt';
+  }
+  function setText(id, v){ var el = document.getElementById(id); if(el) el.textContent = v; }
+  function applyStaticLang(){
+    var L = LANG();
+    document.documentElement.setAttribute('lang', L === 'en' ? 'en' : (L === 'es' ? 'es' : 'pt-BR'));
+    document.title = t('siteName') + (L === 'pt' ? ' — Mapa das correntes da esquerda' : (L === 'es' ? ' — Mapa de las corrientes de la izquierda' : ' — Map of left currents'));
+    setText('kicker', t('kicker')); setText('siteTitle', t('siteName')); setText('lead', t('lead'));
+    setText('spXt', t('spX_t')); setText('spXb', t('spX_b')); setText('spXd', t('spX_d'));
+    setText('spYt', t('spY_t')); setText('spYb', t('spY_b')); setText('spYd', t('spY_d'));
+    setText('spZt', t('spZ_t')); setText('spZb', t('spZ_b')); setText('spZd', t('spZ_d'));
+    setText('spCt', t('spC_t')); setText('spCb', t('spC_b')); setText('spCd', t('spC_d'));
+    setText('spSt', t('spS_t')); setText('spSb', t('spS_b')); setText('spSd', t('spS_d'));
+    setText('cubeH', t('cubeH')); setText('tiltL', t('tiltL')); setText('showAllL', t('showAllL'));
+    var rs = document.getElementById('reset'); if(rs) rs.textContent = t('resetB');
+    setText('legC1a', t('legC1a')); setText('legC1b', t('legC1b'));
+    setText('legF1a', t('legF1a')); setText('legF1b', t('legF1b'));
+    setText('dragH', t('dragH'));
+    setText('projH', t('projH')); setText('projP', t('projP'));
+    setText('catH', t('catH')); setText('catP', t('catP'));
+    setText('catqL', t('searchPh'));
+    var cq = document.getElementById('catq'); if(cq) cq.setAttribute('placeholder', t('searchPh'));
+    setText('note1a', t('note1a')); setText('note1b', t('note1b')); setText('note2', t('note2'));
+    var og = document.querySelector('meta[property="og:locale"]');
+    if(og) og.setAttribute('content', L === 'en' ? 'en_US' : (L === 'es' ? 'es_ES' : 'pt_BR'));
+  }
+  function setLang(L, rerender){
+    if(L !== 'pt' && L !== 'en' && L !== 'es') L = 'pt';
+    window.__LANG = L;
+    try{ localStorage.setItem('bussola-lang', L); }catch(e){}
+    try{
+      var u = new URL(window.location.href);
+      u.searchParams.set('lang', L);
+      history.replaceState(null, '', u.toString());
+    }catch(e){}
+    applyStaticLang();
+    if(rerender !== false){ renderCat(); updateLensVars(); updateLensTokens(); updateViz(); refreshPane(); }
+  }
+  function refreshPane(){
+    if(SHARED && answeredCount() === 0) renderResult();
+    else if(state.done) renderResult();
+    else if(!state.picked && answeredCount() === 0) renderModePick();
+    else renderQuiz();
+  }
+
   /* ---------- Início ---------- */
+  SHARED = parseResultURL();
+  window.__LANG = detectLang();
   load();
+  applyStaticLang();
+  var langBtns = document.querySelectorAll('[data-lang]');
+  for(var li=0; li<langBtns.length; li++){
+    (function(btn){ btn.onclick = function(){ setLang(btn.getAttribute('data-lang')); }; })(langBtns[li]);
+  }
   updateLensVars(); updateLensTokens();
   document.getElementById('catq').addEventListener('input', renderCat);
   renderCat();
-  if(state.done) renderResult(); else renderQuiz();
+  if(SHARED && answeredCount() === 0) renderResult();
+  else if(state.done) renderResult();
+  else if(!state.picked && answeredCount() === 0) renderModePick();
+  else renderQuiz();
   updateViz();
   startAuto();
   if(window.matchMedia){
