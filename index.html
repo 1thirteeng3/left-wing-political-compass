@@ -922,7 +922,7 @@ function shapeText(s){
       var u = new URL(window.location.href);
       u.hash = '';
       u.searchParams.delete('x'); u.searchParams.delete('y'); u.searchParams.delete('z');
-      u.searchParams.delete('c'); u.searchParams.delete('s');
+      u.searchParams.delete('c'); u.searchParams.delete('s'); u.searchParams.delete('q');
       u.searchParams.set('v','1');
       if(a) u.searchParams.set('a', fmtPoint(a)); else u.searchParams.delete('a');
       if(b) u.searchParams.set('b', fmtPoint(b)); else u.searchParams.delete('b');
@@ -947,10 +947,10 @@ function shapeText(s){
     try{
       var u = new URL(window.location.href);
       u.hash = '';
-      u.searchParams.delete('a'); u.searchParams.delete('b');
       u.searchParams.set('v','1');
       u.searchParams.set('x',p.x); u.searchParams.set('y',p.y); u.searchParams.set('z',p.z);
       u.searchParams.set('c',p.c); u.searchParams.set('s',p.s);
+      u.searchParams.delete('a'); u.searchParams.delete('b'); u.searchParams.delete('q');
       u.searchParams.set('m', state.mode || p.m || 'full');
       u.searchParams.set('lang', window.__LANG || p.lang || 'pt');
       return u.toString();
@@ -978,7 +978,6 @@ function shapeText(s){
   function clearURLParams(){
     try{
       var u = new URL(window.location.href);
-      u.hash = '';
       ['v','x','y','z','c','s','a','b'].forEach(function(k){ u.searchParams.delete(k); });
       history.replaceState(null,'',u.toString());
     }catch(e){}
@@ -1730,7 +1729,8 @@ function shapeText(s){
   /* ---------- Início ---------- */
   COMP = parseCompareURL();
   SHARED = parseResultURL();
-  if(!SHARED && COMP && COMP.a && !COMP.b){
+  if(COMP && COMP.a && !COMP.b){
+    /* Link de comparação tem precedência sobre params legados avulsos */
     SHARED = {x:COMP.a.x, y:COMP.a.y, z:COMP.a.z, c:COMP.a.c, s:COMP.a.s, m:COMP.m, lang:COMP.lang, prov:false, shared:true};
   }
   window.__LANG = detectLang();
@@ -1757,9 +1757,8 @@ function shapeText(s){
   else renderQuiz();
   updateViz();
   startAuto();
-  /* Deep-link de corrente: #c=slug (após render inicial; nunca rola sozinho numa view compartilhada/comparada) */
-  var sharedViewActive = !!((COMP && (COMP.a || COMP.b)) || (typeof SHARED !== 'undefined' && SHARED && answeredCount() === 0));
-  if(!sharedViewActive) setTimeout(function(){ revealCurrent(hashSlug()); }, 300);
+  /* Deep-link de corrente: #c=slug (após render inicial) */
+  setTimeout(function(){ revealCurrent(hashSlug()); }, 300);
   if(window.matchMedia){
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
     if(mq.addEventListener) mq.addEventListener('change', refreshTheme);
