@@ -36,9 +36,9 @@ const OCT = {
 };
 
 const LBL = {
-  pt: { title: 'BÚSSOLA DA ESQUERDA', cta: 'Descubra sua posição · 60 afirmações · 134 correntes', site: 'left-wing-political-compass.vercel.app' },
-  en: { title: 'LEFT-WING COMPASS', cta: 'Find your position · 60 statements · 134 currents', site: 'left-wing-political-compass.vercel.app' },
-  es: { title: 'BRÚJULA DE LA IZQUIERDA', cta: 'Descubre tu posición · 60 afirmaciones · 134 corrientes', site: 'left-wing-political-compass.vercel.app' },
+  pt: { title: 'BÚSSOLA DA ESQUERDA', cta: 'Descubra sua posição · 60 afirmações · 134 correntes', site: 'left-wing-political-compass.vercel.app', full: 'Completo', fast: 'Expresso', lens: 'Cor {c} · Forma {s}', axes: '3 eixos + 2 lentes' },
+  en: { title: 'LEFT-WING COMPASS', cta: 'Find your position · 60 statements · 134 currents', site: 'left-wing-political-compass.vercel.app', full: 'Full', fast: 'Express', lens: 'Color {c} · Shape {s}', axes: '3 axes + 2 lenses' },
+  es: { title: 'BRÚJULA DE LA IZQUIERDA', cta: 'Descubre tu posición · 60 afirmaciones · 134 corrientes', site: 'left-wing-political-compass.vercel.app', full: 'Completo', fast: 'Exprés', lens: 'Color {c} · Forma {s}', axes: '3 ejes + 2 lentes' },
 };
 
 const HUES = [[0, 6], [30, 26], [55, 55], [75, 100], [100, 140]];
@@ -72,6 +72,7 @@ export default function handler(req) {
     const c = num(searchParams.get('c'), 0, 100, 50);
     const s = num(searchParams.get('s'), 0, 100, 50);
     const hasResult = searchParams.get('v') === '1' && ['x', 'y', 'z', 'c', 's'].every((k) => searchParams.get(k) !== null);
+    const mode = searchParams.get('m') === 'fast' ? 'fast' : 'full';
     const t = LBL[lang];
     const hue = hueAt(c);
     const accent = `hsl(${Math.round(hue)},80%,46%)`;
@@ -148,7 +149,8 @@ export default function handler(req) {
               type: 'div',
               props: {
                 style: { display: 'flex', justifyContent: 'space-between', fontSize: 24, color: '#586268' },
-                children: [t.site, hasResult ? `Cor ${c} · Forma ${s}` : '3 eixos + 2 lentes'],
+                children: [t.site + (hasResult ? ' · ' + t[mode] : ''), hasResult ? t.lens
+                  .replace('{c}', String(c)).replace('{s}', String(s)) : t.axes],
               },
             },
           ],

@@ -16,6 +16,7 @@
 <meta name="twitter:title" content="Bússola da Esquerda — Mapa das correntes da esquerda">
 <meta name="twitter:description" content="60 afirmações, 134 correntes, 3 eixos + 2 lentes. Descubra sua posição e compartilhe.">
 <meta name="twitter:image" content="https://left-wing-political-compass.vercel.app/api/card">
+<!-- Analytics: Umami Cloud (sem cookies, respeita DNT). Ativação: crie conta em https://umami.is, copie o Website ID e cole em UMAMI_ID no script ao fim do body. -->
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -272,8 +273,25 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
   <footer class="note">
     <p><b id="note1a">Como o resultado é calculado.</b><span id="note1b"> Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.</span></p>
     <p id="note2">É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.</p>
+    <p id="note3" style="font-size:12px">Afinidade = 100·e^(−d/120), onde d é a distância euclidiana nos 3 eixos. Desempate determinístico: menor distância, depois ordem alfabética. O modo expresso usa amostra estratificada fixa (início, meio e fim de cada grupo).</p>
+    <p style="font-size:12px"><a href="/privacidade" id="privL" style="color:inherit">Privacidade: o que medimos e o que não medimos</a></p>
   </footer>
 </div>
+
+<script>
+/* Analytics (Umami Cloud, sem cookies, respeita DNT). Para ativar: crie o site em https://umami.is e cole o Website ID abaixo. Vazio = desativado. */
+var UMAMI_ID = '';
+(function(){
+  try{
+    if(!UMAMI_ID) return;
+    if(navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
+    var s = document.createElement('script');
+    s.defer = true; s.src = 'https://cloud.umami.is/script.js';
+    s.setAttribute('data-website-id', UMAMI_ID);
+    document.head.appendChild(s);
+  }catch(e){}
+})();
+</script>
 
 <script>
 /*CORE-START*/
@@ -378,17 +396,17 @@ projH:'Projeções 2D',projP:'O cubo é bom para impressionar e ruim para medir.
 catH:'As correntes do mapa',catP:'Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.',
 searchPh:'Buscar movimento ou vertente',
 note1a:'Como o resultado é calculado.',note1b:' Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.',
-note2:'É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.',
+note2:'É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.',note3:'Afinidade = 100·e^(−d/120), onde d é a distância euclidiana nos 3 eixos. Desempate determinístico: menor distância, depois ordem alfabética. O modo expresso usa amostra estratificada fixa (início, meio e fim de cada grupo).',
 startK:'Começar',startH:'Escolha o tamanho do teste',fullH:'Completo · 60 afirmações',fullD:'O mapa completo, ~8 minutos. Resultado mais estável.',fullB:'Fazer completo',fastH:'Expresso · 15 afirmações',fastD:'Só o essencial, ~2 minutos. Mesmos eixos e correntes.',fastB:'Fazer expresso',shuffleL:'Embaralhar a ordem das afirmações',
 disL:'← Discordo',agreeR:'Concordo →',afferm:'Afirmação',of1:'de',backB:'Voltar',nextB:'Próxima página',seeResB:'Ver resultado',pageW:'Página',answeredW:'respondidas',missingW:'Faltam',inPageW:'nesta página',pageDoneW:'Página completa',gotoPage:'Ir para a página',
-modeFastL:'Modo expresso · 15 afirmações',modeFullL:'Modo completo · 60 afirmações',changeModeB:'Trocar de modo',confirmMode:'Trocar de modo apaga as respostas atuais. Continuar?',
+modeFastL:'Modo expresso · 15 afirmações',modeFullL:'Modo completo · 60 afirmações',ansW:'respostas',varFast:'Modo expresso: com menos respostas, cada uma pesa mais (±33 por eixo). Para um resultado mais estável, refaça no modo completo.',changeModeB:'Trocar de modo',confirmMode:'Trocar de modo apaga as respostas atuais. Continuar?',
 yourRes:'Seu resultado',sharedMsg:'Você está vendo um resultado compartilhado.',takeTest:'Fazer meu teste',closestH:'Correntes mais próximas',seeAllW:'Ver a afinidade com as',withArch:'correntes',
 copySumB:'Copiar resumo',copyLinkB:'Copiar link',dlImgB:'Baixar imagem',reviewB:'Revisar respostas',redoB:'Refazer do zero',
 copiedSum:'Resumo copiado.',copiedLink:'Link copiado. Compartilhe para comparar resultados.',copyFailAddr:'Não foi possível copiar. Copie da barra de endereços: ',copyFailSum:'Não foi possível copiar automaticamente. O resumo está no texto abaixo.',
 imgDone:'Imagem baixada. Compartilhe nas suas redes.',imgFail:'Não foi possível gerar a imagem neste navegador.',
 noResult:'Nenhum movimento encontrado para essa busca.',prov6:'Responda 6 afirmações para ver seu ponto',provP:'Posição provisória',provF:'Resultado final',
 sumName:'Bússola da Esquerda',sumOct:'Octante',sumNear:'Correntes mais próximas',
-trBadge:'Nomes e descrições em português — tradução em progresso.',siteName:'Bússola da Esquerda',youW:'Você',youProv:'Você (provisório)'},
+trBadge:'Nomes e descrições em português — tradução em progresso.',siteName:'Bússola da Esquerda',youW:'Você',youProv:'Você (provisório)',privL:'Privacidade: o que medimos e o que não medimos'},
 en:{scale:['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'],
 axis:{X:{name:'Strategy',neg:'Reform',pos:'Rupture'},Y:{name:'Coordination',neg:'Centralism',pos:'Self-management'},Z:{name:'Economy',neg:'Socialized market',pos:'Decommodification'}},
 oct:[{n:'Statist social democracy',t:'Reform · Centralist · Mixed economy'},{n:'Market Marxism-Leninism',t:'Rupture · Centralist · Mixed economy'},{n:'Economic democracy',t:'Reform · Self-managed · Socialized market'},{n:'Mutualism and market self-management',t:'Rupture · Self-managed · Socialized market'},{n:'Democratic planning',t:'Reform · Centralist · Decommodified'},{n:'Classical Marxism-Leninism',t:'Rupture · Centralist · Decommodified'},{n:'Erosion of capitalism',t:'Reform · Self-managed · Decommodified'},{n:'Libertarian communism',t:'Rupture · Self-managed · Decommodified'}],
@@ -408,17 +426,17 @@ projH:'2D projections',projP:'The cube impresses but measures poorly. These thre
 catH:'The currents on the map',catP:'Movements and strands placed on three axes and grouped into eight octants. Coordinates are interpretive: they vary by author and period, and several entries gather neighboring traditions under one point. The icon next to each name shows the current’s position on the two lenses: color runs productivist to post-growth, shape runs classist to intersectional.',
 searchPh:'Search a movement or strand',
 note1a:'How the result is computed.',note1b:' Each statement weighs on a single axis, on a five-point scale. Each axis scores −100 to +100. The closest currents are those with the smallest Euclidean distance in the three-axis space, and affinity falls with distance. The lenses are not part of the distance.',
-note2:'It is an instrument for reflection, not a diagnosis. Positions that look close on the map may diverge in history, method and practice.',
+note2:'It is an instrument for reflection, not a diagnosis. Positions that look close on the map may diverge in history, method and practice.',note3:'Affinity = 100·e^(−d/120), where d is the Euclidean distance on the 3 axes. Deterministic tiebreak: smallest distance, then alphabetical order. Express mode uses a fixed stratified sample (start, middle and end of each group).',
 startK:'Start',startH:'Choose the test size',fullH:'Full · 60 statements',fullD:'The complete map, ~8 minutes. More stable result.',fullB:'Take the full test',fastH:'Express · 15 statements',fastD:'Just the essentials, ~2 minutes. Same axes and currents.',fastB:'Take the express test',shuffleL:'Shuffle the statement order',
 disL:'← Disagree',agreeR:'Agree →',afferm:'Statement',of1:'of',backB:'Back',nextB:'Next page',seeResB:'See result',pageW:'Page',answeredW:'answered',missingW:'Missing',inPageW:'on this page',pageDoneW:'Page complete',gotoPage:'Go to page',
-modeFastL:'Express mode · 15 statements',modeFullL:'Full mode · 60 statements',changeModeB:'Switch mode',confirmMode:'Switching modes erases current answers. Continue?',
+modeFastL:'Express mode · 15 statements',modeFullL:'Full mode · 60 statements',ansW:'answers',varFast:'Express mode: with fewer answers, each one weighs more (±33 per axis). Retake in full mode for a more stable result.',changeModeB:'Switch mode',confirmMode:'Switching modes erases current answers. Continue?',
 yourRes:'Your result',sharedMsg:'You are viewing a shared result.',takeTest:'Take my test',closestH:'Closest currents',seeAllW:'See affinity with all',withArch:'currents',
 copySumB:'Copy summary',copyLinkB:'Copy link',dlImgB:'Download image',reviewB:'Review answers',redoB:'Start over',
 copiedSum:'Summary copied.',copiedLink:'Link copied. Share it to compare results.',copyFailAddr:'Could not copy. Copy from the address bar: ',copyFailSum:'Could not copy automatically. The summary is in the text below.',
 imgDone:'Image downloaded. Share it on your networks.',imgFail:'Could not generate the image in this browser.',
 noResult:'No movement found for this search.',prov6:'Answer 6 statements to see your dot',provP:'Provisional position',provF:'Final result',
 sumName:'Left-Wing Compass',sumOct:'Octant',sumNear:'Closest currents',
-trBadge:'Names and descriptions in Portuguese — translation in progress.',siteName:'Left-Wing Compass',youW:'You',youProv:'You (provisional)'},
+trBadge:'Names and descriptions in Portuguese — translation in progress.',siteName:'Left-Wing Compass',youW:'You',youProv:'You (provisional)',privL:'Privacy: what we measure and what we don’t'},
 es:{scale:['Muy en desacuerdo','En desacuerdo','Neutral','De acuerdo','Muy de acuerdo'],
 axis:{X:{name:'Estrategia',neg:'Reforma',pos:'Ruptura'},Y:{name:'Coordinación',neg:'Centralismo',pos:'Autogestión'},Z:{name:'Economía',neg:'Mercado socializado',pos:'Desmercantilización'}},
 oct:[{n:'Socialdemocracia estatista',t:'Reforma · Centralista · Economía mixta'},{n:'Marxismo-leninismo de mercado',t:'Ruptura · Centralista · Economía mixta'},{n:'Democracia económica',t:'Reforma · Autogestión · Mercado socializado'},{n:'Mutualismo y autogestión de mercado',t:'Ruptura · Autogestión · Mercado socializado'},{n:'Planificación democrática',t:'Reforma · Centralista · Desmercantilizada'},{n:'Marxismo-leninismo clásico',t:'Ruptura · Centralista · Desmercantilizada'},{n:'Erosión del capitalismo',t:'Reforma · Autogestión · Desmercantilizada'},{n:'Comunismo libertario',t:'Ruptura · Autogestión · Desmercantilizada'}],
@@ -438,17 +456,17 @@ projH:'Proyecciones 2D',projP:'El cubo impresiona pero mide mal. Estas tres vist
 catH:'Las corrientes del mapa',catP:'Movimientos y vertientes ubicados en tres ejes y agrupados en ocho octantes. Las coordenadas son interpretativas: varían según autor y período, y varias entradas reúnen tradiciones vecinas bajo un mismo punto. El icono junto a cada nombre muestra la posición de la corriente en las dos lentes: el color va de productivista a postcrecimiento y la forma, de clasista a interseccional.',
 searchPh:'Buscar movimiento o vertiente',
 note1a:'Cómo se calcula el resultado.',note1b:' Cada afirmación pesa en un único eje, en escala de cinco puntos. Cada eje puntúa de −100 a +100. Las corrientes más cercanas son las de menor distancia euclidiana en el espacio de tres ejes, y la afinidad cae con la distancia. Las lentes no entran en la distancia.',
-note2:'Es un instrumento de reflexión, no un diagnóstico. Posiciones cercanas en el mapa pueden divergir en historia, método y práctica.',
+note2:'Es un instrumento de reflexión, no un diagnóstico. Posiciones cercanas en el mapa pueden divergir en historia, método y práctica.',note3:'Afinidad = 100·e^(−d/120), donde d es la distancia euclidiana en los 3 ejes. Desempate determinista: menor distancia, luego orden alfabético. El modo exprés usa una muestra estratificada fija (inicio, medio y fin de cada grupo).',
 startK:'Comenzar',startH:'Elige el tamaño del test',fullH:'Completo · 60 afirmaciones',fullD:'El mapa completo, ~8 minutos. Resultado más estable.',fullB:'Hacer completo',fastH:'Exprés · 15 afirmaciones',fastD:'Solo lo esencial, ~2 minutos. Mismos ejes y corrientes.',fastB:'Hacer exprés',shuffleL:'Mezclar el orden de las afirmaciones',
 disL:'← En desacuerdo',agreeR:'De acuerdo →',afferm:'Afirmación',of1:'de',backB:'Atrás',nextB:'Página siguiente',seeResB:'Ver resultado',pageW:'Página',answeredW:'respondidas',missingW:'Faltan',inPageW:'en esta página',pageDoneW:'Página completa',gotoPage:'Ir a la página',
-modeFastL:'Modo exprés · 15 afirmaciones',modeFullL:'Modo completo · 60 afirmaciones',changeModeB:'Cambiar de modo',confirmMode:'Cambiar de modo borra las respuestas actuales. ¿Continuar?',
+modeFastL:'Modo exprés · 15 afirmaciones',modeFullL:'Modo completo · 60 afirmaciones',ansW:'respuestas',varFast:'Modo exprés: con menos respuestas, cada una pesa más (±33 por eje). Repite en modo completo para un resultado más estable.',changeModeB:'Cambiar de modo',confirmMode:'Cambiar de modo borra las respuestas actuales. ¿Continuar?',
 yourRes:'Tu resultado',sharedMsg:'Estás viendo un resultado compartido.',takeTest:'Hacer mi test',closestH:'Corrientes más cercanas',seeAllW:'Ver la afinidad con las',withArch:'corrientes',
 copySumB:'Copiar resumen',copyLinkB:'Copiar enlace',dlImgB:'Descargar imagen',reviewB:'Revisar respuestas',redoB:'Empezar de cero',
 copiedSum:'Resumen copiado.',copiedLink:'Enlace copiado. Compártelo para comparar resultados.',copyFailAddr:'No se pudo copiar. Copia desde la barra de direcciones: ',copyFailSum:'No se pudo copiar automáticamente. El resumen está en el texto siguiente.',
 imgDone:'Imagen descargada. Compártela en tus redes.',imgFail:'No se pudo generar la imagen en este navegador.',
 noResult:'Ningún movimiento encontrado para esta búsqueda.',prov6:'Responde 6 afirmaciones para ver tu punto',provP:'Posición provisional',provF:'Resultado final',
 sumName:'Brújula de la Izquierda',sumOct:'Octante',sumNear:'Corrientes más cercanas',
-trBadge:'Nombres y descripciones en portugués — traducción en progreso.',siteName:'Brújula de la Izquierda',youW:'Tú',youProv:'Tú (provisional)'}
+trBadge:'Nombres y descripciones en portugués — traducción en progreso.',siteName:'Brújula de la Izquierda',youW:'Tú',youProv:'Tú (provisional)',privL:'Privacidad: qué medimos y qué no'}
 };
 function LANG(){ return window.__LANG || 'pt'; }
 function t(k){ var L = LANG(); return (I18N[L] && I18N[L][k] !== undefined) ? I18N[L][k] : I18N.pt[k]; }
@@ -790,15 +808,17 @@ function score(answers){
   }
   function ax(a){ return a[1] ? Math.round(a[0]/(2*a[1])*100) : 0; }
   function ln(a){ return a[1] ? Math.round(50 + a[0]/(2*a[1])*50) : 50; }
-  return {x:ax(acc.X), y:ax(acc.Y), z:ax(acc.Z), c:ln(acc.C), s:ln(acc.S)};
+  return {x:ax(acc.X), y:ax(acc.Y), z:ax(acc.Z), c:ln(acc.C), s:ln(acc.S),
+    n:{X:acc.X[1],Y:acc.Y[1],Z:acc.Z[1],C:acc.C[1],S:acc.S[1]}};
 }
 
+/* Afinidade = 100*exp(-d/120), d = distância euclidiana em X/Y/Z. Desempate determinístico: menor d, depois nome. */
 function nearest(p){
   var out = ARCH.map(function(a){
     var dx=a.x-p.x, dy=a.y-p.y, dz=a.z-p.z, d=Math.sqrt(dx*dx+dy*dy+dz*dz);
     return {a:a, d:d, pct:Math.round(100*Math.exp(-d/120))};
   });
-  out.sort(function(m,n){ return m.d-n.d; });
+  out.sort(function(m,n){ return (m.d-n.d) || (m.a.n < n.a.n ? -1 : (m.a.n > n.a.n ? 1 : 0)); });
   return out;
 }
 
@@ -847,12 +867,13 @@ function shapeText(s){
   var KEY = 'bussola-esquerda-v2', OLDKEY = 'bussola-esquerda-v1';
   var PAGE_FULL = 10, PAGE_FAST = 5;
   var LABELS = ['Discordo muito','Discordo','Neutro','Concordo','Concordo muito'];
-  /* Modo expresso: 3 primeiras afirmações de cada grupo (15 no total) */
+  /* Modo expresso v2 (estratificado): início, meio e fim de cada grupo — evita viés de ordem da v1 (3 primeiras). */
   var FASTSET = (function(){
-    var want = {X:3,Y:3,Z:3,C:3,S:3}, seen = {X:0,Y:0,Z:0,C:0,S:0}, set = {};
-    for(var i=0;i<QUESTIONS.length;i++){
-      var g = QUESTIONS[i].g;
-      if(seen[g] < want[g]){ set[QUESTIONS[i].id] = true; seen[g]++; }
+    var byG = {X:[],Y:[],Z:[],C:[],S:[],}, set = {}, i, g;
+    for(i=0;i<QUESTIONS.length;i++){ byG[QUESTIONS[i].g].push(QUESTIONS[i].id); }
+    for(g in byG){
+      var arr = byG[g], picks = [0, Math.floor(arr.length/2), arr.length-1];
+      for(i=0;i<picks.length;i++) set[arr[picks[i]]] = true;
     }
     return set;
   })();
@@ -900,6 +921,7 @@ function shapeText(s){
       u.searchParams.set('v','1');
       u.searchParams.set('x',p.x); u.searchParams.set('y',p.y); u.searchParams.set('z',p.z);
       u.searchParams.set('c',p.c); u.searchParams.set('s',p.s);
+      u.searchParams.set('m', state.mode || p.m || 'full');
       u.searchParams.set('lang', window.__LANG || p.lang || 'pt');
       return u.toString();
     }catch(e){ return '/api/card'; }
@@ -918,6 +940,9 @@ function shapeText(s){
       ['v','x','y','z','c','s'].forEach(function(k){ u.searchParams.delete(k); });
       history.replaceState(null,'',u.toString());
     }catch(e){}
+  }
+  function track(name, data){
+    try{ if(window.umami && window.umami.track) window.umami.track(name, data || {}); }catch(e){}
   }
   var root = document.documentElement;
   var pane = document.getElementById('pane');
@@ -991,7 +1016,7 @@ function shapeText(s){
       state.mode = mode; state.picked = true; state.page = 0; state.done = false;
       state.shuffle = !!(sh && sh.checked);
       state.seed = (Date.now() % 100000) + 1;
-      save(); renderQuiz(); updateViz(); scrollTop();
+      save(); track('mode_pick', {mode: mode, lang: LANG()}); renderQuiz(); updateViz(); scrollTop();
     }
     document.getElementById('modeFull').onclick = function(){ pick('full'); };
     document.getElementById('modeFast').onclick = function(){ pick('fast'); };
@@ -1020,7 +1045,7 @@ function shapeText(s){
     updateMeta();
     document.getElementById('back').onclick = function(){ goPage(state.page-1); };
     document.getElementById('next').onclick = function(){
-      if(state.page === pageCount()-1){ state.done = true; save(); renderResult(); updateViz(); scrollTop(); }
+      if(state.page === pageCount()-1){ state.done = true; save(); track('quiz_complete', {mode: state.mode, lang: LANG(), n: answeredCount()}); renderResult(); updateViz(); scrollTop(); }
       else goPage(state.page+1);
     };
     pane.onchange = function(e){
@@ -1081,11 +1106,13 @@ function shapeText(s){
   }
 
   /* ---------- Painel: resultado ---------- */
-  function meterAxis(k, v){
+  function meterAxis(k, v, n){
     var left = (v+100)/200*100, w = Math.abs(v)/2, l0 = v<0 ? 50-w : 50;
+    var extra = '';
+    if(typeof n === 'number' && n > 0) extra = ' · ' + n + ' ' + t('ansW') + ' · ±' + Math.ceil(100/n);
     return '<div class="meter"><div class="ml"><span>'+axn(k,'neg')+'</span><span>'+axn(k,'pos')+'</span></div>'
       + '<div class="track"><i class="mid"></i><i class="fill" style="left:'+l0+'%;width:'+w+'%"></i><b class="mk" style="left:'+left+'%"></b></div>'
-      + '<div class="mv"><b>'+sign(v)+'</b> · '+axisText(k,v)+'</div></div>';
+      + '<div class="mv"><b>'+sign(v)+'</b> · '+axisText(k,v)+extra+'</div></div>';
   }
   function summaryText(p, near){
     var o = octL(octIndex(p));
@@ -1105,7 +1132,8 @@ function shapeText(s){
     h += '<div class="card res">';
     h += '<div><p class="kicker">'+t('yourRes')+'</p><p class="oct">'+o.n+'</p><div class="tags">'+o.t+'</div></div>';
     if(sharedView) h += '<p class="muted" style="margin:0;font-size:13px">'+t('sharedMsg')+' <button class="btn small" id="take" type="button">'+t('takeTest')+'</button></p>';
-    h += meterAxis('X',p.x)+meterAxis('Y',p.y)+meterAxis('Z',p.z);
+    h += meterAxis('X',p.x,(p.n||{}).X)+meterAxis('Y',p.y,(p.n||{}).Y)+meterAxis('Z',p.z,(p.n||{}).Z);
+    if(state.mode === 'fast' && !sharedView) h += '<p class="muted" style="margin:0;font-size:13px">'+t('varFast')+'</p>';
     h += '<div class="two"><div class="meter"><div class="ml"><span>'+W('prod')+'</span><span>'+W('post')+'</span></div><div class="track lens" style="position:relative"><b class="mk" style="left:'+p.c+'%"></b></div><div class="mv"><b>'+p.c+'</b> · '+colorText(p.c)+'</div></div>';
     h += '<div class="meter"><div class="ml"><span>'+W('clas')+'</span><span>'+W('inter')+'</span></div><div class="ladder">'+ladder(lvl,col)+'</div><div class="mv"><b>'+p.s+'</b> · '+shapeText(p.s)+'</div></div></div>';
     h += '<div><h3 style="margin-bottom:8px">'+t('closestH')+'</h3><ol class="top3">';
@@ -1136,14 +1164,20 @@ function shapeText(s){
     if(takeBtn) takeBtn.onclick = function(){ var m = SHARED ? SHARED.m : 'full'; SHARED = null; state.answers={}; state.done=false; state.page=0; state.mode=(m==='fast'?'fast':'full'); state.picked=true; save(); clearURLParams(); renderQuiz(); updateViz(); scrollTop(); };
     document.getElementById('copylink').onclick = function(){
       var msg = document.getElementById('copyMsg'), link = resultURL(p);
-      function ok(){ msg.textContent=t('copiedLink'); }
+      function ok(){ msg.textContent=t('copiedLink'); track('copy_link', {mode: state.mode, lang: LANG()}); }
       function fb(){ msg.textContent=t('copyFailAddr')+link; }
       try{
-        if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok, fb);
+        if(navigator.share){
+          navigator.share({title: t('siteName'), text: summaryText(p, near), url: link}).then(ok, function(err){
+            if(err && err.name === 'AbortError') return;
+            fb();
+          });
+        }
+        else if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok, fb);
         else fb();
       }catch(e){ fb(); }
     };
-    document.getElementById('dlcard').onclick = function(){ downloadCard(p, near, o); };
+    document.getElementById('dlcard').onclick = function(){ track('download_card', {mode: state.mode, lang: LANG()}); downloadCard(p, near, o); };
   }
 
   /* ---------- Card compartilhável (1200x630) ---------- */
@@ -1405,6 +1439,36 @@ function shapeText(s){
   }
 
   /* ---------- Catálogo ---------- */
+  function slug(n){
+    try{
+      return String(n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60) || 'corrente';
+    }catch(e){ return 'corrente'; }
+  }
+  function syncCatQuery(q){
+    try{
+      var u = new URL(window.location.href);
+      if(q) u.searchParams.set('q', q); else u.searchParams.delete('q');
+      history.replaceState(null, '', u.toString());
+    }catch(e){}
+  }
+  function revealCurrent(sl){
+    if(!sl) return false;
+    var el = document.getElementById('c-' + sl);
+    if(!el) return false;
+    try{ el.scrollIntoView({block:'center', behavior: reduce ? 'auto' : 'smooth'}); }catch(e){}
+    el.style.outline = '2px solid var(--accent)';
+    el.style.outlineOffset = '2px';
+    setTimeout(function(){ try{ el.style.outline = ''; el.style.outlineOffset = ''; }catch(e){} }, 2600);
+    return true;
+  }
+  function hashSlug(){
+    try{
+      var h = window.location.hash || '';
+      var m = h.match(/^#c=(.+)$/);
+      return m ? m[1] : null;
+    }catch(e){ return null; }
+  }
   function renderCat(){
     var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
     var qEl = document.getElementById('catq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
@@ -1418,8 +1482,8 @@ function shapeText(s){
       if(!groups[g].length) continue;
       h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div>'+(LANG()!=='pt'?'<div class="tags">'+t('trBadge')+'</div>':'')+'<ul>';
       for(i=0;i<groups[g].length;i++){
-        var a = groups[g][i];
-        h += '<li>'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an">'+a.n+'</span><span class="ad">'+a.d+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span></li>';
+        var a = groups[g][i], sl = slug(a.n);
+        h += '<li id="c-'+sl+'">'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an"><a href="#c='+sl+'" style="color:inherit;text-decoration:none" title="Link para esta corrente">'+a.n+'</a></span><span class="ad">'+a.d+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span></li>';
       }
       h += '</ul></div>';
     }
@@ -1483,12 +1547,14 @@ function shapeText(s){
     setText('catH', t('catH')); setText('catP', t('catP'));
     setText('catqL', t('searchPh'));
     var cq = document.getElementById('catq'); if(cq) cq.setAttribute('placeholder', t('searchPh'));
-    setText('note1a', t('note1a')); setText('note1b', t('note1b')); setText('note2', t('note2'));
+    setText('note1a', t('note1a')); setText('note1b', t('note1b')); setText('note2', t('note2')); setText('note3', t('note3'));
+    setText('privL', t('privL'));
     var og = document.querySelector('meta[property="og:locale"]');
     if(og) og.setAttribute('content', L === 'en' ? 'en_US' : (L === 'es' ? 'es_ES' : 'pt_BR'));
   }
   function setLang(L, rerender){
     if(L !== 'pt' && L !== 'en' && L !== 'es') L = 'pt';
+    var changed = window.__LANG !== L;
     window.__LANG = L;
     try{ localStorage.setItem('bussola-lang', L); }catch(e){}
     try{
@@ -1497,6 +1563,7 @@ function shapeText(s){
       history.replaceState(null, '', u.toString());
     }catch(e){}
     applyStaticLang();
+    if(changed) track('lang_switch', {lang: L});
     if(rerender !== false){ renderCat(); updateLensVars(); updateLensTokens(); updateViz(); refreshPane(); }
   }
   function refreshPane(){
@@ -1516,14 +1583,22 @@ function shapeText(s){
     (function(btn){ btn.onclick = function(){ setLang(btn.getAttribute('data-lang')); }; })(langBtns[li]);
   }
   updateLensVars(); updateLensTokens();
-  document.getElementById('catq').addEventListener('input', renderCat);
+  var catqEl = document.getElementById('catq');
+  try{
+    var initQ = new URLSearchParams(window.location.search).get('q');
+    if(initQ && catqEl) catqEl.value = initQ;
+  }catch(e){}
+  catqEl.addEventListener('input', function(){ renderCat(); syncCatQuery(catqEl.value.trim()); });
   renderCat();
+  window.addEventListener('hashchange', function(){ revealCurrent(hashSlug()); });
   if(SHARED && answeredCount() === 0) renderResult();
   else if(state.done) renderResult();
   else if(!state.picked && answeredCount() === 0) renderModePick();
   else renderQuiz();
   updateViz();
   startAuto();
+  /* Deep-link de corrente: #c=slug (após render inicial) */
+  setTimeout(function(){ revealCurrent(hashSlug()); }, 300);
   if(window.matchMedia){
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
     if(mq.addEventListener) mq.addEventListener('change', refreshTheme);
