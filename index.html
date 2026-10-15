@@ -920,7 +920,9 @@ function shapeText(s){
   function compareURL(a, b){
     try{
       var u = new URL(window.location.href);
+      u.hash = '';
       u.searchParams.delete('x'); u.searchParams.delete('y'); u.searchParams.delete('z');
+      u.searchParams.delete('c'); u.searchParams.delete('s');
       u.searchParams.set('v','1');
       if(a) u.searchParams.set('a', fmtPoint(a)); else u.searchParams.delete('a');
       if(b) u.searchParams.set('b', fmtPoint(b)); else u.searchParams.delete('b');
@@ -944,6 +946,8 @@ function shapeText(s){
   function resultURL(p){
     try{
       var u = new URL(window.location.href);
+      u.hash = '';
+      u.searchParams.delete('a'); u.searchParams.delete('b');
       u.searchParams.set('v','1');
       u.searchParams.set('x',p.x); u.searchParams.set('y',p.y); u.searchParams.set('z',p.z);
       u.searchParams.set('c',p.c); u.searchParams.set('s',p.s);
@@ -974,6 +978,7 @@ function shapeText(s){
   function clearURLParams(){
     try{
       var u = new URL(window.location.href);
+      u.hash = '';
       ['v','x','y','z','c','s','a','b'].forEach(function(k){ u.searchParams.delete(k); });
       history.replaceState(null,'',u.toString());
     }catch(e){}
@@ -1752,8 +1757,9 @@ function shapeText(s){
   else renderQuiz();
   updateViz();
   startAuto();
-  /* Deep-link de corrente: #c=slug (após render inicial) */
-  setTimeout(function(){ revealCurrent(hashSlug()); }, 300);
+  /* Deep-link de corrente: #c=slug (após render inicial; nunca rola sozinho numa view compartilhada/comparada) */
+  var sharedViewActive = !!((COMP && (COMP.a || COMP.b)) || (typeof SHARED !== 'undefined' && SHARED && answeredCount() === 0));
+  if(!sharedViewActive) setTimeout(function(){ revealCurrent(hashSlug()); }, 300);
   if(window.matchMedia){
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
     if(mq.addEventListener) mq.addEventListener('change', refreshTheme);
