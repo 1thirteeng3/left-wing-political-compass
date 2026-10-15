@@ -1,0 +1,993 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Bússola da Esquerda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: quiz à esquerda e cubo 3D fixo à direita; projeções 2D e catálogo de correntes abaixo. */
+:root{
+  --bg:#EDEFEC;
+  --surface:#F7F8F6;
+  --fg:#14181B;
+  --muted:#586268;
+  --line:#C9CFCC;
+  --accent:#2339C7;
+  --accent-fg:#FFFFFF;
+  --dot:#7E8985;
+  --grid:rgba(20,24,27,.16);
+  --tint:rgba(20,24,27,.035);
+  --is-dark:0;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Public Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1113;--surface:#161A1D;--fg:#E8ECEB;--muted:#99A4A9;--line:#2A3135;
+    --accent:#8C99FF;--accent-fg:#0E1113;--dot:#6E797E;--grid:rgba(232,236,235,.18);--tint:rgba(232,236,235,.04);--is-dark:1;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1113;--surface:#161A1D;--fg:#E8ECEB;--muted:#99A4A9;--line:#2A3135;
+  --accent:#8C99FF;--accent-fg:#0E1113;--dot:#6E797E;--grid:rgba(232,236,235,.18);--tint:rgba(232,236,235,.04);--is-dark:1;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.wrap{max-width:1200px;margin:0 auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Cabeçalho */
+.top{display:grid;gap:22px;padding-bottom:26px;border-bottom:2px solid var(--fg);margin-bottom:28px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{
+  font-family:var(--f-display);font-weight:850;font-stretch:125%;font-variation-settings:"wdth" 125;
+  font-size:clamp(2.1rem,7vw,4.6rem);line-height:.94;letter-spacing:-.015em;text-transform:uppercase;
+  margin:0;text-wrap:balance;
+}
+.lead{max-width:64ch;margin:0;color:var(--fg)}
+.spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;border-top:1px solid var(--line)}
+.spec>div{padding:12px 16px 12px 0;display:grid;gap:2px;min-width:0}
+.spec .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.spec b{font-family:var(--f-display);font-weight:700;font-size:15px}
+.spec span.poles{color:var(--muted);font-size:13px}
+
+/* Colunas */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+@media (min-width:980px){
+  .layout{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+  .viz{position:sticky;top:16px}
+}
+h2{font-family:var(--f-display);font-weight:800;font-stretch:112%;font-variation-settings:"wdth" 112;font-size:clamp(1.3rem,3vw,1.75rem);line-height:1.1;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:1.05rem;margin:0;text-wrap:balance}
+.card{background:var(--surface);border:1px solid var(--line);padding:22px;min-width:0}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+/* Quiz */
+.progress{display:grid;gap:8px;margin-bottom:6px}
+.progress .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.bar{height:4px;background:var(--line);position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);transition:width .25s}
+.scalehint{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:14px 0 0}
+fieldset.q{border:0;border-top:1px solid var(--line);margin:0;padding:18px 0 4px;min-width:0}
+fieldset.q:first-of-type{border-top:0}
+fieldset.q legend{padding:0;float:left;width:100%;margin-bottom:12px}
+.qn{display:block;font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:4px}
+.qt{display:block;font-size:16px;line-height:1.45;max-width:62ch;text-wrap:pretty}
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;clear:both;padding-bottom:14px}
+.scale input{position:absolute;opacity:0;width:1px;height:1px}
+.scale label{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:46px;padding:6px 4px;border:1px solid var(--line);background:var(--bg);
+  font-size:11.5px;line-height:1.2;cursor:pointer;color:var(--muted);user-select:none;
+  transition:background .12s,color .12s,border-color .12s;
+}
+.scale label:hover{border-color:var(--fg);color:var(--fg)}
+.scale input:checked+label{background:var(--accent);border-color:var(--accent);color:var(--accent-fg);font-weight:600}
+.scale input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+.nav{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:8px;padding-top:16px;border-top:2px solid var(--fg)}
+.nav .hint{font-size:13px;color:var(--muted)}
+.btn{font:inherit;font-weight:600;padding:.62rem 1.1rem;border:1px solid var(--fg);background:transparent;color:var(--fg);border-radius:2px;cursor:pointer}
+.btn:hover:not(:disabled){background:var(--fg);color:var(--bg)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.primary:hover:not(:disabled){background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.btn:disabled{opacity:.38;cursor:not-allowed}
+.btn.small{padding:.4rem .7rem;font-size:13px}
+
+/* Resultado */
+.res{display:grid;gap:22px}
+.res .oct{font-family:var(--f-display);font-weight:850;font-stretch:118%;font-variation-settings:"wdth" 118;font-size:clamp(1.5rem,4.2vw,2.3rem);line-height:1;margin:2px 0 8px;text-transform:uppercase;text-wrap:balance}
+.res .tags{font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.meter{display:grid;gap:6px}
+.meter .ml{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--muted)}
+.track{position:relative;height:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.track .mid{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--fg);opacity:.5}
+.track .fill{position:absolute;top:0;bottom:0;background:var(--accent);opacity:.22}
+.track .mk{position:absolute;top:50%;width:14px;height:14px;transform:translate(-50%,-50%) rotate(45deg);background:var(--accent);border:2px solid var(--surface)}
+.track.lens{background:var(--lens-grad,#888);border-color:transparent;height:12px}
+.meter .mv{font-size:13.5px}
+.meter .mv b{font-family:var(--f-mono);font-weight:500}
+.ladder{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ladder .step{display:grid;place-items:center;width:30px;height:30px;border:1px solid transparent}
+.ladder .step.on{border-color:var(--accent)}
+.ladder svg{display:block}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.top3{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.top3 li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;padding:14px 0;border-top:1px solid var(--line)}
+.top3 li:first-child{border-top:2px solid var(--fg)}
+.top3 .pct{font-family:var(--f-display);font-weight:800;font-stretch:112%;font-size:1.6rem;line-height:1;grid-row:span 2;min-width:3.1ch;font-variant-numeric:tabular-nums}
+.top3 .nm{font-weight:600}
+.top3 .ds{color:var(--muted);font-size:13.5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+details.all{border-top:1px solid var(--line);padding-top:12px}
+details.all summary{cursor:pointer;font-weight:600}
+.rank{display:grid;gap:0;margin:10px 0 0;padding:0;list-style:none;font-size:13.5px}
+.rank li{display:grid;grid-template-columns:2.6rem minmax(0,1fr) 4.2rem;gap:10px;padding:5px 0;border-top:1px solid var(--line);align-items:baseline}
+.rank .mono{color:var(--muted);text-align:right}
+.rank .rp{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Cubo */
+.vizcard{display:grid;gap:12px;padding:16px}
+.vizhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.vizhead .prov{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.cubewrap{position:relative;border:1px solid var(--line);background:var(--bg)}
+#cube{display:block;width:100%;height:clamp(300px,52vw,430px);cursor:grab;touch-action:pan-y}
+#cube:active{cursor:grabbing}
+.ctrls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:13px}
+.ctrls label{display:flex;gap:6px;align-items:center;color:var(--muted)}
+.ctrls input[type=range]{width:110px;accent-color:var(--accent)}
+.ctrls input[type=checkbox]{accent-color:var(--accent)}
+.legend{display:grid;gap:12px;padding-top:6px;border-top:1px solid var(--line)}
+.legend .lg{display:grid;gap:5px}
+.legend .lg .ml{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px}
+
+/* Projeções */
+section.block{margin-top:44px}
+section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
+.projs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.proj{border:1px solid var(--line);background:var(--surface);padding:12px;min-width:0}
+.proj h3{font-size:.95rem;margin-bottom:8px}
+.proj h3 span{font-family:var(--f-mono);font-weight:400;font-size:11px;color:var(--muted);margin-left:6px}
+.proj svg{display:block;width:100%;height:auto;max-width:100%}
+.proj text{font-family:var(--f-body);font-size:10px;fill:var(--muted);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
+.proj .pd text{opacity:0;fill:var(--fg);font-weight:600}
+.proj .pd:hover text,.proj .pd:focus text{opacity:1}
+.proj .pd{outline:none}
+.proj .pd:focus circle{stroke:var(--accent);stroke-width:2}
+.proj text.you{font-weight:700;fill:var(--fg);font-size:11px}
+.proj text.t3{opacity:1;fill:var(--fg);font-weight:600}
+
+/* Catálogo */
+.cat{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:18px}
+.oc{border-top:2px solid var(--fg);padding-top:10px;min-width:0}
+.oc h3{font-family:var(--f-display);font-weight:800;font-stretch:112%;font-variation-settings:"wdth" 112;text-transform:uppercase;font-size:1rem}
+.oc .tags{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.04em;margin:2px 0 8px}
+.oc ul{list-style:none;margin:0;padding:0}
+.oc li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:2px 10px;padding:9px 0;border-top:1px solid var(--line)}
+.oc li svg{grid-row:span 3;margin-top:2px}
+.oc .an{font-weight:600;font-size:14px}
+.oc .ad{color:var(--muted);font-size:13px}
+.oc .ac{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.catbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
+.catbar input{font:inherit;padding:.55rem .75rem;width:min(100%,340px);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:2px}
+.catbar input::placeholder{color:var(--muted)}
+.oc .empty{color:var(--muted);font-size:14px}
+.note{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:78ch}
+.note p{margin:0 0 8px}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+@media (max-width:520px){
+  .card{padding:16px}
+  .scale label{font-size:10.5px;padding:4px 2px}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">Mapa de correntes da esquerda · 3 eixos + 2 lentes · 60 afirmações · 134 correntes</p>
+    <h1>Bússola da Esquerda</h1>
+    <p class="lead">Um mapa só do campo da esquerda. Em vez de dividir entre economia e costumes, ele mede como você quer chegar lá, como a sociedade se coordena e o que acontece com o mercado. Duas lentes, a cor e a forma do seu ponto, mostram o horizonte produtivo e o sujeito político.</p>
+    <div class="spec" role="list">
+      <div role="listitem"><span class="tag">Eixo X · Estratégia</span><b>Reforma ↔ Ruptura</b><span class="poles">Disputar o Estado por dentro ou superar o sistema.</span></div>
+      <div role="listitem"><span class="tag">Eixo Y · Coordenação</span><b>Centralismo ↔ Autogestão</b><span class="poles">Vanguarda e planejamento central ou conselhos e democracia direta.</span></div>
+      <div role="listitem"><span class="tag">Eixo Z · Economia</span><b>Mercado socializado ↔ Desmercantilização</b><span class="poles">Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.</span></div>
+      <div role="listitem"><span class="tag">Lente · Cor</span><b>Produtivista ↔ Pós-crescimento</b><span class="poles">Do vermelho-laranja ao verde.</span></div>
+      <div role="listitem"><span class="tag">Lente · Forma</span><b>Classista ↔ Interseccional</b><span class="poles">Do triângulo, somando lados, até o círculo.</span></div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="pane" aria-live="polite"></section>
+
+    <aside class="viz" aria-label="Cubo 3D">
+      <div class="card vizcard">
+        <div class="vizhead">
+          <h2 style="margin:0">O cubo</h2>
+          <span class="prov" id="prov"></span>
+        </div>
+        <div class="cubewrap"><canvas id="cube" role="img" aria-label="Cubo tridimensional com as correntes da esquerda e a sua posição"></canvas></div>
+        <div class="ctrls">
+          <label for="tilt">Inclinação <input type="range" id="tilt" min="-80" max="80" value="22"></label>
+          <label for="showall"><input type="checkbox" id="showall"> Nomear todas as correntes</label>
+          <button class="btn small" id="reset" type="button">Resetar vista</button>
+        </div>
+        <div class="legend">
+          <div class="lg"><div class="ml"><span>Cor · Produtivista</span><span>Pós-crescimento</span></div><div class="track lens" id="legTrack"></div></div>
+          <div class="lg"><div class="ml"><span>Forma · Classista</span><span>Interseccional</span></div><div class="ladder" id="legLadder"></div></div>
+          <div class="ml" style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.</span></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <section class="block">
+    <h2>Projeções 2D</h2>
+    <p>O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.</p>
+    <div class="projs" id="projs"></div>
+  </section>
+
+  <section class="block">
+    <h2>As correntes do mapa</h2>
+    <p>Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.</p>
+    <div class="catbar">
+      <label class="sr-only" for="catq">Buscar movimento ou vertente</label>
+      <input id="catq" type="search" placeholder="Buscar movimento ou vertente" autocomplete="off">
+      <span class="muted mono" id="catn" style="font-size:12px"></span>
+    </div>
+    <div class="cat" id="cat"></div>
+  </section>
+
+  <footer class="note">
+    <p><b>Como o resultado é calculado.</b> Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.</p>
+    <p>É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.</p>
+  </footer>
+</div>
+
+<script>
+/*CORE-START*/
+var AXIS = {
+  X:{name:'Estratégia', neg:'Reforma', pos:'Ruptura'},
+  Y:{name:'Coordenação', neg:'Centralismo', pos:'Autogestão'},
+  Z:{name:'Economia', neg:'Mercado socializado', pos:'Desmercantilização'}
+};
+
+/* dir = +1: concordar empurra para o polo positivo (Ruptura, Autogestão, Desmercantilização, Pós-crescimento, Interseccional). */
+var RAW = {
+  X:[
+    ['O Estado capitalista não pode ser reformado por dentro. No fim, a transformação exige uma ruptura.',1],
+    ['Eleições, sindicatos fortes e políticas públicas graduais são o caminho mais realista para o socialismo.',-1],
+    ['Uma greve geral com ocupação dos locais de trabalho transforma mais do que qualquer vitória eleitoral.',1],
+    ['Ampliar direitos trabalhistas e regular o capital já muda a correlação de forças de modo duradouro.',-1],
+    ['Toda conquista dentro da ordem vigente tende a ser revertida quando o capital se sente ameaçado.',1],
+    ['Pactos sociais entre trabalhadores, empresas e governo são instrumentos legítimos de esquerda.',-1],
+    ['Um período de poder dual, com instituições paralelas dos trabalhadores, é necessário antes de qualquer mudança profunda.',1],
+    ['Mesmo imperfeita, a democracia representativa deve ser defendida e aprofundada, não superada.',-1],
+    ['A expropriação de grandes empresas sem indenização deve estar na pauta de qualquer projeto sério.',1],
+    ['Governos de esquerda devem priorizar a estabilidade institucional, mesmo que isso atrase mudanças.',-1],
+    ['As maiores mudanças sociais da história foram conquistadas por revoluções, não por reformas.',1],
+    ['Uma transformação social profunda é possível sem crise revolucionária, pelo acúmulo de reformas.',-1],
+    ['Participar do parlamento serve, no máximo, para denunciar o sistema e acumular forças para o rompimento.',1],
+    ['Quem rejeita a via institucional abandona milhões de pessoas que vivem sob as regras atuais.',-1]
+  ],
+  Y:[
+    ['As decisões centrais de uma empresa devem ser tomadas em assembleia por quem trabalha nela.',1],
+    ['Um partido de vanguarda organizado é indispensável para conduzir a luta.',-1],
+    ['Conselhos de base, com delegados revogáveis, devem substituir a burocracia estatal.',1],
+    ['Uma economia complexa precisa de um núcleo de planejamento centralizado que coordene a produção.',-1],
+    ['Toda hierarquia permanente, mesmo bem-intencionada, tende a virar uma nova classe dominante.',1],
+    ['Em guerra ou sob ameaça externa, comando unificado e disciplina valem mais que participação.',-1],
+    ['As comunidades devem decidir diretamente o que produzir e como, sem ministérios decidindo de cima.',1],
+    ['Técnicos e especialistas devem ter peso decisivo no planejamento, porque a maioria não domina esses temas.',-1],
+    ['Uma federação de comunas autônomas é melhor do que um Estado nacional forte.',1],
+    ['Um Estado forte é necessário para impedir que o capital e a reação retomem o poder.',-1],
+    ['Cargos de direção devem ser sorteados ou rotativos e revogáveis a qualquer momento.',1],
+    ['Disciplina partidária e centralismo democrático são necessários para vencer.',-1],
+    ['O ideal é que o Estado se dissolva aos poucos nas organizações da própria sociedade.',1],
+    ['Ministérios e algoritmos de planejamento podem coordenar a economia melhor do que assembleias.',-1]
+  ],
+  Z:[
+    ['A longo prazo, o dinheiro e o salário devem desaparecer.',1],
+    ['Mercados regulados, com cooperativas competindo entre si, são compatíveis com o socialismo.',-1],
+    ['Todos os bens básicos devem ser fornecidos gratuitamente, sem preço.',1],
+    ['Os preços de mercado trazem informação útil que nenhum planejamento substitui por completo.',-1],
+    ['O trabalho assalariado deve ser abolido, e não apenas humanizado.',1],
+    ['Uma economia mista, com setor público forte e setor privado regulado, já seria um bom ponto de chegada.',-1],
+    ['Mercadoria, lucro e concorrência são formas a superar, e não apenas a domesticar.',1],
+    ['Pequenos negócios e cooperativas que vendem no mercado têm lugar permanente numa sociedade socialista.',-1],
+    ['Cada pessoa deve dar conforme sua capacidade e receber conforme sua necessidade, sem contabilidade individual do trabalho.',1],
+    ['Alguma remuneração diferenciada por esforço ou contribuição é necessária para manter a produtividade.',-1],
+    ['Nenhuma empresa, nem mesmo cooperativa, deveria vender no mercado: a produção deve ser planejada para o uso.',1],
+    ['Empresas pertencentes aos próprios trabalhadores devem poder competir e crescer no mercado.',-1],
+    ['A troca por equivalentes monetários é, em si, uma forma de dominação que precisa ser extinta.',1],
+    ['Tentativas de abolir o mercado de uma só vez levaram, historicamente, à escassez e ao autoritarismo.',-1]
+  ],
+  C:[
+    ['Só acelerando as forças produtivas e a tecnologia será possível superar a escassez.',-1],
+    ['O crescimento econômico sem fim é incompatível com os limites do planeta. É preciso decrescer.',1],
+    ['Grandes obras estatais, energia abundante e industrialização pesada são parte central do projeto socialista.',-1],
+    ['O Bem Viver indígena e a agroecologia apontam um caminho melhor do que a industrialização.',1],
+    ['A automação total e a inteligência artificial devem ser aceleradas para livrar as pessoas do trabalho.',-1],
+    ['Os países ricos devem reduzir de forma planejada o seu consumo e a sua produção material.',1],
+    ['A soberania industrial e energética de um país é condição para a justiça social.',-1],
+    ['A justiça climática exige limitar a mineração e a extração, mesmo que isso custe empregos no curto prazo.',1],
+    ['Uma economia material menor, com mais tempo livre, cuidado e cultura, deve ser prioridade mesmo com PIB menor.',1]
+  ],
+  S:[
+    ['A contradição entre capital e trabalho é a central. As outras opressões derivam dela.',-1],
+    ['Raça, gênero e sexualidade são formas de opressão tão estruturantes quanto a classe.',1],
+    ['A política identitária fragmenta a classe trabalhadora e favorece o capital.',-1],
+    ['A luta antirracista e anticolonial deve ter o mesmo peso que a luta sindical na estratégia da esquerda.',1],
+    ['Salário, emprego e soberania nacional devem ocupar o centro do programa, antes das pautas culturais.',-1],
+    ['Mudar a cultura, a linguagem e as relações cotidianas faz parte da luta política e não é distração.',1],
+    ['Sindicatos e partidos de trabalhadores são o sujeito político principal. Os demais movimentos são aliados.',-1],
+    ['Não há libertação da classe trabalhadora sem a libertação das mulheres, da população negra e LGBTQIA+ no mesmo processo.',1],
+    ['A esquerda deve dar voz própria a grupos que historicamente ficaram fora das organizações de classe.',1]
+  ]
+};
+
+/* Ordem intercalada: X, Y, Z, C, S, X, Y, Z... para que o eixo de cada pergunta não seja óbvio. */
+var QUESTIONS = (function(){
+  var order = ['X','Y','Z','C','S'], idx = {X:0,Y:0,Z:0,C:0,S:0}, out = [], n = 0, added = true;
+  while(added){
+    added = false;
+    for(var k=0;k<order.length;k++){
+      var g = order[k];
+      if(idx[g] < RAW[g].length){
+        var it = RAW[g][idx[g]++];
+        n++;
+        out.push({id:'q'+n, g:g, t:it[0], dir:it[1]});
+        added = true;
+      }
+    }
+  }
+  return out;
+})();
+
+/* x: Reforma(-) Ruptura(+) · y: Centralismo(-) Autogestão(+) · z: Mercado(-) Desmercantilização(+) · c: 0 produtivista … 100 pós-crescimento · s: 0 classista … 100 interseccional */
+var ARCH = [
+  /* Centro-esquerda e reformismo */
+  {n:'Social-liberalismo / Liberalismo social',x:-95,y:-35,z:-95,c:40,s:55,d:'Liberalismo que aceita o Estado de bem-estar e a correção das falhas de mercado, sem mudar a propriedade dos meios de produção.'},
+  {n:'Social-democracia clássica e moderna',x:-82,y:-20,z:-72,c:35,s:40,d:'Estado de bem-estar universal, sindicatos fortes e negociação coletiva num capitalismo regulado.'},
+  {n:'Terceira Via / Blairocentrismo',x:-92,y:-45,z:-98,c:40,s:50,d:'Social-democracia reposicionada para o mercado: parcerias público-privadas, flexibilização e política social focalizada.'},
+  {n:'Trabalhismo / Labourism / Brizolismo',x:-78,y:-50,z:-68,c:15,s:20,d:'Partido ligado aos sindicatos, nacionalismo popular e direitos trabalhistas. No Brasil, o legado de Vargas e Brizola.'},
+  {n:'Socialismo Democrático',x:-52,y:-12,z:-28,c:45,s:45,d:'Direitos sociais universais, poder sindical e propriedade pública de setores-chave, por eleições e movimentos de massa.'},
+  {n:'Progressismo',x:-88,y:-30,z:-85,c:50,s:70,d:'Reformas graduais de direitos civis e justiça social, com ênfase em igualdade e diversidade dentro da ordem existente.'},
+  {n:'Esquerda Cristã / Teologia da Libertação / Socialismo Cristão',x:-15,y:30,z:12,c:55,s:55,d:'Opção preferencial pelos pobres, comunidades eclesiais de base e crítica estrutural ao capitalismo a partir da fé.'},
+  {n:'Verde / Ecossocial-democracia',x:-75,y:10,z:-55,c:80,s:60,d:'Transição ecológica dentro da democracia social: impostos verdes, serviços públicos e participação.'},
+  {n:'Socioliberalismo Desenvolvimentista Latino',x:-85,y:-50,z:-90,c:10,s:35,d:'Crescimento puxado pelo Estado com inclusão social e abertura regulada ao mercado, como no neodesenvolvimentismo latino-americano.'},
+  {n:'Nacional-desenvolvimentismo',x:-75,y:-55,z:-75,c:5,s:10,d:'Industrialização conduzida pelo Estado, soberania econômica e pacto entre capital produtivo e trabalho.'},
+
+  /* Nova Esquerda e movimentos contemporâneos */
+  {n:'Nova Esquerda (New Left)',x:50,y:40,z:20,c:50,s:70,d:'Esquerda dos anos 1960 que deslocou o foco da fábrica para estudantes, cultura e autonomia, e criticou o burocratismo soviético.'},
+  {n:'Escola de Frankfurt / Teoria Crítica / Neomarxismo cultural',x:35,y:20,z:30,c:55,s:60,d:'Crítica da cultura, da razão instrumental e da indústria cultural, sem programa partidário definido.'},
+  {n:'Gramscismo / Eurocomunismo',x:-48,y:-28,z:22,c:35,s:55,d:'Disputa de hegemonia na sociedade civil e partido de massas que aceita o pluralismo e o parlamento como terreno da transição.'},
+  {n:'Feminismo Socialista / Marxista / Interseccional',x:62,y:28,z:58,c:55,s:95,d:'Gênero, classe e trabalho de cuidado como partes do mesmo sistema, com ruptura a partir da reprodução social.'},
+  {n:'Antirracismo radical / Pan-africanismo socialista / Decolonial',x:65,y:10,z:40,c:50,s:92,d:'Racismo e colonialismo como estruturas do capitalismo, com soberania e libertação do Sul global e das populações racializadas.'},
+  {n:'Queer de esquerda / Abolicionismo LGBT',x:60,y:60,z:50,c:55,s:98,d:'Liberação sexual e de gênero ligada à crítica do Estado, da polícia e do capital, com autonomia e apoio mútuo.'},
+  {n:'Ecossocialismo',x:55,y:15,z:35,c:95,s:60,d:'Planejamento ecológico e propriedade social para frear o colapso climático e redistribuir riqueza.'},
+  {n:'Decrescimento / Ecomarxismo / Buen Vivir',x:45,y:55,z:38,c:100,s:72,d:'Redução planejada da produção e do consumo material, harmonia com a natureza e crítica ao desenvolvimentismo.'},
+  {n:'Municipalismo / Comunalismo / Confederalismo Democrático',x:30,y:70,z:25,c:80,s:78,d:'Conselhos e assembleias locais federados em confederação, com economia comunal e liderança paritária de gênero (Rojava).'},
+  {n:'Zapatismo',x:55,y:90,z:40,c:90,s:85,d:'Autonomia indígena, caracóis e mandar obedecendo, sem tomar o poder de Estado.'},
+  {n:'Altermundismo / Movimento antiglobalização',x:-5,y:55,z:10,c:75,s:75,d:'Rede global de movimentos contra o poder das corporações e das instituições financeiras, reunida no Fórum Social Mundial.'},
+
+  /* Marxismos */
+  {n:'Marxismo Ortodoxo / Marxismo Clássico',x:78,y:12,z:88,c:20,s:10,d:'Crítica da economia política de Marx e Engels: luta de classes, revolução proletária e superação do Estado e do capital.'},
+  {n:'Socialismo Utópico',x:-40,y:40,z:30,c:55,s:35,d:'Projetos socialistas anteriores a Marx, baseados em comunidades modelo e persuasão moral em vez de luta de classes.'},
+  {n:'Leninismo',x:85,y:-72,z:62,c:5,s:10,d:'Partido de vanguarda toma o poder e dirige a transição por meio do Estado dos conselhos.'},
+  {n:'Marxismo-Leninismo / Stalinismo',x:80,y:-98,z:85,c:0,s:0,d:'Planejamento centralizado total e partido-Estado de comando único.'},
+  {n:'Trotskismo',x:85,y:-35,z:60,c:15,s:20,d:'Revolução permanente, partido de vanguarda internacional e planejamento sob conselhos operários.'},
+  {n:'Luxemburguismo / Comunismo de Esquerda',x:80,y:30,z:55,c:25,s:25,d:'Greve de massas e espontaneidade da classe, com crítica ao jacobinismo do partido, mas com ruptura.'},
+  {n:'Conselhismo (Comunismo de Conselhos)',x:85,y:80,z:75,c:25,s:25,d:'Conselhos operários assumem a produção e dissolvem o partido e o Estado.'},
+  {n:'Bordiguismo (Esquerda Comunista Italiana)',x:92,y:-85,z:95,c:10,s:5,d:'O partido histórico invariante como guardião do programa comunista, contra o democratismo e contra a autogestão.'},
+  {n:'De Leonismo / Impossibilismo / Sindicalismo marxista',x:60,y:55,z:60,c:25,s:15,d:'Sindicatos industriais como futura administração da produção, combinados com ação política para tomar o Estado.'},
+  {n:'Maoismo / Pensamento Mao Zedong',x:90,y:-65,z:75,c:20,s:25,d:'Guerra popular prolongada e mobilização de massas, com o partido dirigindo uma revolução camponesa.'},
+  {n:'Hoxhaismo / Marxismo-Leninismo anti-revisionista',x:88,y:-95,z:85,c:5,s:5,d:'Marxismo-leninismo albanês, hostil a Tito, a Mao e a Khrushchov, com partido e Estado rígidos.'},
+  {n:'Titoismo / Autogestão Iugoslava',x:40,y:25,z:-75,c:25,s:15,d:'Conselhos de trabalhadores dirigem empresas que operam no mercado dentro de um Estado socialista.'},
+  {n:'Juche / Songun',x:70,y:-100,z:80,c:0,s:0,d:'Autossuficiência nacional, liderança hereditária e prioridade militar num Estado de partido único.'},
+  {n:'Castrismo / Guevarismo / Foquismo',x:88,y:-48,z:58,c:20,s:25,d:'Foco guerrilheiro insurrecional e a formação do homem novo, guiados por uma vanguarda armada.'},
+  {n:'Sandinismo / FSLN',x:70,y:-30,z:-30,c:25,s:40,d:'Revolução nicaraguense de 1979, com economia mista, campanha de alfabetização e participação popular.'},
+  {n:'Chavismo / Bolivarianismo / Socialismo do Século XXI',x:35,y:-55,z:-35,c:15,s:35,d:'Estado forte que distribui a renda dos recursos naturais e estimula comunas em torno de uma liderança mobilizadora.'},
+  {n:'Mariateguismo / Indo-americanismo socialista',x:60,y:30,z:30,c:55,s:72,d:'Comunidades indígenas andinas como base de um socialismo peruano próprio, sem copiar o modelo europeu.'},
+  {n:'Sankarismo / Nkrumahismo / Socialismo Africano',x:40,y:-45,z:-40,c:20,s:45,d:'Soberania africana, panafricanismo, Estado desenvolvimentista e mobilização popular anti-imperialista.'},
+  {n:'Nasserismo / Baathismo de esquerda / Socialismo Árabe',x:35,y:-75,z:-55,c:10,s:15,d:'Nacionalismo árabe com reforma agrária, nacionalizações e Estado forte de partido ou de líder.'},
+  {n:'Operaismo / Autonomia Italiana / Pós-operaismo',x:70,y:75,z:60,c:40,s:65,d:'Lutas autônomas da classe, recusa do trabalho e redes fora de partidos e sindicatos.'},
+  {n:'Situacionismo',x:82,y:85,z:72,c:55,s:65,d:'Crítica da sociedade do espetáculo, deriva e subversão da vida cotidiana, com conselhos operários como horizonte.'},
+  {n:'Marxismo Analítico / Marxismo Acadêmico',x:-20,y:18,z:-32,c:40,s:35,d:'Marxismo reconstruído com rigor da filosofia analítica e da economia: Cohen, Elster, Roemer, Wright.'},
+  {n:'Escola da Regulação / Neogramscianismo econômico',x:-55,y:-30,z:-50,c:40,s:35,d:'Análise dos regimes de acumulação e dos modos de regulação do capitalismo, com propostas de reforma institucional.'},
+  {n:'Comunização / Insurrecionalismo contemporâneo / Tiqqun / Comitê Invisível',x:95,y:62,z:100,c:45,s:62,d:'A revolução já é a abolição imediata do valor, do dinheiro e do trabalho, sem fase de transição.'},
+  {n:'Posadismo',x:92,y:-60,z:90,c:0,s:15,d:'Vertente trotskista que combina revolução mundial e planejamento com a aposta numa civilização extraterrestre socialista.'},
+
+  /* Anarquismos */
+  {n:'Mutualismo (Proudhon)',x:45,y:75,z:-70,c:40,s:20,d:'Crédito mútuo e trocas entre produtores associados e federados, sem Estado nem capital.'},
+  {n:'Anarco-coletivismo (Bakunin)',x:90,y:85,z:40,c:40,s:25,d:'Propriedade coletiva dos meios de produção, remuneração pelo trabalho, revolta social e federalismo.'},
+  {n:'Anarco-comunismo (Kropotkin, Malatesta, Emma Goldman)',x:85,y:90,z:90,c:60,s:70,d:'Comunas federadas, abolição do Estado, do dinheiro e da propriedade, e distribuição por necessidade.'},
+  {n:'Anarco-sindicalismo',x:80,y:80,z:70,c:35,s:25,d:'Sindicatos de ação direta e greve geral que se tornam os órgãos da nova sociedade.'},
+  {n:'Anarco-individualismo',x:60,y:100,z:-55,c:50,s:55,d:'Soberania do indivíduo contra o Estado, a moral e os coletivismos, com associações livres e mercado de produtores.'},
+  {n:'Illegalismo / Anarquismo insurrecional',x:100,y:95,z:82,c:60,s:58,d:'Ação direta e ilegal contra o Estado e o capital, organização por afinidade e recusa do trabalho.'},
+  {n:'Plataformismo / Especifismo',x:85,y:55,z:70,c:40,s:35,d:'Anarquismo organizado em federação, com unidade tática e teórica. No Sul global, o especifismo.'},
+  {n:'Anarco-feminismo / Anarco-queer',x:80,y:92,z:80,c:70,s:98,d:'Patriarcado e normas de gênero tratados como hierarquias a abolir junto com o Estado e o capital.'},
+  {n:'Anarco-ecologia / Ecologia Social / Anarco-primitivismo',x:75,y:95,z:72,c:100,s:55,d:'Hierarquia social e degradação ecológica como partes do mesmo problema, do municipalismo ao rewilding.'},
+  {n:'Anarco-pacifismo / Anarco-cristão',x:30,y:90,z:50,c:80,s:55,d:'Rejeição do Estado e da violência a partir da não violência e do Evangelho, na linha de Tolstói.'},
+  {n:'Agorismo (esquerdista)',x:55,y:92,z:-96,c:50,s:45,d:'Contraeconomia e mercados livres de privilégios estatais, com orientação antiautoritária e anticorporativa.'},
+  {n:'Municipalismo Libertário',x:25,y:75,z:40,c:85,s:65,d:'Assembleias populares de bairro federadas em confederação, esvaziando o Estado nacional (Bookchin).'},
+
+  /* Socialismos históricos do século XIX e início do XX */
+  {n:'Babouvismo / Neo-babouvismo',x:90,y:-55,z:80,c:35,s:15,d:'Conspiração dos Iguais: igualdade real, propriedade comum e insurreição conduzida por um núcleo secreto.'},
+  {n:'Diggers / Levellers / Milenarismo de Münster',x:85,y:45,z:75,c:65,s:25,d:'Movimentos igualitários e comunitários da Reforma e da Revolução Inglesa, com terra comum e esperança milenarista.'},
+  {n:'Blanquismo',x:98,y:-90,z:55,c:20,s:5,d:'Golpe insurrecional de uma minoria revolucionária disciplinada, seguido de uma ditadura provisória.'},
+  {n:'Cartismo / Chartism',x:-70,y:30,z:-60,c:40,s:25,d:'Movimento operário britânico pelo sufrágio universal masculino e por reformas políticas (1838–1850).'},
+  {n:'Owenismo',x:-45,y:68,z:38,c:50,s:30,d:'Aldeias cooperativas, cooperativas de consumo e bônus de trabalho, inspirados por Robert Owen.'},
+  {n:'Fourierismo / Falanstério',x:-52,y:62,z:-8,c:65,s:60,d:'Comunidades chamadas falanstérios, trabalho atraente e libertação das mulheres, com remuneração a capital, trabalho e talento.'},
+  {n:'Saint-simonianismo',x:-62,y:-78,z:-45,c:0,s:20,d:'Industriais, cientistas e engenheiros dirigindo uma produção planejada em benefício da classe mais numerosa e mais pobre.'},
+  {n:'Icarianismo / Cabetismo',x:-25,y:-55,z:80,c:30,s:25,d:'Comunidade igualitária de bens e direção eleita, descrita na Viagem a Icária de Étienne Cabet.'},
+  {n:'Lassallismo',x:-92,y:-80,z:-48,c:10,s:5,d:'Socialismo de Estado: sufrágio universal e cooperativas de produção financiadas pelo Estado.'},
+  {n:'Austromarxismo',x:-45,y:15,z:-10,c:25,s:20,d:'Democracia social, conselhos de fábrica e educação operária combinados com a via parlamentar.'},
+  {n:'Menchevismo',x:-72,y:-10,z:-40,c:20,s:15,d:'Ala social-democrata russa que defendia uma revolução burguesa antes do socialismo e a ação legal do movimento operário.'},
+  {n:'Narodnismo / Socialismo-Revolucionário (SRs)',x:68,y:55,z:35,c:50,s:30,d:'Socialismo agrário russo baseado na comuna camponesa, com ação direta e terrorismo revolucionário.'},
+  {n:'Bernsteinismo / Revisionismo',x:-100,y:-20,z:-78,c:30,s:20,d:'O socialismo como movimento: reforma gradual, democracia e sindicatos em lugar da catástrofe revolucionária.'},
+  {n:'Kautskismo / Centrismo marxista',x:-38,y:-58,z:60,c:20,s:15,d:'Marxismo ortodoxo de partido de massas, que espera a maturação das contradições e rejeita tanto o reformismo quanto o putschismo.'},
+  {n:'Fabianismo',x:-98,y:-78,z:-62,c:25,s:25,d:'Gradualismo tecnocrático: especialistas, fatos e permeação das elites.'},
+  {n:'Guild Socialism / Gildismo',x:-58,y:78,z:-42,c:40,s:25,d:'Guildas de produtores administram as indústrias, com o Estado representando os consumidores.'},
+  {n:'Impossibilismo / SPGB',x:55,y:50,z:98,c:40,s:15,d:'Recusa de reformas e programas intermediários, com socialismo sem dinheiro por vontade de uma maioria consciente.'},
+  {n:'Bundismo',x:-40,y:40,z:-20,c:40,s:60,d:'Socialismo judaico secular e diaspórico: autonomia cultural nacional e organização operária.'},
+  {n:'Sionismo Socialista / Kibutziano',x:20,y:85,z:80,c:50,s:25,d:'Comunidades voluntárias de propriedade comum e decisão em assembleia, os kibutzim.'},
+
+  /* Marxismo ocidental e crítico do século XX */
+  {n:'Marxismo Humanista / Praxis',x:40,y:65,z:55,c:55,s:55,d:'Ênfase na alienação, na emancipação individual e na autogestão, como na escola Praxis iugoslava.'},
+  {n:'Freudo-marxismo',x:45,y:55,z:45,c:55,s:70,d:'Reich e Marcuse: repressão psíquica e dominação social ligadas, com liberação sexual e política.'},
+  {n:'Open Marxism / Marxismo Autonomista Aberto',x:80,y:75,z:82,c:58,s:55,d:'Crítica das categorias como formas de luta, com a classe como antagonismo aberto e sem teleologia.'},
+  {n:'Teoria da Dependência / Sistema-Mundo',x:62,y:-28,z:48,c:30,s:42,d:'O subdesenvolvimento como produto do capitalismo mundial, e a superexploração do Sul global como condição do centro.'},
+  {n:'Socialismo de Mercado Acadêmico',x:-45,y:20,z:-90,c:30,s:35,d:'Empresas sociais ou cooperativas competem no mercado, e o Estado distribui dividendos e investimento (Roemer, Schweickart).'},
+
+  /* Socialismos de Estado reformados e do Sul global */
+  {n:'Dubcekismo / Socialismo de Rosto Humano',x:-55,y:5,z:-35,c:30,s:35,d:'Reforma interna do socialismo de Estado: liberdade de imprensa, pluralismo e descentralização econômica (Praga, 1968).'},
+  {n:'Kadarismo / Comunismo Goulash',x:-5,y:-75,z:-52,c:15,s:10,d:'Estado de partido único que troca apoio político por consumo e pequenos espaços de mercado.'},
+  {n:'Gorbachevismo / Glasnost-Perestroika',x:-60,y:-45,z:-55,c:30,s:25,d:'Abertura política e reestruturação econômica dentro do sistema soviético.'},
+  {n:'Dengismo / Socialismo com Características Chinesas',x:55,y:-80,z:-70,c:10,s:5,d:'Partido único dirige a economia e usa o mercado como instrumento de desenvolvimento.'},
+  {n:'Pensamento Ho Chi Minh',x:75,y:-60,z:-10,c:15,s:20,d:'Libertação nacional e socialismo sob direção do partido, com abertura de mercado a partir do Đổi mới.'},
+  {n:'Naxalismo',x:92,y:-52,z:68,c:35,s:30,d:'Insurgência maoísta camponesa e adivasi na Índia, com guerra popular e áreas de governo paralelo.'},
+  {n:'Sendero Luminoso / Gonzaloismo',x:98,y:-88,z:70,c:20,s:10,d:'Maoísmo peruano de guerra popular, dirigido pelo presidente Gonzalo e marcado pela violência contra civis.'},
+  {n:'Caminho Prachanda / Maoismo Nepalês',x:50,y:-45,z:40,c:30,s:40,d:'Guerra popular no Nepal que migrou para a via eleitoral e para a república (1996–2006).'},
+  {n:'Pol-Potismo / Khmer Vermelho',x:100,y:-95,z:100,c:40,s:0,d:'Comunismo agrário radical no Camboja (1975–1979), com esvaziamento das cidades e genocídio.'},
+  {n:'Cabralismo / MPLA-FRELIMO-PAIGC Lusófono',x:70,y:-50,z:20,c:25,s:45,d:'Libertação nacional africana lusófona: Cabral, a luta anticolonial e a construção de Estados socialistas.'},
+  {n:'Ujamaa / Ubuntu Socialism / Consciencismo / Humanismo Zambiano',x:10,y:30,z:42,c:60,s:48,d:'Socialismos africanos de base comunitária, com aldeias cooperativas e humanismo como fundamento ético.'},
+  {n:'Lumumbismo',x:60,y:-35,z:-20,c:20,s:40,d:'Independência e soberania sobre os recursos do Congo, nacionalismo pan-africano e não alinhamento.'},
+  {n:'Socialismo Islâmico / Islamo-esquerdismo',x:20,y:-20,z:-15,c:45,s:55,d:'Justiça social, zakat e propriedade comum lidas a partir do Islã, em diálogo com o anti-imperialismo.'},
+  {n:'Gaddafismo / Jamahiriya / Terceira Teoria Universal',x:60,y:20,z:-20,c:25,s:20,d:'Democracia direta por comitês populares no discurso, com liderança personalista na prática.'},
+  {n:'Socialismo Budista',x:10,y:65,z:40,c:90,s:55,d:'Simplicidade, compaixão e cooperação como base econômica.'},
+  {n:'Camilismo / Cristãos pelo Socialismo',x:30,y:10,z:25,c:50,s:50,d:'Radicalização cristã que aderiu à luta revolucionária, como Camilo Torres, ou à via chilena.'},
+  {n:'Ambedkarismo / Dalit-Budismo de Esquerda',x:10,y:35,z:-20,c:55,s:90,d:'Aniquilação das castas, democracia constitucional e conversão budista, com Estado de bem-estar.'},
+  {n:'Periyarismo / Dravidianismo Socialista',x:15,y:25,z:-18,c:50,s:88,d:'Racionalismo, antibramanismo e igualdade de castas e de gênero no sul da Índia.'},
+
+  /* América Latina */
+  {n:'Magonismo',x:95,y:85,z:75,c:40,s:40,d:'Anarquismo mexicano pré-revolucionário do Partido Liberal Mexicano: terra, liberdade e insurreição.'},
+  {n:'Zapatismo Original / Ayala Agrarista',x:75,y:70,z:20,c:55,s:35,d:'Revolução agrária camponesa mexicana, com terra comunal e autonomia das aldeias (Plano de Ayala).'},
+  {n:'Cardenismo',x:-60,y:-38,z:-52,c:25,s:28,d:'Reforma agrária, ejidos e nacionalização do petróleo no México de Lázaro Cárdenas.'},
+  {n:'Aprismo Original / Indoamérica',x:-38,y:-40,z:-45,c:30,s:45,d:'Frente de classes anti-imperialista, com Estado reformista e latino-americanismo.'},
+  {n:'Velasquismo',x:40,y:-85,z:-48,c:15,s:25,d:'Governo militar reformista no Peru (1968–1975): reforma agrária, nacionalizações e comunidades laborais.'},
+  {n:'Peronismo de Esquerda / Montoneros',x:55,y:-58,z:-38,c:20,s:22,d:'Peronismo revolucionário que combinou nacionalismo popular e luta armada nos anos 1970.'},
+  {n:'Allendismo / Via Chilena',x:-58,y:-35,z:5,c:30,s:40,d:'Transição ao socialismo por meios legais e eleitorais, com nacionalização do cobre e reforma agrária.'},
+  {n:'Tupamaros / MLN Uruguai / Mujiquismo',x:65,y:10,z:22,c:55,s:40,d:'Guerrilha urbana uruguaia que depois migrou para a via eleitoral, com austeridade e ecologia popular.'},
+  {n:'Marighellismo / Nova Esquerda Armada Brasileira 1964-73',x:95,y:-30,z:55,c:20,s:25,d:'Guerrilha urbana brasileira contra a ditadura militar, ancorada no Minimanual do Guerrilheiro Urbano.'},
+  {n:'Katarismo / Indianismo / Evismo Comunitário',x:35,y:25,z:25,c:85,s:85,d:'Povos indígenas como sujeito político: plurinacionalidade, comunitarismo andino e controle estatal de recursos.'},
+  {n:'Populismo de Esquerda Laclau-Mouffe',x:-68,y:-25,z:-50,c:50,s:70,d:'Construção hegemônica de um povo contra as elites, por meio da articulação de demandas e de liderança.'},
+
+  /* Correntes contemporâneas e pós-escassez */
+  {n:'Municipalismo Novo / Cidades Rebeldes',x:-30,y:70,z:18,c:75,s:75,d:'Plataformas cidadãs que radicalizam a democracia local, com remunicipalização e comuns urbanos, como Barcelona en Comú.'},
+  {n:'Aceleracionismo de Esquerda',x:45,y:-10,z:70,c:0,s:40,d:'Automação plena e tecnologia pesada para abolir o trabalho, apropriando-se do que o capitalismo desenvolveu.'},
+  {n:'Xenofeminismo / Ciberfeminismo',x:58,y:58,z:62,c:15,s:98,d:'Tecnologia como instrumento de emancipação de gênero e de reconstrução do mundo, contra o essencialismo.'},
+  {n:'Comunismo de Luxo Automatizado / Pós-escassez',x:35,y:-25,z:75,c:5,s:40,d:'Automação, energia abundante e serviços universais para uma vida de luxo acessível a todos.'},
+  {n:'Ciber-socialismo / Cybersyn',x:-35,y:-25,z:55,c:20,s:20,d:'Planejamento com informação em tempo real e participação, sem romper a ordem legal (Cybersyn, Chile, 1971–1973).'},
+  {n:'Pós-trabalhismo / Abolicionismo do Trabalho',x:45,y:50,z:95,c:60,s:60,d:'Recusa e abolição do trabalho: renda básica, redução radical da jornada e fim da centralidade do emprego.'},
+  {n:'Ecomodernismo Socialista',x:20,y:-45,z:35,c:12,s:40,d:'Energia limpa abundante e tecnologia, como nuclear, renováveis e agricultura intensiva, sob propriedade pública.'},
+  {n:'Economia dos Comuns / P2P / Parecon',x:25,y:78,z:55,c:62,s:52,d:'Bens comuns, produção entre pares e planejamento por conselhos de trabalhadores e de consumidores, sem mercado.'},
+  {n:'Democracia Econômica / Meidner / Cooperativismo Mondragon / Economia Solidária',x:-60,y:50,z:-62,c:45,s:35,d:'Fundos de assalariados, cooperativas federadas e economia solidária como caminhos de transferência gradual do poder econômico.'},
+  {n:'Sewer Socialism / Socialismo Municipal',x:-78,y:-35,z:-50,c:30,s:15,d:'Gestão pública competente de água, esgoto, transporte e habitação nas cidades, como em Milwaukee e na Viena Vermelha.'},
+  {n:'MMT de Esquerda / Pós-keynesianismo Radical',x:-75,y:-55,z:-85,c:25,s:25,d:'Moeda soberana, pleno emprego garantido pelo Estado e política fiscal ativa.'},
+  {n:'Georgismo de Esquerda / Geo-socialismo',x:-85,y:10,z:-90,c:65,s:30,d:'Imposto sobre a renda da terra e dos recursos naturais, com mercado livre de rentistas.'},
+  {n:'Solarpunk de Esquerda',x:20,y:70,z:40,c:90,s:80,d:'Futuro de comunidades descentralizadas, energia renovável e cuidado, entre estética e programa.'},
+  {n:'Convivialismo',x:-25,y:55,z:5,c:85,s:60,d:'Manifesto convivialista: pacto de não violência, cooperação e limites ecológicos, sem programa partidário.'},
+  {n:'Erosão do capitalismo (Wright)',x:-30,y:55,z:15,c:55,s:50,d:'Utopias reais: ampliar nichos de economia social e democrática até corroer a lógica capitalista.'},
+
+  /* Anarquismos pós-estruturalistas e de fronteira */
+  {n:'Pós-anarquismo',x:70,y:95,z:55,c:60,s:85,d:'Anarquismo que dialoga com o pós-estruturalismo: poder difuso, subjetividade e crítica do essencialismo.'},
+  {n:'Pós-esquerda / Anarquia Pós-esquerda',x:90,y:98,z:45,c:60,s:45,d:'Crítica da própria esquerda organizada, do moralismo e do ativismo como papel, com ênfase na vida e na liberdade imediata.'},
+  {n:'Anarco-niilismo / Insurrecionalismo Verde',x:98,y:100,z:65,c:100,s:40,d:'Recusa total da civilização industrial e de toda mediação, com ação insurrecional contra a ordem tecnológica.'},
+  {n:'Anarco-transumanismo / Anarco-futurismo',x:65,y:90,z:60,c:15,s:60,d:'Autonomia corporal e tecnológica radical, com redes descentralizadas e emancipação da condição biológica.'},
+  {n:'Veganarquismo / Libertação Total',x:75,y:92,z:65,c:90,s:80,d:'Libertação humana, animal e da terra como lutas inseparáveis, com recusa de toda dominação.'},
+  {n:'Anarco-naturismo / Anarco-surrealismo',x:55,y:96,z:60,c:85,s:65,d:'Vida natural, nudismo, vegetarianismo e imaginação poética como instrumentos de transformação social.'},
+  {n:'Sindicalismo Revolucionário Soreliano',x:90,y:70,z:40,c:30,s:15,d:'Greve geral como mito mobilizador e ação direta, com o sindicato como núcleo moral de uma nova civilização (Sorel).'},
+  {n:'Agorismo de Esquerda / Cripto-anarquismo',x:62,y:88,z:-92,c:35,s:45,d:'Criptografia, moedas e redes como ferramentas de uma contraeconomia que escapa do Estado e das corporações.'}
+];
+
+var OCT = [
+  {n:'Socialdemocracia estatista', t:'Reforma · Centralista · Economia mista'},
+  {n:'Marxismo-leninismo de mercado', t:'Ruptura · Centralista · Economia mista'},
+  {n:'Democracia econômica', t:'Reforma · Autogestão · Mercado socializado'},
+  {n:'Mutualismo e autogestão de mercado', t:'Ruptura · Autogestão · Mercado socializado'},
+  {n:'Planejamento democrático', t:'Reforma · Centralista · Desmercantilizada'},
+  {n:'Marxismo-leninismo clássico', t:'Ruptura · Centralista · Desmercantilizada'},
+  {n:'Erosão do capitalismo', t:'Reforma · Autogestão · Desmercantilizada'},
+  {n:'Comunismo libertário', t:'Ruptura · Autogestão · Desmercantilizada'}
+];
+
+function octIndex(p){ return (p.x>=0?1:0) + (p.y>=0?2:0) + (p.z>=0?4:0); }
+
+function score(answers){
+  var acc = {X:[0,0],Y:[0,0],Z:[0,0],C:[0,0],S:[0,0]};
+  for(var i=0;i<QUESTIONS.length;i++){
+    var q = QUESTIONS[i], v = answers[q.id];
+    if(typeof v === 'number'){ acc[q.g][0] += v*q.dir; acc[q.g][1]++; }
+  }
+  function ax(a){ return a[1] ? Math.round(a[0]/(2*a[1])*100) : 0; }
+  function ln(a){ return a[1] ? Math.round(50 + a[0]/(2*a[1])*50) : 50; }
+  return {x:ax(acc.X), y:ax(acc.Y), z:ax(acc.Z), c:ln(acc.C), s:ln(acc.S)};
+}
+
+function nearest(p){
+  var out = ARCH.map(function(a){
+    var dx=a.x-p.x, dy=a.y-p.y, dz=a.z-p.z, d=Math.sqrt(dx*dx+dy*dy+dz*dz);
+    return {a:a, d:d, pct:Math.round(100*Math.exp(-d/120))};
+  });
+  out.sort(function(m,n){ return m.d-n.d; });
+  return out;
+}
+
+var SIDES = [3,4,5,6,7,8,9,10,12,0]; /* 0 = círculo */
+function shapeLevel(s){ return Math.max(0, Math.min(9, Math.floor(s/10))); }
+function polyPts(cx,cy,r,n){
+  var pts=[], i, a;
+  var oy = n===3 ? r*0.25 : 0;
+  for(i=0;i<n;i++){
+    a = -Math.PI/2 + i*2*Math.PI/n;
+    pts.push((cx + r*Math.cos(a)).toFixed(2)+','+(cy + oy + r*Math.sin(a)).toFixed(2));
+  }
+  return pts.join(' ');
+}
+
+var HUES = [[0,6],[30,26],[55,55],[75,100],[100,140]];
+function hueAt(c){
+  c = Math.max(0, Math.min(100, c));
+  for(var i=1;i<HUES.length;i++){
+    if(c <= HUES[i][0]){
+      var a=HUES[i-1], b=HUES[i], t=(c-a[0])/(b[0]-a[0]);
+      return a[1] + t*(b[1]-a[1]);
+    }
+  }
+  return HUES[HUES.length-1][1];
+}
+function lensColor(c, dark){
+  return 'hsl('+hueAt(c).toFixed(0)+',80%,'+(dark?60:46)+'%)';
+}
+
+function degree(v){ var a=Math.abs(v); return a<15?'equilibrado':a<40?'leve':a<70?'moderado':a<90?'forte':'extremo'; }
+function axisText(k, v){
+  if(Math.abs(v) < 15) return 'Equilibrado entre '+AXIS[k].neg+' e '+AXIS[k].pos;
+  return (v<0?AXIS[k].neg:AXIS[k].pos)+' ('+degree(v)+')';
+}
+function colorText(c){
+  return c<20?'Produtivista':c<40?'Desenvolvimentista':c<60?'Intermediário':c<80?'Ecossocialista':'Pós-crescimento';
+}
+function shapeText(s){
+  return s<20?'Classista':s<40?'Classista com abertura':s<60?'Intermediário':s<80?'Pluralista':'Interseccional';
+}
+/*CORE-END*/
+
+(function(){
+  var KEY = 'bussola-esquerda-v1';
+  var PAGE = 10, PAGES = Math.ceil(QUESTIONS.length/PAGE);
+  var LABELS = ['Discordo muito','Discordo','Neutro','Concordo','Concordo muito'];
+  var state = {page:0, answers:{}, done:false};
+  var root = document.documentElement;
+  var pane = document.getElementById('pane');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function load(){
+    try{
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if(s && s.answers && typeof s.answers === 'object'){
+        state.answers = s.answers;
+        state.page = Math.min(Math.max(parseInt(s.page,10)||0,0),PAGES-1);
+        state.done = !!s.done && answeredCount() === QUESTIONS.length;
+      }
+    }catch(e){}
+  }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  function answeredCount(){
+    var n=0; for(var i=0;i<QUESTIONS.length;i++){ if(typeof state.answers[QUESTIONS[i].id]==='number') n++; } return n;
+  }
+  function isDark(){ return String(getComputedStyle(root).getPropertyValue('--is-dark')).trim()==='1'; }
+  function cssv(n){ return String(getComputedStyle(root).getPropertyValue(n)).trim(); }
+  function user(){
+    if(answeredCount() < 6) return null;
+    var p = score(state.answers); p.prov = !state.done; return p;
+  }
+  function pad(n){ return n<10?'0'+n:''+n; }
+  function sign(v){ return (v>0?'+':v<0?'−':'')+Math.abs(v); }
+
+  /* ---------- Formas ---------- */
+  function shapeSvg(level, size, fill, stroke, sw){
+    var n = SIDES[level], c = size/2, r = size/2 - sw - 1, inner;
+    if(!n) inner = '<circle cx="'+c+'" cy="'+c+'" r="'+r+'"/>';
+    else inner = '<polygon points="'+polyPts(c,c,r,n)+'"/>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+sw+'" stroke-linejoin="round" aria-hidden="true">'+inner+'</svg>';
+  }
+  function ladder(active, fill){
+    var h = '';
+    for(var i=0;i<SIDES.length;i++){
+      var on = i===active;
+      h += '<span class="step'+(on?' on':'')+'">'+shapeSvg(i,22,on?fill:'none','var(--fg)',1.6)+'</span>';
+    }
+    return h;
+  }
+  function updateLensVars(){
+    var dark = isDark(), stops = [];
+    for(var c=0;c<=100;c+=10) stops.push(lensColor(c,dark)+' '+c+'%');
+    root.style.setProperty('--lens-grad','linear-gradient(90deg,'+stops.join(',')+')');
+  }
+
+  /* ---------- Painel: quiz ---------- */
+  function renderQuiz(){
+    var start = state.page*PAGE, qs = QUESTIONS.slice(start, start+PAGE), h = '';
+    h += '<div class="card"><div class="progress"><div class="row"><span id="pgTxt"></span><span id="anTxt"></span></div><div class="bar"><i id="bar"></i></div></div>';
+    h += '<p class="scalehint"><span>← Discordo</span><span>Concordo →</span></p>';
+    for(var i=0;i<qs.length;i++){
+      var q = qs[i], cur = state.answers[q.id], opts = '';
+      for(var v=-2; v<=2; v++){
+        var id = q.id+'_'+(v+2);
+        opts += '<input type="radio" name="'+q.id+'" id="'+id+'" value="'+v+'"'+(cur===v?' checked':'')+'><label for="'+id+'">'+LABELS[v+2]+'</label>';
+      }
+      h += '<fieldset class="q"><legend><span class="qn">Afirmação '+pad(start+i+1)+' de '+QUESTIONS.length+'</span><span class="qt">'+q.t+'</span></legend><div class="scale">'+opts+'</div></fieldset>';
+    }
+    h += '<div class="nav"><button class="btn" id="back" type="button">Voltar</button><span class="hint" id="hint"></span><button class="btn primary" id="next" type="button"></button></div></div>';
+    pane.innerHTML = h;
+    updateMeta();
+    document.getElementById('back').onclick = function(){ goPage(state.page-1); };
+    document.getElementById('next').onclick = function(){
+      if(state.page === PAGES-1){ state.done = true; save(); renderResult(); updateViz(); scrollTop(); }
+      else goPage(state.page+1);
+    };
+    pane.onchange = function(e){
+      var t = e.target;
+      if(t && t.type==='radio'){
+        state.answers[t.name] = parseInt(t.value,10);
+        save(); updateMeta(); updateViz();
+      }
+    };
+  }
+  function pageAnswered(){
+    var start = state.page*PAGE, qs = QUESTIONS.slice(start,start+PAGE), n=0;
+    for(var i=0;i<qs.length;i++) if(typeof state.answers[qs[i].id]==='number') n++;
+    return {n:n, total:qs.length};
+  }
+  function updateMeta(){
+    var pa = pageAnswered(), total = answeredCount();
+    document.getElementById('pgTxt').textContent = 'Página '+(state.page+1)+' de '+PAGES;
+    document.getElementById('anTxt').textContent = total+' de '+QUESTIONS.length+' respondidas';
+    document.getElementById('bar').style.width = (total/QUESTIONS.length*100)+'%';
+    var next = document.getElementById('next'), back = document.getElementById('back'), hint = document.getElementById('hint');
+    back.disabled = state.page===0;
+    next.textContent = state.page===PAGES-1 ? 'Ver resultado' : 'Próxima página';
+    next.disabled = pa.n < pa.total;
+    hint.textContent = pa.n < pa.total ? 'Faltam '+(pa.total-pa.n)+' nesta página' : 'Página completa';
+  }
+  function goPage(p){
+    state.page = Math.max(0, Math.min(PAGES-1, p)); save(); renderQuiz(); scrollTop();
+  }
+  function scrollTop(){
+    var top = pane.getBoundingClientRect().top + window.scrollY - 12;
+    if(window.scrollY > top) window.scrollTo({top:top, behavior: reduce?'auto':'smooth'});
+  }
+
+  /* ---------- Painel: resultado ---------- */
+  function meterAxis(k, v){
+    var left = (v+100)/200*100, w = Math.abs(v)/2, l0 = v<0 ? 50-w : 50;
+    return '<div class="meter"><div class="ml"><span>'+AXIS[k].neg+'</span><span>'+AXIS[k].pos+'</span></div>'
+      + '<div class="track"><i class="mid"></i><i class="fill" style="left:'+l0+'%;width:'+w+'%"></i><b class="mk" style="left:'+left+'%"></b></div>'
+      + '<div class="mv"><b>'+sign(v)+'</b> · '+axisText(k,v)+'</div></div>';
+  }
+  function summaryText(p, near){
+    var o = OCT[octIndex(p)];
+    return 'Bússola da Esquerda\n'
+      + 'Octante: '+o.n+' ('+o.t+')\n'
+      + 'X Estratégia: '+sign(p.x)+' ('+axisText('X',p.x)+')\n'
+      + 'Y Coordenação: '+sign(p.y)+' ('+axisText('Y',p.y)+')\n'
+      + 'Z Economia: '+sign(p.z)+' ('+axisText('Z',p.z)+')\n'
+      + 'Cor: '+colorText(p.c)+' ('+p.c+'/100) · Forma: '+shapeText(p.s)+' ('+p.s+'/100)\n'
+      + 'Correntes mais próximas: '+near.slice(0,3).map(function(r){ return r.a.n+' '+r.pct+'%'; }).join(', ');
+  }
+  function renderResult(){
+    var p = score(state.answers), near = nearest(p), o = OCT[octIndex(p)], dark = isDark();
+    var col = lensColor(p.c, dark), lvl = shapeLevel(p.s), h = '';
+    h += '<div class="card res">';
+    h += '<div><p class="kicker">Seu resultado</p><p class="oct">'+o.n+'</p><div class="tags">'+o.t+'</div></div>';
+    h += meterAxis('X',p.x)+meterAxis('Y',p.y)+meterAxis('Z',p.z);
+    h += '<div class="two"><div class="meter"><div class="ml"><span>Produtivista</span><span>Pós-crescimento</span></div><div class="track lens" style="position:relative"><b class="mk" style="left:'+p.c+'%"></b></div><div class="mv"><b>'+p.c+'</b> · '+colorText(p.c)+'</div></div>';
+    h += '<div class="meter"><div class="ml"><span>Classista</span><span>Interseccional</span></div><div class="ladder">'+ladder(lvl,col)+'</div><div class="mv"><b>'+p.s+'</b> · '+shapeText(p.s)+'</div></div></div>';
+    h += '<div><h3 style="margin-bottom:8px">Correntes mais próximas</h3><ol class="top3">';
+    for(var i=0;i<3;i++){
+      h += '<li><span class="pct">'+near[i].pct+'%</span><span class="nm">'+near[i].a.n+'</span><span class="ds">'+near[i].a.d+'</span></li>';
+    }
+    h += '</ol></div>';
+    h += '<details class="all"><summary>Ver a afinidade com as '+ARCH.length+' correntes</summary><ol class="rank">';
+    for(var j=0;j<near.length;j++){
+      h += '<li><span class="rp">'+near[j].pct+'%</span><span>'+near[j].a.n+'</span><span class="mono">d '+Math.round(near[j].d)+'</span></li>';
+    }
+    h += '</ol></details>';
+    h += '<div class="actions"><button class="btn primary" id="copy" type="button">Copiar resumo</button><button class="btn" id="review" type="button">Revisar respostas</button><button class="btn" id="redo" type="button">Refazer do zero</button></div>';
+    h += '<p class="muted" style="margin:0;font-size:13px" id="copyMsg" aria-live="polite"></p>';
+    h += '</div>';
+    pane.innerHTML = h;
+    pane.onchange = null;
+    document.getElementById('copy').onclick = function(){
+      var txt = summaryText(p, near), msg = document.getElementById('copyMsg');
+      function fb(){ msg.textContent = 'Não foi possível copiar automaticamente. O resumo está no texto abaixo.'; var pre=document.createElement('pre'); pre.style.cssText='white-space:pre-wrap;font-family:var(--f-mono);font-size:12px;margin:8px 0 0;user-select:all'; pre.textContent=txt; msg.appendChild(pre); }
+      try{
+        navigator.clipboard.writeText(txt).then(function(){ msg.textContent='Resumo copiado.'; }, fb);
+      }catch(e){ fb(); }
+    };
+    document.getElementById('review').onclick = function(){ state.done=false; state.page=0; save(); renderQuiz(); updateViz(); scrollTop(); };
+    document.getElementById('redo').onclick = function(){ state.answers={}; state.done=false; state.page=0; save(); renderQuiz(); updateViz(); scrollTop(); };
+  }
+
+  /* ---------- Cubo 3D ---------- */
+  var cv = document.getElementById('cube'), cubeS = {yaw:-0.62, pitch:0.38, auto:!reduce, hover:-1, drag:null};
+  var tilt = document.getElementById('tilt'), showAll = document.getElementById('showall'), raf = 0;
+  var scr = []; /* pontos projetados das correntes, para o hover */
+  var CORNERS = [];
+  for(var ci=0;ci<8;ci++) CORNERS.push({x:(ci&1)?1:-1, y:(ci&2)?1:-1, z:(ci&4)?1:-1});
+  var EDGES = [];
+  for(var ei=0;ei<8;ei++) for(var ej=ei+1;ej<8;ej++){ var xr=ei^ej; if(xr===1||xr===2||xr===4) EDGES.push([ei,ej]); }
+
+  function drawShape(ctx, cx, cy, r, level, fill, stroke, lw){
+    var n = SIDES[level];
+    ctx.beginPath();
+    if(!n){ ctx.arc(cx,cy,r,0,Math.PI*2); }
+    else{
+      var oy = n===3 ? r*0.25 : 0;
+      for(var i=0;i<n;i++){
+        var a = -Math.PI/2 + i*2*Math.PI/n, x = cx + r*Math.cos(a), y = cy + oy + r*Math.sin(a);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+    }
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.lineJoin = 'round'; ctx.lineWidth = lw; ctx.strokeStyle = stroke; ctx.stroke();
+  }
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+  function drawCube(){
+    var w = cv.clientWidth, h = cv.clientHeight;
+    if(!w || !h) return;
+    var dpr = window.devicePixelRatio || 1;
+    if(cv.width !== Math.round(w*dpr) || cv.height !== Math.round(h*dpr)){ cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); }
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+    var fg = cssv('--fg'), muted = cssv('--muted'), grid = cssv('--grid'), dot = cssv('--dot'), bg = cssv('--bg'), accent = cssv('--accent');
+    var dark = isDark(), cx = w/2, cy = h/2, S = Math.min(w,h)*0.30;
+    var cyaw = Math.cos(cubeS.yaw), syaw = Math.sin(cubeS.yaw), cp = Math.cos(cubeS.pitch), sp = Math.sin(cubeS.pitch), D = 4.2;
+    function P(x,y,z){
+      var x1 = x*cyaw + z*syaw, z1 = -x*syaw + z*cyaw;
+      var y1 = y*cp - z1*sp, z2 = y*sp + z1*cp;
+      var k = D/(D - z2);
+      return {x:cx + x1*S*k, y:cy - y1*S*k, z:z2, k:k};
+    }
+    ctx.font = '600 11px "Public Sans",system-ui,sans-serif';
+    ctx.textBaseline = 'middle';
+    function label(text, x, y, align, color){
+      var tw = ctx.measureText(text).width, lx = x;
+      if(align==='right') lx = x - tw; else if(align==='center') lx = x - tw/2;
+      lx = clamp(lx, 6, w - 6 - tw);
+      ctx.lineWidth = 3.5; ctx.strokeStyle = bg; ctx.lineJoin='round'; ctx.strokeText(text, lx, y);
+      ctx.fillStyle = color; ctx.fillText(text, lx, y);
+    }
+    /* Arestas */
+    var i, c1, c2, pa, pb, al;
+    ctx.lineWidth = 1;
+    for(i=0;i<EDGES.length;i++){
+      pa = P(CORNERS[EDGES[i][0]].x, CORNERS[EDGES[i][0]].y, CORNERS[EDGES[i][0]].z);
+      pb = P(CORNERS[EDGES[i][1]].x, CORNERS[EDGES[i][1]].y, CORNERS[EDGES[i][1]].z);
+      al = clamp(0.45 + 0.3*((pa.z+pb.z)/2), 0.2, 0.95);
+      ctx.globalAlpha = al; ctx.strokeStyle = grid; ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    /* Eixos */
+    var ax = [
+      {a:[-1,0,0], b:[1,0,0], l:['Reforma','Ruptura']},
+      {a:[0,-1,0], b:[0,1,0], l:['Centralismo','Autogestão']},
+      {a:[0,0,-1], b:[0,0,1], l:['Mercado','Desmercantilização']}
+    ];
+    ctx.setLineDash([]);
+    for(i=0;i<ax.length;i++){
+      pa = P(ax[i].a[0],ax[i].a[1],ax[i].a[2]); pb = P(ax[i].b[0],ax[i].b[1],ax[i].b[2]);
+      ctx.strokeStyle = muted; ctx.globalAlpha = 0.7; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y); ctx.stroke(); ctx.globalAlpha = 1;
+      var qa = P(ax[i].a[0]*1.14,ax[i].a[1]*1.14,ax[i].a[2]*1.14), qb = P(ax[i].b[0]*1.14,ax[i].b[1]*1.14,ax[i].b[2]*1.14);
+      label(ax[i].l[0], qa.x, qa.y, qa.x < cx ? 'right' : 'left', muted);
+      label(ax[i].l[1], qb.x, qb.y, qb.x < cx ? 'right' : 'left', muted);
+    }
+    /* Correntes */
+    var u = user(), near = u && state.done ? nearest(u).slice(0,3).map(function(r){ return r.a; }) : [];
+    var pts = [], k;
+    for(k=0;k<ARCH.length;k++){
+      var a = ARCH[k], pr = P(a.x/100, a.y/100, a.z/100);
+      pts.push({i:k, p:pr, a:a});
+    }
+    scr = pts;
+    var order = pts.slice().sort(function(m,n){ return m.p.z - n.p.z; });
+    for(k=0;k<order.length;k++){
+      var o = order[k], isNear = near.indexOf(o.a) >= 0, r = (isNear?4.6:3.3)*o.p.k;
+      ctx.globalAlpha = clamp(0.55 + 0.25*o.p.z, 0.35, 1);
+      ctx.beginPath(); ctx.arc(o.p.x, o.p.y, r, 0, Math.PI*2); ctx.fillStyle = isNear ? fg : dot; ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    /* Rótulos das correntes */
+    for(k=0;k<order.length;k++){
+      var o2 = order[k];
+      if(showAll.checked || near.indexOf(o2.a)>=0 || cubeS.hover===o2.i){
+        label(o2.a.n, o2.p.x+7, o2.p.y-8, 'left', fg);
+      }
+    }
+    /* Ponto do usuário */
+    if(u){
+      var up = P(u.x/100, u.y/100, u.z/100), fl = P(u.x/100, -1, u.z/100), col = lensColor(u.c, dark), rr = 11*up.k;
+      ctx.setLineDash([3,3]); ctx.strokeStyle = fg; ctx.globalAlpha = .55; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(up.x,up.y); ctx.lineTo(fl.x,fl.y); ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.arc(fl.x, fl.y, 2.4, 0, Math.PI*2); ctx.fillStyle = fg; ctx.fill();
+      drawShape(ctx, up.x, up.y, rr+1.5, shapeLevel(u.s), bg, bg, 4);
+      drawShape(ctx, up.x, up.y, rr, shapeLevel(u.s), col, fg, 2);
+      label(u.prov ? 'Você (provisório)' : 'Você', up.x + rr + 6, up.y + 1, 'left', fg);
+    }
+  }
+  function tickAuto(){
+    if(cubeS.auto){ cubeS.yaw += 0.0035; drawCube(); raf = requestAnimationFrame(tickAuto); } else raf = 0;
+  }
+  function startAuto(){ if(!raf && cubeS.auto && !reduce) raf = requestAnimationFrame(tickAuto); }
+  function stopAuto(){ cubeS.auto = false; }
+
+  cv.addEventListener('pointerdown', function(e){
+    stopAuto(); cubeS.drag = {x:e.clientX, y:e.clientY, t:e.pointerType};
+    try{ cv.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  cv.addEventListener('pointermove', function(e){
+    if(cubeS.drag){
+      var dx = e.clientX - cubeS.drag.x, dy = e.clientY - cubeS.drag.y;
+      cubeS.drag.x = e.clientX; cubeS.drag.y = e.clientY;
+      cubeS.yaw += dx*0.011;
+      if(cubeS.drag.t !== 'touch') cubeS.pitch = clamp(cubeS.pitch + dy*0.009, -1.4, 1.4);
+      tilt.value = Math.round(cubeS.pitch*180/Math.PI);
+      drawCube();
+    } else {
+      var rect = cv.getBoundingClientRect(), mx = e.clientX - rect.left, my = e.clientY - rect.top, best = -1, bd = 14;
+      for(var i=0;i<scr.length;i++){
+        var d = Math.hypot(scr[i].p.x-mx, scr[i].p.y-my);
+        if(d < bd){ bd = d; best = scr[i].i; }
+      }
+      if(best !== cubeS.hover){ cubeS.hover = best; drawCube(); }
+    }
+  });
+  function endDrag(){ cubeS.drag = null; }
+  cv.addEventListener('pointerup', endDrag);
+  cv.addEventListener('pointercancel', endDrag);
+  cv.addEventListener('pointerleave', function(){ if(cubeS.hover !== -1){ cubeS.hover = -1; drawCube(); } });
+  tilt.addEventListener('input', function(){ stopAuto(); cubeS.pitch = parseInt(tilt.value,10)*Math.PI/180; drawCube(); });
+  showAll.addEventListener('change', drawCube);
+  document.getElementById('reset').addEventListener('click', function(){
+    cubeS.yaw = -0.62; cubeS.pitch = 0.38; cubeS.auto = !reduce; tilt.value = 22; drawCube(); startAuto();
+  });
+  if(window.ResizeObserver){ new ResizeObserver(function(){ drawCube(); }).observe(cv); } else window.addEventListener('resize', drawCube);
+
+  /* ---------- Projeções 2D ---------- */
+  var PROJ = [
+    {t:'Estratégia × Coordenação', k:'X · Y', hx:'x', hy:'y', l:'Reforma', r:'Ruptura', b:'Centralismo', tp:'Autogestão'},
+    {t:'Estratégia × Economia', k:'X · Z', hx:'x', hy:'z', l:'Reforma', r:'Ruptura', b:'Mercado', tp:'Desmercantilização'},
+    {t:'Coordenação × Economia', k:'Y · Z', hx:'y', hy:'z', l:'Centralismo', r:'Autogestão', b:'Mercado', tp:'Desmercantilização'}
+  ];
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function projSvg(pr, u, near, dark){
+    var W = 300, x0 = 12, x1 = 288, y0 = 12, y1 = 288, cxm = (x0+x1)/2, cym = (y0+y1)/2;
+    function X(v){ return x0 + (v+100)/200*(x1-x0); }
+    function Y(v){ return y1 - (v+100)/200*(y1-y0); }
+    var s = '<svg viewBox="0 0 '+W+' '+W+'" role="img" aria-label="Projeção '+esc(pr.t)+'">';
+    s += '<rect x="'+x0+'" y="'+y0+'" width="'+(x1-x0)+'" height="'+(y1-y0)+'" fill="var(--bg)" stroke="var(--line)"/>';
+    s += '<rect x="'+x0+'" y="'+y0+'" width="'+(cxm-x0)+'" height="'+(cym-y0)+'" fill="var(--tint)"/>';
+    s += '<rect x="'+cxm+'" y="'+cym+'" width="'+(x1-cxm)+'" height="'+(y1-cym)+'" fill="var(--tint)"/>';
+    s += '<line x1="'+cxm+'" y1="'+y0+'" x2="'+cxm+'" y2="'+y1+'" stroke="var(--grid)"/><line x1="'+x0+'" y1="'+cym+'" x2="'+x1+'" y2="'+cym+'" stroke="var(--grid)"/>';
+    s += '<text x="'+(x0+5)+'" y="'+(cym-6)+'">'+esc(pr.l)+'</text>';
+    s += '<text x="'+(x1-5)+'" y="'+(cym-6)+'" text-anchor="end">'+esc(pr.r)+'</text>';
+    s += '<text x="'+cxm+'" y="'+(y0+13)+'" text-anchor="middle">'+esc(pr.tp)+'</text>';
+    s += '<text x="'+cxm+'" y="'+(y1-7)+'" text-anchor="middle">'+esc(pr.b)+'</text>';
+    for(var i=0;i<ARCH.length;i++){
+      var a = ARCH[i], px = X(a[pr.hx]), py = Y(a[pr.hy]), isN = near.indexOf(a) >= 0;
+      var anchor = px > cxm+60 ? 'end' : 'start', tx = anchor==='end' ? -7 : 7;
+      s += '<g class="pd" tabindex="0"><title>'+esc(a.n)+'</title><circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isN?4.6:3.3)+'" fill="'+(isN?'var(--fg)':'var(--dot)')+'" fill-opacity="'+(isN?1:.85)+'"/>';
+      s += '<text class="'+(isN?'t3':'')+'" x="'+(px+tx).toFixed(1)+'" y="'+(py-6).toFixed(1)+'" text-anchor="'+anchor+'">'+esc(a.n)+'</text></g>';
+    }
+    if(u){
+      var ux = X(u[pr.hx]), uy = Y(u[pr.hy]), n = SIDES[shapeLevel(u.s)], col = lensColor(u.c, dark), shape;
+      if(!n) shape = '<circle cx="'+ux.toFixed(1)+'" cy="'+uy.toFixed(1)+'" r="10"';
+      else shape = '<polygon points="'+polyPts(ux,uy,10,n)+'"';
+      s += '<g>'+shape+' fill="'+col+'" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/>';
+      s += '<text class="you" x="'+(ux > cxm+60 ? ux-15 : ux+15).toFixed(1)+'" y="'+(uy+4).toFixed(1)+'" text-anchor="'+(ux > cxm+60 ? 'end' : 'start')+'">Você</text></g>';
+    }
+    return s + '</svg>';
+  }
+  function renderProj(){
+    var u = user(), dark = isDark(), near = u && state.done ? nearest(u).slice(0,3).map(function(r){ return r.a; }) : [], h = '';
+    for(var i=0;i<PROJ.length;i++){
+      h += '<div class="proj"><h3>'+PROJ[i].t+'<span>'+PROJ[i].k+'</span></h3>'+projSvg(PROJ[i], u, near, dark)+'</div>';
+    }
+    document.getElementById('projs').innerHTML = h;
+  }
+
+  /* ---------- Catálogo ---------- */
+  function renderCat(){
+    var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
+    var qEl = document.getElementById('catq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
+    for(i=0;i<ARCH.length;i++){
+      if(q && (ARCH[i].n+' '+ARCH[i].d).toLowerCase().indexOf(q) < 0) continue;
+      groups[octIndex(ARCH[i])].push(ARCH[i]); shown++;
+    }
+    var seq = [0,2,4,6,1,3,5,7];
+    for(var s=0;s<seq.length;s++){
+      var g = seq[s];
+      if(!groups[g].length) continue;
+      h += '<div class="oc"><h3>'+OCT[g].n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+OCT[g].t+'</div><ul>';
+      for(i=0;i<groups[g].length;i++){
+        var a = groups[g][i];
+        h += '<li>'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an">'+a.n+'</span><span class="ad">'+a.d+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span></li>';
+      }
+      h += '</ul></div>';
+    }
+    if(!shown) h = '<p class="oc empty" style="border-top:0">Nenhum movimento encontrado para essa busca.</p>';
+    document.getElementById('cat').innerHTML = h;
+    document.getElementById('catn').textContent = q ? shown+' de '+ARCH.length : ARCH.length+' correntes';
+  }
+  function updateLensTokens(){
+    var dark = isDark();
+    for(var c=0;c<=100;c+=10) root.style.setProperty('--lens-'+c, lensColor(c,dark));
+  }
+
+  /* ---------- Legenda e atualização geral ---------- */
+  function renderLegend(){
+    var u = user(), dark = isDark();
+    document.getElementById('legTrack').style.position = 'relative';
+    var tr = document.getElementById('legTrack');
+    tr.innerHTML = u ? '<b class="mk" style="left:'+u.c+'%"></b>' : '';
+    document.getElementById('legLadder').innerHTML = ladder(u ? shapeLevel(u.s) : -1, u ? lensColor(u.c,dark) : 'none');
+    var pv = document.getElementById('prov');
+    pv.textContent = !u ? 'Responda 6 afirmações para ver seu ponto' : (u.prov ? 'Posição provisória' : 'Resultado final');
+  }
+  function updateViz(){ renderLegend(); drawCube(); renderProj(); }
+  function refreshTheme(){
+    updateLensVars(); updateLensTokens(); renderCat(); updateViz();
+    if(state.done) renderResult();
+  }
+
+  /* ---------- Início ---------- */
+  load();
+  updateLensVars(); updateLensTokens();
+  document.getElementById('catq').addEventListener('input', renderCat);
+  renderCat();
+  if(state.done) renderResult(); else renderQuiz();
+  updateViz();
+  startAuto();
+  if(window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if(mq.addEventListener) mq.addEventListener('change', refreshTheme);
+  }
+  new MutationObserver(refreshTheme).observe(root, {attributes:true, attributeFilter:['data-theme']});
+})();
+</script>
+
+</body></html>
