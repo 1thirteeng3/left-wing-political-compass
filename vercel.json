@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/en", "destination": "/?lang=en" },
+    { "source": "/es", "destination": "/?lang=es" }
+  ],
+  "headers": [
+    {
+      "source": "/sw.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    }
+  ]
+}

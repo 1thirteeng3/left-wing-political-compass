@@ -4,7 +4,16 @@
 <meta name="theme-color" content="#EDEFEC" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1113" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://left-wing-political-compass.vercel.app/">
+<link rel="alternate" hreflang="pt" href="https://left-wing-political-compass.vercel.app/">
+<link rel="alternate" hreflang="en" href="https://left-wing-political-compass.vercel.app/en">
+<link rel="alternate" hreflang="es" href="https://left-wing-political-compass.vercel.app/es">
+<link rel="alternate" hreflang="x-default" href="https://left-wing-political-compass.vercel.app/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232339C7'/%3E%3Cpath d='M16 5l9 16H7z' fill='none' stroke='white' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='19' r='3' fill='white'/%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Bússola da Esquerda">
 <meta property="og:locale" content="pt_BR">
@@ -20,6 +29,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
 <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <style>
@@ -201,14 +211,25 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
 .oc .empty{color:var(--muted);font-size:14px}
 .note{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:78ch}
 .note p{margin:0 0 8px}
-@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}.scale label{transition:none}.skip-link{transition:none}}
 @media (max-width:520px){
   .card{padding:16px}
   .scale label{font-size:10.5px;padding:4px 2px}
 }
+/* Alvos de toque maiores em telas touch */
+@media (pointer:coarse){
+  #cube{height:clamp(320px,70vw,430px)}
+  .ctrls{gap:16px}
+  .ctrls input[type=range]{width:150px;min-height:32px}
+  .btn.small{padding:.55rem .9rem}
+  .scale label{min-height:52px}
+}
+.skip-link{position:absolute;left:12px;top:-48px;z-index:50;background:var(--fg);color:var(--bg);padding:.6rem 1rem;font-weight:600;border-radius:2px;transition:top .15s}
+.skip-link:focus{top:12px}
 </style>
 
 <div class="wrap">
+  <a class="skip-link" href="#pane" id="skipLink">Pular para o questionário</a>
   <header class="top">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
       <p class="kicker" id="kicker" style="margin:0">Mapa de correntes da esquerda · 3 eixos + 2 lentes · 60 afirmações · 134 correntes</p>
@@ -238,7 +259,8 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
           <h2 style="margin:0" id="cubeH">O cubo</h2>
           <span class="prov" id="prov"></span>
         </div>
-        <div class="cubewrap"><canvas id="cube" role="img" aria-label="Cubo tridimensional com as correntes da esquerda e a sua posição"></canvas></div>
+        <div class="cubewrap"><canvas id="cube" role="img" tabindex="0" aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown r" aria-label="Cubo tridimensional com as correntes da esquerda e a sua posição"></canvas></div>
+        <div class="sr-only" id="cubeTable" aria-live="polite"></div>
         <div class="ctrls">
           <label for="tilt"><span id="tiltL">Inclinação</span> <input type="range" id="tilt" min="-80" max="80" value="22"></label>
           <label for="showall"><input type="checkbox" id="showall"> <span id="showAllL">Nomear todas as correntes</span></label>
@@ -406,7 +428,7 @@ copiedSum:'Resumo copiado.',copiedLink:'Link copiado. Compartilhe para comparar 
 imgDone:'Imagem baixada. Compartilhe nas suas redes.',imgFail:'Não foi possível gerar a imagem neste navegador.',
 noResult:'Nenhum movimento encontrado para essa busca.',prov6:'Responda 6 afirmações para ver seu ponto',provP:'Posição provisória',provF:'Resultado final',
 sumName:'Bússola da Esquerda',sumOct:'Octante',sumNear:'Correntes mais próximas',
-trBadge:'Nomes e descrições em português — tradução em progresso.',siteName:'Bússola da Esquerda',youW:'Você',youProv:'Você (provisório)',privL:'Privacidade: o que medimos e o que não medimos'},
+trBadge:'Nomes e descrições em português — tradução em progresso.',siteName:'Bússola da Esquerda',youW:'Você',youProv:'Você (provisório)',privL:'Privacidade: o que medimos e o que não medimos',skipL:'Pular para o questionário'},
 en:{scale:['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'],
 axis:{X:{name:'Strategy',neg:'Reform',pos:'Rupture'},Y:{name:'Coordination',neg:'Centralism',pos:'Self-management'},Z:{name:'Economy',neg:'Socialized market',pos:'Decommodification'}},
 oct:[{n:'Statist social democracy',t:'Reform · Centralist · Mixed economy'},{n:'Market Marxism-Leninism',t:'Rupture · Centralist · Mixed economy'},{n:'Economic democracy',t:'Reform · Self-managed · Socialized market'},{n:'Mutualism and market self-management',t:'Rupture · Self-managed · Socialized market'},{n:'Democratic planning',t:'Reform · Centralist · Decommodified'},{n:'Classical Marxism-Leninism',t:'Rupture · Centralist · Decommodified'},{n:'Erosion of capitalism',t:'Reform · Self-managed · Decommodified'},{n:'Libertarian communism',t:'Rupture · Self-managed · Decommodified'}],
@@ -436,7 +458,7 @@ copiedSum:'Summary copied.',copiedLink:'Link copied. Share it to compare results
 imgDone:'Image downloaded. Share it on your networks.',imgFail:'Could not generate the image in this browser.',
 noResult:'No movement found for this search.',prov6:'Answer 6 statements to see your dot',provP:'Provisional position',provF:'Final result',
 sumName:'Left-Wing Compass',sumOct:'Octant',sumNear:'Closest currents',
-trBadge:'Names and descriptions in Portuguese — translation in progress.',siteName:'Left-Wing Compass',youW:'You',youProv:'You (provisional)',privL:'Privacy: what we measure and what we don’t'},
+trBadge:'Names and descriptions in Portuguese — translation in progress.',siteName:'Left-Wing Compass',youW:'You',youProv:'You (provisional)',privL:'Privacy: what we measure and what we don’t',skipL:'Skip to the quiz'},
 es:{scale:['Muy en desacuerdo','En desacuerdo','Neutral','De acuerdo','Muy de acuerdo'],
 axis:{X:{name:'Estrategia',neg:'Reforma',pos:'Ruptura'},Y:{name:'Coordinación',neg:'Centralismo',pos:'Autogestión'},Z:{name:'Economía',neg:'Mercado socializado',pos:'Desmercantilización'}},
 oct:[{n:'Socialdemocracia estatista',t:'Reforma · Centralista · Economía mixta'},{n:'Marxismo-leninismo de mercado',t:'Ruptura · Centralista · Economía mixta'},{n:'Democracia económica',t:'Reforma · Autogestión · Mercado socializado'},{n:'Mutualismo y autogestión de mercado',t:'Ruptura · Autogestión · Mercado socializado'},{n:'Planificación democrática',t:'Reforma · Centralista · Desmercantilizada'},{n:'Marxismo-leninismo clásico',t:'Ruptura · Centralista · Desmercantilizada'},{n:'Erosión del capitalismo',t:'Reforma · Autogestión · Desmercantilizada'},{n:'Comunismo libertario',t:'Ruptura · Autogestión · Desmercantilizada'}],
@@ -466,7 +488,7 @@ copiedSum:'Resumen copiado.',copiedLink:'Enlace copiado. Compártelo para compar
 imgDone:'Imagen descargada. Compártela en tus redes.',imgFail:'No se pudo generar la imagen en este navegador.',
 noResult:'Ningún movimiento encontrado para esta búsqueda.',prov6:'Responde 6 afirmaciones para ver tu punto',provP:'Posición provisional',provF:'Resultado final',
 sumName:'Brújula de la Izquierda',sumOct:'Octante',sumNear:'Corrientes más cercanas',
-trBadge:'Nombres y descripciones en portugués — traducción en progreso.',siteName:'Brújula de la Izquierda',youW:'Tú',youProv:'Tú (provisional)',privL:'Privacidad: qué medimos y qué no'}
+trBadge:'Nombres y descripciones en portugués — traducción en progreso.',siteName:'Brújula de la Izquierda',youW:'Tú',youProv:'Tú (provisional)',privL:'Privacidad: qué medimos y qué no',skipL:'Saltar al cuestionario'}
 };
 function LANG(){ return window.__LANG || 'pt'; }
 function t(k){ var L = LANG(); return (I18N[L] && I18N[L][k] !== undefined) ? I18N[L][k] : I18N.pt[k]; }
@@ -988,6 +1010,8 @@ function shapeText(s){
   var root = document.documentElement;
   var pane = document.getElementById('pane');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var saveData = false;
+  try{ saveData = !!(navigator.connection && navigator.connection.saveData); }catch(e){}
 
   function load(){
     try{
@@ -1098,7 +1122,7 @@ function shapeText(s){
       var t = e.target;
       if(t && t.type==='radio'){
         state.answers[t.name] = parseInt(t.value,10);
-        save(); updateMeta(); updateViz();
+        save(); updateMeta(); updateVizLight();
       }
     };
   }
@@ -1355,7 +1379,7 @@ function shapeText(s){
   }
 
   /* ---------- Cubo 3D ---------- */
-  var cv = document.getElementById('cube'), cubeS = {yaw:-0.62, pitch:0.38, auto:!reduce, hover:-1, drag:null};
+  var cv = document.getElementById('cube'), cubeS = {yaw:-0.62, pitch:0.38, auto:(!reduce && !saveData), hover:-1, drag:null};
   var tilt = document.getElementById('tilt'), showAll = document.getElementById('showall'), raf = 0;
   var scr = []; /* pontos projetados das correntes, para o hover */
   var CORNERS = [];
@@ -1492,6 +1516,13 @@ function shapeText(s){
     stopAuto(); cubeS.drag = {x:e.clientX, y:e.clientY, t:e.pointerType};
     try{ cv.setPointerCapture(e.pointerId); }catch(err){}
   });
+  var cubeRaf = 0;
+  function drawCubeSoon(){
+    if(cubeRaf) return;
+    try{
+      cubeRaf = requestAnimationFrame(function(){ cubeRaf = 0; drawCube(); });
+    }catch(e){ cubeRaf = 0; drawCube(); }
+  }
   cv.addEventListener('pointermove', function(e){
     if(cubeS.drag){
       var dx = e.clientX - cubeS.drag.x, dy = e.clientY - cubeS.drag.y;
@@ -1499,7 +1530,7 @@ function shapeText(s){
       cubeS.yaw += dx*0.011;
       if(cubeS.drag.t !== 'touch') cubeS.pitch = clamp(cubeS.pitch + dy*0.009, -1.4, 1.4);
       tilt.value = Math.round(cubeS.pitch*180/Math.PI);
-      drawCube();
+      drawCubeSoon();
     } else {
       var rect = cv.getBoundingClientRect(), mx = e.clientX - rect.left, my = e.clientY - rect.top, best = -1, bd = 14;
       for(var i=0;i<scr.length;i++){
@@ -1513,10 +1544,26 @@ function shapeText(s){
   cv.addEventListener('pointerup', endDrag);
   cv.addEventListener('pointercancel', endDrag);
   cv.addEventListener('pointerleave', function(){ if(cubeS.hover !== -1){ cubeS.hover = -1; drawCube(); } });
-  tilt.addEventListener('input', function(){ stopAuto(); cubeS.pitch = parseInt(tilt.value,10)*Math.PI/180; drawCube(); });
+  tilt.addEventListener('input', function(){ stopAuto(); cubeS.pitch = parseInt(tilt.value,10)*Math.PI/180; drawCubeSoon(); });
   showAll.addEventListener('change', drawCube);
   document.getElementById('reset').addEventListener('click', function(){
-    cubeS.yaw = -0.62; cubeS.pitch = 0.38; cubeS.auto = !reduce; tilt.value = 22; drawCube(); startAuto();
+    cubeS.yaw = -0.62; cubeS.pitch = 0.38; cubeS.auto = (!reduce && !saveData); tilt.value = 22; drawCube(); startAuto();
+  });
+  /* Teclado no cubo: setas giram, R reseta (o title do botão já anunciava o atalho) */
+  cv.addEventListener('keydown', function(e){
+    var step = 0.12, handled = true;
+    stopAuto();
+    if(e.key === 'ArrowLeft') cubeS.yaw -= step;
+    else if(e.key === 'ArrowRight') cubeS.yaw += step;
+    else if(e.key === 'ArrowUp') cubeS.pitch = clamp(cubeS.pitch - 0.1, -1.4, 1.4);
+    else if(e.key === 'ArrowDown') cubeS.pitch = clamp(cubeS.pitch + 0.1, -1.4, 1.4);
+    else if(e.key === 'r' || e.key === 'R'){ cubeS.yaw = -0.62; cubeS.pitch = 0.38; }
+    else handled = false;
+    if(handled){
+      try{ e.preventDefault(); }catch(err){}
+      tilt.value = Math.round(cubeS.pitch*180/Math.PI);
+      drawCube();
+    }
   });
   if(window.ResizeObserver){ new ResizeObserver(function(){ drawCube(); }).observe(cv); } else window.addEventListener('resize', drawCube);
 
@@ -1656,16 +1703,53 @@ function shapeText(s){
     document.getElementById('legLadder').innerHTML = ladder(u ? shapeLevel(u.s) : -1, u ? lensColor(u.c,dark) : 'none');
     var pv = document.getElementById('prov');
     pv.textContent = !u ? t('prov6') : (u.prov ? t('provP') : t('provF'));
+    /* Alternativa textual ao canvas para leitores de tela */
+    var ct = document.getElementById('cubeTable');
+    if(ct){
+      if(!u){ ct.textContent = t('prov6'); }
+      else{
+        var rows = ['X ' + axn('X','name') + ': ' + sign(u.x), 'Y ' + axn('Y','name') + ': ' + sign(u.y), 'Z ' + axn('Z','name') + ': ' + sign(u.z)];
+        var extra = '';
+        if(state.done || u.shared){
+          var nn = nearest(u).slice(0,3).map(function(r){ return r.a.n + ' ' + r.pct + '%'; }).join('; ');
+          extra = ' ' + t('closestH') + ': ' + nn + '.';
+        }
+        ct.textContent = rows.join('. ') + '.' + extra;
+      }
+    }
   }
-  function updateViz(){ renderLegend(); drawCube(); renderProj(); }
+  function updateViz(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); if(catSeen) renderCat(); }
+  function updateVizLight(){ renderLegend(); drawCube(); }
+  function updateVizLazy(){ if(projsSeen) renderProj(); if(catSeen) renderCat(); }
+  var projsSeen = false, catSeen = false;
+  function ensureIO(){
+    try{
+      if(!('IntersectionObserver' in window)){ projsSeen = catSeen = true; return; }
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting){
+            if(e.target.id === 'projs') projsSeen = true;
+            if(e.target.id === 'cat') catSeen = true;
+            try{ io.unobserve(e.target); }catch(err){}
+            updateVizLazy();
+          }
+        });
+      }, {rootMargin: '200px'});
+      io.observe(document.getElementById('projs'));
+      io.observe(document.getElementById('cat'));
+    }catch(e){ projsSeen = catSeen = true; }
+  }
   function refreshTheme(){
-    updateLensVars(); updateLensTokens(); renderCat(); updateViz();
+    updateLensVars(); updateLensTokens(); updateViz();
     if(state.done) renderResult();
   }
 
   /* ---------- Idioma ---------- */
   function detectLang(){
     try{
+      var path = window.location.pathname || '/';
+      if(path === '/en' || path.indexOf('/en/') === 0) return 'en';
+      if(path === '/es' || path.indexOf('/es/') === 0) return 'es';
       var q = new URLSearchParams(window.location.search).get('lang');
       if(q) q = q.toLowerCase();
       if(q === 'pt' || q === 'en' || q === 'es') return q;
@@ -1699,9 +1783,16 @@ function shapeText(s){
     setText('catqL', t('searchPh'));
     var cq = document.getElementById('catq'); if(cq) cq.setAttribute('placeholder', t('searchPh'));
     setText('note1a', t('note1a')); setText('note1b', t('note1b')); setText('note2', t('note2')); setText('note3', t('note3'));
-    setText('privL', t('privL'));
+    setText('privL', t('privL')); setText('skipLink', t('skipL'));
     var og = document.querySelector('meta[property="og:locale"]');
     if(og) og.setAttribute('content', L === 'en' ? 'en_US' : (L === 'es' ? 'es_ES' : 'pt_BR'));
+    try{
+      var base = window.location.origin, langPath = L === 'en' ? '/en' : (L === 'es' ? '/es' : '/');
+      var canon = document.querySelector('link[rel="canonical"]');
+      if(canon) canon.setAttribute('href', base + langPath);
+      var ogu = document.querySelector('meta[property="og:url"]');
+      if(ogu) ogu.setAttribute('content', base + langPath);
+    }catch(e){}
   }
   function setLang(L, rerender){
     if(L !== 'pt' && L !== 'en' && L !== 'es') L = 'pt';
@@ -1715,7 +1806,7 @@ function shapeText(s){
     }catch(e){}
     applyStaticLang();
     if(changed) track('lang_switch', {lang: L});
-    if(rerender !== false){ renderCat(); updateLensVars(); updateLensTokens(); updateViz(); refreshPane(); }
+    if(rerender !== false){ updateLensVars(); updateLensTokens(); updateViz(); refreshPane(); }
   }
   function refreshPane(){
     if(CMP) renderCompare(CMP.a, CMP.b);
@@ -1747,7 +1838,9 @@ function shapeText(s){
     if(initQ && catqEl) catqEl.value = initQ;
   }catch(e){}
   catqEl.addEventListener('input', function(){ renderCat(); syncCatQuery(catqEl.value.trim()); });
-  renderCat();
+  /* Deep-link (#c=) ou busca (?q=) exige catálogo renderizado de imediato; senão, lazy via IntersectionObserver */
+  if(hashSlug() || (catqEl.value && catqEl.value.trim())){ projsSeen = true; catSeen = true; renderCat(); }
+  ensureIO();
   window.addEventListener('hashchange', function(){ revealCurrent(hashSlug()); });
   if(COMP && COMP.a && COMP.b) renderCompare(COMP.a, COMP.b);
   else if(SHARED && answeredCount() === 0) renderResult();
@@ -1757,6 +1850,10 @@ function shapeText(s){
   else renderQuiz();
   updateViz();
   startAuto();
+  /* PWA: registra o service worker (offline). Falha silenciosa fora de HTTPS/localhost. */
+  try{
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+  }catch(e){}
   /* Deep-link de corrente: #c=slug (após render inicial) */
   setTimeout(function(){ revealCurrent(hashSlug()); }, 300);
   if(window.matchMedia){

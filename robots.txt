@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://left-wing-political-compass.vercel.app/sitemap.xml
