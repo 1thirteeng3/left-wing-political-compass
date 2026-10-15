@@ -1,0 +1,10 @@
+{
+  "name": "left-wing-political-compass",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Bússola da Esquerda — mapa das correntes da esquerda",
+  "dependencies": {
+    "@vercel/og": "^0.6.5",
+    "react": "^18.3.1"
+  }
+}
