@@ -1,6 +1,6 @@
 /* Bússola da Esquerda — service worker. Cache-first p/ shell estático; network-first p/ /api/card. */
-var CACHE = 'bussola-v1';
-var SHELL = ['/', '/index.html', '/privacidade', '/manifest.json', '/icon-192.png', '/icon-512.png'];
+var CACHE = 'bussola-v3';
+var SHELL = ['/', '/index.html', '/privacidade', '/manifest.json', '/icon-192.png', '/icon-512.png', '/sitemap.xml'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(
@@ -24,8 +24,8 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(fetch(e.request).catch(function () { return caches.match('/'); }));
     return;
   }
-  /* Shell: /en e /es são rewrites da home — normaliza para '/' no cache */
-  var shellPaths = ['/', '/index.html', '/en', '/es'];
+  /* Shell: /en, /es e /s são rewrites — normaliza para '/' no cache */
+  var shellPaths = ['/', '/index.html', '/en', '/es', '/s'];
   var key = shellPaths.indexOf(url.pathname) >= 0 ? '/' : e.request;
   e.respondWith(
     caches.match(key).then(function (hit) {
@@ -34,7 +34,7 @@ self.addEventListener('fetch', function (e) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(key === '/' ? '/' : e.request, copy); });
         return res;
-      }).catch(function () { return caches.match('/'); });
+      }).catch(function () { return caches.match(key).then(function (fallback) { return fallback || caches.match('/'); }); });
     })
   );
 });

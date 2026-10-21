@@ -2,6 +2,10 @@
 <title>Privacidade — Bússola da Esquerda</title>
 <meta name="description" content="O que a Bússola da Esquerda mede e o que não mede sobre você.">
 <link rel="canonical" href="https://left-wing-political-compass.vercel.app/privacidade">
+<meta property="og:title" content="Privacidade — Bússola da Esquerda">
+<meta property="og:description" content="O que a Bússola da Esquerda mede e o que não mede sobre você.">
+<meta property="og:url" content="https://left-wing-political-compass.vercel.app/privacidade">
+<meta property="og:type" content="website">
 <style>body{font-family:system-ui,sans-serif;max-width:44rem;margin:0 auto;padding:2rem 1rem;line-height:1.6;color:#14181B;background:#EDEFEC}a{color:#2339C7}h1{line-height:1.15}ul{padding-left:1.2rem}</style>
 </head><body>
 <h1>Privacidade: o que medimos e o que não medimos</h1>
@@ -23,4 +27,69 @@
 <h2>Seus dados, seu controle</h2>
 <p>O botão "Refazer do zero" apaga suas respostas deste navegador. Links compartilhados contêm apenas as 5 coordenadas do resultado — apague o link e não há mais nada.</p>
 <p><a href="/">← Voltar para a Bússola</a></p>
+<p id="langLinks" style="font-size:12px">Idiomas: <a href="/privacidade">pt</a> · <a href="/privacidade?lang=en">en</a> · <a href="/privacidade?lang=es">es</a></p>
+<script>
+(function(){
+  var L = { pt: null, en: {
+    title: 'Privacy — Left-Wing Compass',
+    desc: 'What the Left-Wing Compass measures and does not measure about you.',
+    h1: 'Privacy: what we measure and what we don’t',
+    p1: 'The Left-Wing Compass was designed to <strong>not know who you are</strong>. Your answers stay in your browser (<code>localStorage</code>) and your result travels in the URL itself when you choose to share the link. There are no accounts, login or profile.',
+    h2a: 'What we measure (after opt-in)',
+    p2: 'We use <a href="https://umami.is">Umami</a>, a cookie-free analytics tool, only for aggregate statistics:',
+    li1: 'test completion (full/express mode, language) — without the answers;',
+    li2: 'clicks on "copy link", "download image" and language switch;',
+    li3: 'visited pages and approximate country (no stored IP).',
+    p3: 'We respect the browser’s <strong>Do Not Track (DNT)</strong> signal: with DNT on, nothing is sent.',
+    h2b: 'What we do NOT measure',
+    li4: 'your individual answers to the statements;',
+    li5: 'name, e-mail or any identifier;',
+    li6: 'tracking cookies or fingerprinting.',
+    h2c: 'Your data, your control',
+    p4: 'The "Start over" button erases your answers from this browser. Shared links contain only the 5 result coordinates — delete the link and nothing remains.',
+    back: '← Back to the Compass',
+    langs: 'Languages: '
+  }, es: {
+    title: 'Privacidad — Brújula de la Izquierda',
+    desc: 'Lo que la Brújula de la Izquierda mide y no mide sobre ti.',
+    h1: 'Privacidad: qué medimos y qué no',
+    p1: 'La Brújula de la Izquierda fue diseñada para <strong>no saber quién eres</strong>. Tus respuestas quedan en tu navegador (<code>localStorage</code>) y tu resultado viaja en la propia URL cuando decides compartir el enlace. No hay cuentas, login ni perfil.',
+    h2a: 'Qué medimos (tras la activación)',
+    p2: 'Usamos <a href="https://umami.is">Umami</a>, una herramienta de analítica sin cookies, solo para estadísticas agregadas:',
+    li1: 'finalización del test (modo completo/exprés, idioma) — sin las respuestas;',
+    li2: 'clics en "copiar enlace", "descargar imagen" y cambio de idioma;',
+    li3: 'páginas visitadas y país aproximado (sin IP almacenada).',
+    p3: 'Respetamos la señal <strong>Do Not Track (DNT)</strong> del navegador: con DNT activado, no se envía nada.',
+    h2b: 'Qué NO medimos',
+    li4: 'tus respuestas individuales a las afirmaciones;',
+    li5: 'nombre, correo o cualquier identificador;',
+    li6: 'cookies de rastreo ni fingerprinting.',
+    h2c: 'Tus datos, tu control',
+    p4: 'El botón "Rehacer desde cero" borra tus respuestas de este navegador. Los enlaces compartidos contienen solo las 5 coordenadas del resultado — borra el enlace y no queda nada.',
+    back: '← Volver a la Brújula',
+    langs: 'Idiomas: '
+  }};
+  var q = new URLSearchParams(location.search).get('lang');
+  if (!q || !L[q]) return;
+  var d = L[q];
+  document.documentElement.lang = q === 'en' ? 'en' : 'es';
+  document.title = d.title;
+  var m = document.querySelector('meta[name="description"]');
+  if (m) m.setAttribute('content', d.desc);
+  function t(sel, html){ var el = document.querySelector(sel); if (el) el.innerHTML = html; }
+  t('h1', d.h1); t('h2:nth-of-type(1)', d.h2a); t('h2:nth-of-type(2)', d.h2b); t('h2:nth-of-type(3)', d.h2c);
+  var ps = document.querySelectorAll('body > p');
+  t('body > p:nth-of-type(1)', d.p1);
+  t('body > p:nth-of-type(2)', d.p2);
+  t('body > p:nth-of-type(3)', d.p3);
+  t('body > p:nth-of-type(5)', d.p4);
+  var lis = document.querySelectorAll('ul li');
+  if (lis.length >= 9) {
+    lis[0].innerHTML = d.li1; lis[1].innerHTML = d.li2; lis[2].innerHTML = d.li3;
+    lis[3].innerHTML = d.li4; lis[4].innerHTML = d.li5; lis[5].innerHTML = d.li6;
+  }
+  var back = document.querySelector('body > p:nth-of-type(6) a');
+  if (back) back.innerHTML = d.back;
+})();
+</script>
 </body></html>
