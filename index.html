@@ -129,7 +129,9 @@ fieldset.q legend{padding:0;float:left;width:100%;margin-bottom:12px}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .btn.primary:hover:not(:disabled){background:var(--fg);border-color:var(--fg);color:var(--bg)}
 .btn:disabled{opacity:.38;cursor:not-allowed}
-.btn.small{padding:.4rem .7rem;font-size:13px}
+  .btn.small{padding:.4rem .7rem;font-size:13px}
+  .btn.ghost{border-color:transparent;background:none;color:inherit;opacity:.7;font-weight:500;padding:.42rem .35rem}
+  .btn.ghost:hover:not(:disabled){background:none;color:var(--accent);opacity:1;text-decoration:underline;text-underline-offset:3px}
 
 /* Resultado */
 .res{display:grid;gap:22px}
@@ -248,6 +250,7 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
       <div role="listitem"><span class="tag" id="spCt">Lente · Cor</span><b id="spCb">Produtivista ↔ Pós-crescimento</b><span class="poles" id="spCd">Do vermelho-laranja ao verde.</span></div>
       <div role="listitem"><span class="tag" id="spSt">Lente · Forma</span><b id="spSb">Classista ↔ Interseccional</b><span class="poles" id="spSd">Do triângulo, somando lados, até o círculo.</span></div>
     </div>
+    <div style="margin-top:18px"><a class="btn primary" id="ctaStart" href="#pane" style="display:inline-block;text-decoration:none">Fazer o teste</a></div>
   </header>
 
   <main class="layout">
@@ -422,8 +425,8 @@ note1a:'Como o resultado é calculado.',note1b:' Cada afirmação pesa em um ún
 note2:'É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.',note3:'Afinidade = 100·e^(−d/120), onde d é a distância euclidiana nos 3 eixos. Desempate determinístico: menor distância, depois ordem alfabética. O modo expresso usa amostra estratificada fixa (início, meio e fim de cada grupo).',
 startK:'Começar',startH:'Escolha o tamanho do teste',fullH:'Completo · 60 afirmações',fullD:'O mapa completo, ~8 minutos. Resultado mais estável.',fullB:'Fazer completo',fastH:'Expresso · 15 afirmações',fastD:'Só o essencial, ~2 minutos. Mesmos eixos e correntes.',fastB:'Fazer expresso',shuffleL:'Embaralhar a ordem das afirmações',
 disL:'← Discordo',agreeR:'Concordo →',afferm:'Afirmação',of1:'de',backB:'Voltar',nextB:'Próxima página',seeResB:'Ver resultado',pageW:'Página',answeredW:'respondidas',missingW:'Faltam',inPageW:'nesta página',pageDoneW:'Página completa',gotoPage:'Ir para a página',
-modeFastL:'Modo expresso · 15 afirmações',modeFullL:'Modo completo · 60 afirmações',ansW:'respostas',varFast:'Modo expresso: com menos respostas, cada uma pesa mais (±33 por eixo). Para um resultado mais estável, refaça no modo completo.',changeModeB:'Trocar de modo',confirmMode:'Trocar de modo apaga as respostas atuais. Continuar?',
-yourRes:'Seu resultado',sharedMsg:'Você está vendo um resultado compartilhado.',takeTest:'Fazer meu teste',cmpTitle:'Comparar resultados',cmpA:'Quem compartilhou',cmpB:'Você',cmpDelta:'Diferença',cmpDist:'Distância entre vocês',cmpCommon:'Em comum no top 3',cmpNone:'Nenhuma corrente em comum no top 3.',cmpBtn:'Comparar com um amigo',cmpLink:'Copiar link da comparação',cmpCopied:'Link da comparação copiado. Peça para a pessoa abrir e fazer o teste.',cmpFriend:'Amigo',closestH:'Correntes mais próximas',seeAllW:'Ver a afinidade com as',withArch:'correntes',
+modeFastL:'Modo expresso · 15 afirmações',modeFullL:'Modo completo · 60 afirmações',ansW:'respostas',varFast:'Modo expresso: com menos respostas, cada uma pesa mais (±33 por eixo). Para um resultado mais estável, refaça no modo completo.',changeModeB:'Trocar de modo',confirmMode:'Trocar de modo apaga as respostas atuais. Continuar?',confirmYesB:'Trocar mesmo assim',cancelB:'Cancelar',
+ctaStart:'Fazer o teste',saveNote:'salvo neste navegador',yourRes:'Seu resultado',sharedMsg:'Você está vendo um resultado compartilhado.',takeTest:'Fazer meu teste',cmpTitle:'Comparar resultados',cmpA:'Quem compartilhou',cmpB:'Você',cmpDelta:'Diferença',cmpDist:'Distância entre vocês',cmpScale:'Δ em escala −100 a +100 · C e S em pontos 0–100',cmpMore:'mais',cmpLess:'menos',cmpCommon:'Em comum no top 3',cmpNone:'Nenhuma corrente em comum no top 3.',cmpBtn:'Comparar com um amigo',cmpLink:'Copiar link da comparação',cmpCopied:'Link da comparação copiado. Peça para a pessoa abrir e fazer o teste.',cmpFriend:'Amigo',closestH:'Correntes mais próximas',seeAllW:'Ver a afinidade com as',withArch:'correntes',
 copySumB:'Copiar resumo',copyLinkB:'Copiar link',dlImgB:'Baixar imagem',reviewB:'Revisar respostas',redoB:'Refazer do zero',
 copiedSum:'Resumo copiado.',copiedLink:'Link copiado. Compartilhe para comparar resultados.',copyFailAddr:'Não foi possível copiar. Copie da barra de endereços: ',copyFailSum:'Não foi possível copiar automaticamente. O resumo está no texto abaixo.',
 imgDone:'Imagem baixada. Compartilhe nas suas redes.',imgFail:'Não foi possível gerar a imagem neste navegador.',
@@ -452,8 +455,8 @@ note1a:'How the result is computed.',note1b:' Each statement weighs on a single 
 note2:'It is an instrument for reflection, not a diagnosis. Positions that look close on the map may diverge in history, method and practice.',note3:'Affinity = 100·e^(−d/120), where d is the Euclidean distance on the 3 axes. Deterministic tiebreak: smallest distance, then alphabetical order. Express mode uses a fixed stratified sample (start, middle and end of each group).',
 startK:'Start',startH:'Choose the test size',fullH:'Full · 60 statements',fullD:'The complete map, ~8 minutes. More stable result.',fullB:'Take the full test',fastH:'Express · 15 statements',fastD:'Just the essentials, ~2 minutes. Same axes and currents.',fastB:'Take the express test',shuffleL:'Shuffle the statement order',
 disL:'← Disagree',agreeR:'Agree →',afferm:'Statement',of1:'of',backB:'Back',nextB:'Next page',seeResB:'See result',pageW:'Page',answeredW:'answered',missingW:'Missing',inPageW:'on this page',pageDoneW:'Page complete',gotoPage:'Go to page',
-modeFastL:'Express mode · 15 statements',modeFullL:'Full mode · 60 statements',ansW:'answers',varFast:'Express mode: with fewer answers, each one weighs more (±33 per axis). Retake in full mode for a more stable result.',changeModeB:'Switch mode',confirmMode:'Switching modes erases current answers. Continue?',
-yourRes:'Your result',sharedMsg:'You are viewing a shared result.',takeTest:'Take my test',cmpTitle:'Compare results',cmpA:'Who shared',cmpB:'You',cmpDelta:'Difference',cmpDist:'Distance between you',cmpCommon:'Shared in top 3',cmpNone:'No shared currents in the top 3.',cmpBtn:'Compare with a friend',cmpLink:'Copy comparison link',cmpCopied:'Comparison link copied. Ask the person to open it and take the test.',cmpFriend:'Friend',closestH:'Closest currents',seeAllW:'See affinity with all',withArch:'currents',
+modeFastL:'Express mode · 15 statements',modeFullL:'Full mode · 60 statements',ansW:'answers',varFast:'Express mode: with fewer answers, each one weighs more (±33 per axis). Retake in full mode for a more stable result.',changeModeB:'Switch mode',confirmMode:'Switching modes erases current answers. Continue?',confirmYesB:'Switch anyway',cancelB:'Cancel',
+ctaStart:'Take the test',saveNote:'saved in this browser',yourRes:'Your result',sharedMsg:'You are viewing a shared result.',takeTest:'Take my test',cmpTitle:'Compare results',cmpA:'Who shared',cmpB:'You',cmpDelta:'Difference',cmpDist:'Distance between you',cmpScale:'Δ on a −100 to +100 scale · C and S in 0–100 points',cmpMore:'more',cmpLess:'less',cmpCommon:'Shared in top 3',cmpNone:'No shared currents in the top 3.',cmpBtn:'Compare with a friend',cmpLink:'Copy comparison link',cmpCopied:'Comparison link copied. Ask the person to open it and take the test.',cmpFriend:'Friend',closestH:'Closest currents',seeAllW:'See affinity with all',withArch:'currents',
 copySumB:'Copy summary',copyLinkB:'Copy link',dlImgB:'Download image',reviewB:'Review answers',redoB:'Start over',
 copiedSum:'Summary copied.',copiedLink:'Link copied. Share it to compare results.',copyFailAddr:'Could not copy. Copy from the address bar: ',copyFailSum:'Could not copy automatically. The summary is in the text below.',
 imgDone:'Image downloaded. Share it on your networks.',imgFail:'Could not generate the image in this browser.',
@@ -482,8 +485,8 @@ note1a:'Cómo se calcula el resultado.',note1b:' Cada afirmación pesa en un ún
 note2:'Es un instrumento de reflexión, no un diagnóstico. Posiciones cercanas en el mapa pueden divergir en historia, método y práctica.',note3:'Afinidad = 100·e^(−d/120), donde d es la distancia euclidiana en los 3 ejes. Desempate determinista: menor distancia, luego orden alfabético. El modo exprés usa una muestra estratificada fija (inicio, medio y fin de cada grupo).',
 startK:'Comenzar',startH:'Elige el tamaño del test',fullH:'Completo · 60 afirmaciones',fullD:'El mapa completo, ~8 minutos. Resultado más estable.',fullB:'Hacer completo',fastH:'Exprés · 15 afirmaciones',fastD:'Solo lo esencial, ~2 minutos. Mismos ejes y corrientes.',fastB:'Hacer exprés',shuffleL:'Mezclar el orden de las afirmaciones',
 disL:'← En desacuerdo',agreeR:'De acuerdo →',afferm:'Afirmación',of1:'de',backB:'Atrás',nextB:'Página siguiente',seeResB:'Ver resultado',pageW:'Página',answeredW:'respondidas',missingW:'Faltan',inPageW:'en esta página',pageDoneW:'Página completa',gotoPage:'Ir a la página',
-modeFastL:'Modo exprés · 15 afirmaciones',modeFullL:'Modo completo · 60 afirmaciones',ansW:'respuestas',varFast:'Modo exprés: con menos respuestas, cada una pesa más (±33 por eje). Repite en modo completo para un resultado más estable.',changeModeB:'Cambiar de modo',confirmMode:'Cambiar de modo borra las respuestas actuales. ¿Continuar?',
-yourRes:'Tu resultado',sharedMsg:'Estás viendo un resultado compartido.',takeTest:'Hacer mi test',cmpTitle:'Comparar resultados',cmpA:'Quien compartió',cmpB:'Tú',cmpDelta:'Diferencia',cmpDist:'Distancia entre ustedes',cmpCommon:'En común en el top 3',cmpNone:'Ninguna corriente en común en el top 3.',cmpBtn:'Comparar con un amigo',cmpLink:'Copiar enlace de comparación',cmpCopied:'Enlace de comparación copiado. Pide a la persona que lo abra y haga el test.',cmpFriend:'Amigo',closestH:'Corrientes más cercanas',seeAllW:'Ver la afinidad con las',withArch:'corrientes',
+modeFastL:'Modo exprés · 15 afirmaciones',modeFullL:'Modo completo · 60 afirmaciones',ansW:'respuestas',varFast:'Modo exprés: con menos respuestas, cada una pesa más (±33 por eje). Repite en modo completo para un resultado más estable.',changeModeB:'Cambiar de modo',confirmMode:'Cambiar de modo borra las respuestas actuales. ¿Continuar?',confirmYesB:'Cambiar igualmente',cancelB:'Cancelar',
+ctaStart:'Haz el test',saveNote:'guardado en este navegador',yourRes:'Tu resultado',sharedMsg:'Estás viendo un resultado compartido.',takeTest:'Hacer mi test',cmpTitle:'Comparar resultados',cmpA:'Quien compartió',cmpB:'Tú',cmpDelta:'Diferencia',cmpDist:'Distancia entre ustedes',cmpScale:'Δ en escala −100 a +100 · C y S en puntos 0–100',cmpMore:'más',cmpLess:'menos',cmpCommon:'En común en el top 3',cmpNone:'Ninguna corriente en común en el top 3.',cmpBtn:'Comparar con un amigo',cmpLink:'Copiar enlace de comparación',cmpCopied:'Enlace de comparación copiado. Pide a la persona que lo abra y haga el test.',cmpFriend:'Amigo',closestH:'Corrientes más cercanas',seeAllW:'Ver la afinidad con las',withArch:'corrientes',
 copySumB:'Copiar resumen',copyLinkB:'Copiar enlace',dlImgB:'Descargar imagen',reviewB:'Revisar respuestas',redoB:'Empezar de cero',
 copiedSum:'Resumen copiado.',copiedLink:'Enlace copiado. Compártelo para comparar resultados.',copyFailAddr:'No se pudo copiar. Copia desde la barra de direcciones: ',copyFailSum:'No se pudo copiar automáticamente. El resumen está en el texto siguiente.',
 imgDone:'Imagen descargada. Compártela en tus redes.',imgFail:'No se pudo generar la imagen en este navegador.',
@@ -1382,7 +1385,7 @@ function shapeText(s){
     var all = QS(), ps = pageSize(), pcs = pageCount();
     state.page = Math.min(state.page, pcs-1);
     var start = state.page*ps, qs = all.slice(start, start+ps), h = '';
-    h += '<div class="card"><div class="progress"><div class="row"><span id="pgTxt" aria-live="polite"></span><span id="anTxt"></span></div><div class="bar" role="progressbar" aria-label="Progresso do questionário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barWrap"><i id="bar"></i></div><div class="row" id="pageJumps" style="gap:6px"></div><div class="row"><span class="mono muted" id="modeTag" style="font-size:11px"></span></div></div>';
+    h += '<div class="card"><div class="progress"><div class="row"><span id="pgTxt" aria-live="polite"></span><span id="anTxt"></span><span class="mono muted" style="font-size:11px" id="saveNote"></span></div><div class="bar" role="progressbar" aria-label="Progresso do questionário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barWrap"><i id="bar"></i></div><div class="row" id="pageJumps" style="gap:6px"></div><div class="row"><span class="mono muted" id="modeTag" style="font-size:11px"></span></div></div>';
     h += '<p class="scalehint"><span>'+t('disL')+'</span><span>'+t('agreeR')+'</span></p>';
     for(var i=0;i<qs.length;i++){
       var q = qs[i], cur = state.answers[q.id], opts = '';
@@ -1425,6 +1428,7 @@ function shapeText(s){
     var pa = pageAnswered(), total = answeredCount(), all = QS(), pcs = pageCount();
     document.getElementById('pgTxt').textContent = t('pageW')+' '+(state.page+1)+' '+t('of1')+' '+pcs;
     document.getElementById('anTxt').textContent = total+' '+t('of1')+' '+all.length+' '+t('answeredW');
+    var sn = document.getElementById('saveNote'); if(sn) sn.textContent = t('saveNote');
     document.getElementById('bar').style.width = (total/all.length*100)+'%';
     var barWrap = document.getElementById('barWrap');
     if(barWrap) barWrap.setAttribute('aria-valuenow', String(Math.round(total/all.length*100)));
@@ -1446,9 +1450,20 @@ function shapeText(s){
       var ch = document.createElement('button');
       ch.type = 'button'; ch.className = 'btn small'; ch.style.marginLeft = '8px'; ch.textContent = t('changeModeB');
       ch.onclick = function(){
-        if(answeredCount() > 0 && !window.confirm(t('confirmMode'))) return;
-        state.answers = {}; state.done = false; state.page = 0; state.picked = false;
-        save(); renderModePick(); updateViz();
+        var old = document.getElementById('modeConfirm');
+        if(old){ old.remove(); return; }
+        var wrap = document.createElement('div');
+        wrap.id = 'modeConfirm';
+        wrap.setAttribute('role','status');
+        wrap.setAttribute('aria-live','polite');
+        var msg = document.createElement('span'); msg.textContent = t('confirmMode');
+        var yes = document.createElement('button'); yes.type = 'button'; yes.className = 'btn small primary'; yes.textContent = t('confirmYesB');
+        var no = document.createElement('button'); no.type = 'button'; no.className = 'btn small ghost'; no.textContent = t('cancelB');
+        yes.onclick = function(){ wrap.remove(); state.answers = {}; state.done = false; state.page = 0; state.picked = false; save(); renderModePick(); updateViz(); };
+        no.onclick = function(){ wrap.remove(); ch.focus(); };
+        wrap.appendChild(msg); wrap.appendChild(yes); wrap.appendChild(no);
+        modeTag.appendChild(wrap);
+        yes.focus();
       };
       modeTag.appendChild(mt); modeTag.appendChild(ch);
     }
@@ -1506,7 +1521,7 @@ function shapeText(s){
       h += '<li><span class="rp">'+near[j].pct+'%</span><span>'+tA(near[j].a,'n')+'</span><span class="mono">d '+Math.round(near[j].d)+'</span></li>';
     }
     h += '</ol></details>';
-    h += '<div class="actions"><button class="btn primary" id="copy" type="button">'+t('copySumB')+'</button><button class="btn primary" id="copylink" type="button">'+t('copyLinkB')+'</button>'+(!sharedView?'<button class="btn" id="cmp" type="button">'+t('cmpBtn')+'</button>':'')+'<button class="btn" id="dlcard" type="button">'+t('dlImgB')+'</button><button class="btn" id="review" type="button">'+t('reviewB')+'</button><button class="btn" id="redo" type="button">'+t('redoB')+'</button></div>';
+    h += '<div class="actions"><button class="btn primary" id="copy" type="button">'+t('copySumB')+'</button><button class="btn" id="copylink" type="button">'+t('copyLinkB')+'</button>'+(!sharedView?'<button class="btn" id="cmp" type="button">'+t('cmpBtn')+'</button>':'')+'<button class="btn" id="dlcard" type="button">'+t('dlImgB')+'</button><button class="btn ghost" id="review" type="button">'+t('reviewB')+'</button><button class="btn ghost" id="redo" type="button">'+t('redoB')+'</button></div>';
     h += '<p class="muted" style="margin:0;font-size:13px" id="copyMsg" aria-live="polite"></p>';
     h += '</div>';
     pane.innerHTML = h;
@@ -1553,9 +1568,10 @@ function shapeText(s){
   }
 
   /* ---------- Comparador dual ---------- */
-  function cmpDeltaRow(letter, name, va, vb, plain){
+  function cmpDeltaRow(letter, name, va, vb, plain, posWord){
     var d = vb - va, fmt = plain ? function(v){ return '' + v; } : sign;
-    return '<div class="ml" style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:5px 0;border-top:1px solid var(--line)"><span><b>'+letter+'</b> · '+name+'</span><span class="mono">'+fmt(va)+' → '+fmt(vb)+' · Δ '+sign(d)+'</span></div>';
+    var verb = d > 0 ? ' + ' + t('cmpMore') + ' ' + posWord : (d < 0 ? ' − ' + t('cmpLess') + ' ' + posWord : '');
+    return '<div class="ml" style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:5px 0;border-top:1px solid var(--line)"><span><b>'+letter+'</b> · '+name+'</span><span class="mono">'+fmt(va)+' → '+fmt(vb)+' · Δ '+sign(d)+(verb?'<span style="font-family:var(--f-ui);font-weight:500">'+verb+'</span>':'')+'</span></div>';
   }
   function renderCompare(a, b){
     var isNew = !CMP || fmtPoint(CMP.a) !== fmtPoint(a) || fmtPoint(CMP.b) !== fmtPoint(b);
@@ -1575,12 +1591,12 @@ function shapeText(s){
       + '<div><p class="tags">'+t('cmpA')+'</p><p class="oct" style="font-size:clamp(1.2rem,3vw,1.7rem)">'+oA.n+'</p><div class="tags">'+oA.t+'</div><div class="mv mono" style="font-size:13px">X'+sign(a.x)+' Y'+sign(a.y)+' Z'+sign(a.z)+' · C'+a.c+' S'+a.s+'</div></div>'
       + '<div><p class="tags">'+t('cmpB')+'</p><p class="oct" style="font-size:clamp(1.2rem,3vw,1.7rem)">'+oB.n+'</p><div class="tags">'+oB.t+'</div><div class="mv mono" style="font-size:13px">X'+sign(b.x)+' Y'+sign(b.y)+' Z'+sign(b.z)+' · C'+b.c+' S'+b.s+'</div></div>'
       + '</div>';
-    h += '<div><h3 style="margin-bottom:8px">'+t('cmpDelta')+'</h3>'
-      + cmpDeltaRow('X', axn('X','name'), a.x, b.x)
-      + cmpDeltaRow('Y', axn('Y','name'), a.y, b.y)
-      + cmpDeltaRow('Z', axn('Z','name'), a.z, b.z)
-      + cmpDeltaRow('C', t('legC1a'), a.c, b.c, true)
-      + cmpDeltaRow('S', t('legF1a'), a.s, b.s, true)
+    h += '<div><h3 style="margin-bottom:4px">'+t('cmpDelta')+'</h3><p class="mono muted" style="font-size:11px;margin:0 0 10px">'+t('cmpScale')+'</p>'
+      + cmpDeltaRow('X', axn('X','name'), a.x, b.x, false, axn('X','pos'))
+      + cmpDeltaRow('Y', axn('Y','name'), a.y, b.y, false, axn('Y','pos'))
+      + cmpDeltaRow('Z', axn('Z','name'), a.z, b.z, false, axn('Z','pos'))
+      + cmpDeltaRow('C', t('legC1a'), a.c, b.c, true, W('post'))
+      + cmpDeltaRow('S', t('legF1a'), a.s, b.s, true, W('inter'))
       + '<div class="mv" style="margin-top:8px"><b>'+dist+'</b> · '+t('cmpDist')+'</div></div>';
     h += '<div class="two"><div><h3 style="margin-bottom:8px">'+t('cmpA')+' — '+t('closestH')+'</h3><ol class="top3">';
     for(var ci=0;ci<3;ci++) h += '<li><span class="pct">'+nearA[ci].pct+'%</span><span class="nm">'+tA(nearA[ci].a,'n')+'</span></li>';
@@ -1588,7 +1604,7 @@ function shapeText(s){
     for(var cj=0;cj<3;cj++) h += '<li><span class="pct">'+nearB[cj].pct+'%</span><span class="nm">'+tA(nearB[cj].a,'n')+'</span></li>';
     h += '</ol></div></div>';
     h += '<p class="muted" style="margin:0;font-size:13.5px"><b>'+t('cmpCommon')+':</b> '+(common.length ? common.join(' · ') : t('cmpNone'))+'</p>';
-    h += '<div class="actions"><button class="btn primary" id="copycmp" type="button">'+t('cmpLink')+'</button><button class="btn" id="take2" type="button">'+t('takeTest')+'</button><button class="btn" id="redo2" type="button">'+t('redoB')+'</button></div>';
+    h += '<div class="actions"><button class="btn primary" id="copycmp" type="button">'+t('cmpLink')+'</button><button class="btn" id="take2" type="button">'+t('takeTest')+'</button><button class="btn ghost" id="redo2" type="button">'+t('redoB')+'</button></div>';
     h += '<p class="muted" style="margin:0;font-size:13px" id="copyMsg" aria-live="polite"></p>';
     h += '</div>';
     pane.innerHTML = h;
@@ -2040,11 +2056,17 @@ function shapeText(s){
       return 'https://github.com/1thirteeng3/left-wing-political-compass/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
     }catch(e){ return 'https://github.com/1thirteeng3/left-wing-political-compass/issues/new'; }
   }
+  function normText(s){
+    try{
+      return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
+    }catch(e){ return String(s); }
+  }
   function renderCat(){
     var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
     var qEl = document.getElementById('catq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
+    var qn = normText(q);
     for(i=0;i<ARCH.length;i++){
-      if(q && (tA(ARCH[i],'n')+' '+tA(ARCH[i],'d')).toLowerCase().indexOf(q) < 0) continue;
+      if(qn && normText(tA(ARCH[i],'n')+' '+tA(ARCH[i],'d')).indexOf(qn) < 0) continue;
       groups[octIndex(ARCH[i])].push(ARCH[i]); shown++;
     }
     var seq = [0,2,4,6,1,3,5,7];
@@ -2157,6 +2179,7 @@ function shapeText(s){
     var cq = document.getElementById('catq'); if(cq) cq.setAttribute('placeholder', t('searchPh'));
     setText('note1a', t('note1a')); setText('note1b', t('note1b')); setText('note2', t('note2')); setText('note3', t('note3'));
     setText('privL', t('privL')); setText('skipLink', t('skipL'));
+    setText('ctaStart', t('ctaStart'));
     var og = document.querySelector('meta[property="og:locale"]');
     if(og) og.setAttribute('content', L === 'en' ? 'en_US' : (L === 'es' ? 'es_ES' : 'pt_BR'));
     try{
