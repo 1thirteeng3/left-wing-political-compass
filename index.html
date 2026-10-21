@@ -264,7 +264,7 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
         <div class="ctrls">
           <label for="tilt"><span id="tiltL">Inclinação</span> <input type="range" id="tilt" min="-80" max="80" value="22"></label>
           <label for="showall"><input type="checkbox" id="showall"> <span id="showAllL">Nomear todas as correntes</span></label>
-          <button class="btn small" id="reset" type="button" aria-pressed="false" title="Resetar rotação do cubo (atalho: tecla R quando o cubo tem foco)">Resetar vista</button>
+          <button class="btn small" id="reset" type="button" aria-pressed="false" title="Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)">Resetar vista</button>
         </div>
         <div class="legend">
           <div class="lg"><div class="ml"><span id="legC1a">Cor · Produtivista</span><span id="legC1b">Pós-crescimento</span></div><div class="track lens" id="legTrack"></div></div>
@@ -288,6 +288,7 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
       <label class="sr-only" for="catq" id="catqL">Buscar movimento ou vertente</label>
       <input id="catq" type="search" placeholder="Buscar movimento ou vertente" autocomplete="off">
       <span class="muted mono" id="catn" style="font-size:12px"></span>
+      <span class="muted mono" id="anchorNote" style="font-size:12px;color:#b3541e;grid-column:1/-1;display:none"></span>
     </div>
     <div class="cat" id="cat"></div>
   </section>
@@ -411,12 +412,12 @@ spY_t:'Eixo Y · Coordenação',spY_b:'Centralismo ↔ Autogestão',spY_d:'Vangu
 spZ_t:'Eixo Z · Economia',spZ_b:'Mercado socializado ↔ Desmercantilização',spZ_d:'Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.',
 spC_t:'Lente · Cor',spC_b:'Produtivista ↔ Pós-crescimento',spC_d:'Do vermelho-laranja ao verde.',
 spS_t:'Lente · Forma',spS_b:'Classista ↔ Interseccional',spS_d:'Do triângulo, somando lados, até o círculo.',
-cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',
+cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',
 legC1a:'Cor · Produtivista',legC1b:'Pós-crescimento',legF1a:'Forma · Classista',legF1b:'Interseccional',
 dragH:'Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.',
 projH:'Projeções 2D',projP:'O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.',
 catH:'As correntes do mapa',catP:'Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.',
-searchPh:'Buscar movimento ou vertente',
+  searchPh:'Buscar movimento ou vertente',noAnchor:'A corrente do link está oculta pelo filtro de busca. Limpe a busca para vê-la.',
 note1a:'Como o resultado é calculado.',note1b:' Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.',
 note2:'É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.',note3:'Afinidade = 100·e^(−d/120), onde d é a distância euclidiana nos 3 eixos. Desempate determinístico: menor distância, depois ordem alfabética. O modo expresso usa amostra estratificada fixa (início, meio e fim de cada grupo).',
 startK:'Começar',startH:'Escolha o tamanho do teste',fullH:'Completo · 60 afirmações',fullD:'O mapa completo, ~8 minutos. Resultado mais estável.',fullB:'Fazer completo',fastH:'Expresso · 15 afirmações',fastD:'Só o essencial, ~2 minutos. Mesmos eixos e correntes.',fastB:'Fazer expresso',shuffleL:'Embaralhar a ordem das afirmações',
@@ -441,12 +442,12 @@ spY_t:'Y axis · Coordination',spY_b:'Centralism ↔ Self-management',spY_d:'Van
 spZ_t:'Z axis · Economy',spZ_b:'Socialized market ↔ Decommodification',spZ_d:'Competing cooperatives or the end of commodity, money and wages.',
 spC_t:'Lens · Color',spC_b:'Productivist ↔ Post-growth',spC_d:'From red-orange to green.',
 spS_t:'Lens · Shape',spS_b:'Classist ↔ Intersectional',spS_d:'From the triangle, adding sides, to the circle.',
-cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',
+cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',
 legC1a:'Color · Productivist',legC1b:'Post-growth',legF1a:'Shape · Classist',legF1b:'Intersectional',
 dragH:'Drag the cube to rotate. Hover a gray dot to see the current.',
 projH:'2D projections',projP:'The cube impresses but measures poorly. These three flat views show the same points with no perspective. Hover a gray dot to see the name.',
 catH:'The currents on the map',catP:'Movements and strands placed on three axes and grouped into eight octants. Coordinates are interpretive: they vary by author and period, and several entries gather neighboring traditions under one point. The icon next to each name shows the current’s position on the two lenses: color runs productivist to post-growth, shape runs classist to intersectional.',
-searchPh:'Search a movement or strand',
+  searchPh:'Search a movement or strand',noAnchor:'The current from the link is hidden by the search filter. Clear the search to see it.',
 note1a:'How the result is computed.',note1b:' Each statement weighs on a single axis, on a five-point scale. Each axis scores −100 to +100. The closest currents are those with the smallest Euclidean distance in the three-axis space, and affinity falls with distance. The lenses are not part of the distance.',
 note2:'It is an instrument for reflection, not a diagnosis. Positions that look close on the map may diverge in history, method and practice.',note3:'Affinity = 100·e^(−d/120), where d is the Euclidean distance on the 3 axes. Deterministic tiebreak: smallest distance, then alphabetical order. Express mode uses a fixed stratified sample (start, middle and end of each group).',
 startK:'Start',startH:'Choose the test size',fullH:'Full · 60 statements',fullD:'The complete map, ~8 minutes. More stable result.',fullB:'Take the full test',fastH:'Express · 15 statements',fastD:'Just the essentials, ~2 minutes. Same axes and currents.',fastB:'Take the express test',shuffleL:'Shuffle the statement order',
@@ -471,12 +472,12 @@ spY_t:'Eje Y · Coordinación',spY_b:'Centralismo ↔ Autogestión',spY_d:'Vangu
 spZ_t:'Eje Z · Economía',spZ_b:'Mercado socializado ↔ Desmercantilización',spZ_d:'Cooperativas compitiendo o fin de la mercancía, del dinero y del salario.',
 spC_t:'Lente · Color',spC_b:'Productivista ↔ Postcrecimiento',spC_d:'Del rojo-naranja al verde.',
 spS_t:'Lente · Forma',spS_b:'Clasista ↔ Interseccional',spS_d:'Del triángulo, sumando lados, hasta el círculo.',
-cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',
+cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',
 legC1a:'Color · Productivista',legC1b:'Postcrecimiento',legF1a:'Forma · Clasista',legF1b:'Interseccional',
 dragH:'Arrastra el cubo para girar. Pasa el cursor sobre un punto gris para ver la corriente.',
 projH:'Proyecciones 2D',projP:'El cubo impresiona pero mide mal. Estas tres vistas planas muestran los mismos puntos sin perspectiva. Pasa el cursor sobre un punto gris para ver el nombre.',
 catH:'Las corrientes del mapa',catP:'Movimientos y vertientes ubicados en tres ejes y agrupados en ocho octantes. Las coordenadas son interpretativas: varían según autor y período, y varias entradas reúnen tradiciones vecinas bajo un mismo punto. El icono junto a cada nombre muestra la posición de la corriente en las dos lentes: el color va de productivista a postcrecimiento y la forma, de clasista a interseccional.',
-searchPh:'Buscar movimiento o vertiente',
+  searchPh:'Buscar movimiento o vertiente',noAnchor:'La corriente del enlace está oculta por el filtro de búsqueda. Borra la búsqueda para verla.',
 note1a:'Cómo se calcula el resultado.',note1b:' Cada afirmación pesa en un único eje, en escala de cinco puntos. Cada eje puntúa de −100 a +100. Las corrientes más cercanas son las de menor distancia euclidiana en el espacio de tres ejes, y la afinidad cae con la distancia. Las lentes no entran en la distancia.',
 note2:'Es un instrumento de reflexión, no un diagnóstico. Posiciones cercanas en el mapa pueden divergir en historia, método y práctica.',note3:'Afinidad = 100·e^(−d/120), donde d es la distancia euclidiana en los 3 ejes. Desempate determinista: menor distancia, luego orden alfabético. El modo exprés usa una muestra estratificada fija (inicio, medio y fin de cada grupo).',
 startK:'Comenzar',startH:'Elige el tamaño del test',fullH:'Completo · 60 afirmaciones',fullD:'El mapa completo, ~8 minutos. Resultado más estable.',fullB:'Hacer completo',fastH:'Exprés · 15 afirmaciones',fastD:'Solo lo esencial, ~2 minutos. Mismos ejes y corrientes.',fastB:'Hacer exprés',shuffleL:'Mezclar el orden de las afirmaciones',
@@ -1286,10 +1287,10 @@ function shapeText(s){
       if(tw) tw.setAttribute('content', cardURL(p));
     }catch(e){}
   }
-  function clearURLParams(){
+  function clearURLParams(keepA){
     try{
       var u = new URL(window.location.href);
-      ['v','x','y','z','c','s','a','b'].forEach(function(k){ u.searchParams.delete(k); });
+      ['v','x','y','z','c','s','a','b'].forEach(function(k){ if(k === 'a' && keepA) return; u.searchParams.delete(k); });
       history.replaceState(null,'',u.toString());
     }catch(e){}
   }
@@ -1603,68 +1604,83 @@ function shapeText(s){
         else fb();
       }catch(e){ fb(); }
     };
-    document.getElementById('take2').onclick = function(){ CMP = null; SHARED = null; COMP = null; state.answers={}; state.done=false; state.page=0; state.picked=true; save(); clearURLParams(); renderQuiz(); updateViz(); scrollTop(); };
-    document.getElementById('redo2').onclick = function(){ CMP = null; SHARED = null; COMP = null; state.answers={}; state.done=false; state.page=0; save(); clearURLParams(); renderModePick(); updateViz(); scrollTop(); };
+    document.getElementById('take2').onclick = function(){
+    var keep = COMP && COMP.a ? {a: COMP.a, b: null, m: COMP.m, lang: COMP.lang} : null;
+    COMP = keep; SHARED = null; state.answers={}; state.done=false; state.page=0; state.picked=true; save(); clearURLParams(!!keep); renderQuiz(); updateViz(); scrollTop();
+  };
+    document.getElementById('redo2').onclick = function(){
+    var keep = COMP && COMP.a ? {a: COMP.a, b: null, m: COMP.m, lang: COMP.lang} : null;
+    COMP = keep; SHARED = null; state.answers={}; state.done=false; state.page=0; save(); clearURLParams(!!keep); renderModePick(); updateViz(); scrollTop();
+  };
     updateViz(); scrollTop();
   }
 
   /* ---------- Card compartilhável (1200x630) ---------- */
   function downloadCard(p, near, o){
-    try{
-      var W = 1200, H = 630, cv = document.createElement('canvas');
-      cv.width = W; cv.height = H;
-      var ctx = cv.getContext('2d'), dark = isDark();
-      var bg = dark ? '#0E1113' : '#EDEFEC', fg = dark ? '#E8ECEB' : '#14181B', mut = dark ? '#99A4A9' : '#586268';
-      ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-      ctx.fillStyle = fg; ctx.fillRect(0,0,W,10);
-      ctx.fillStyle = mut; ctx.font = '500 24px "IBM Plex Mono",monospace';
-      ctx.fillText(t('siteName').toUpperCase()+' · X'+sign(p.x)+' Y'+sign(p.y)+' Z'+sign(p.z), 60, 70);
-      ctx.fillStyle = fg; ctx.font = '800 64px Archivo,Arial,sans-serif';
-      var title = o.n.toUpperCase();
-      ctx.fillText(title.length > 30 ? title.slice(0,30)+'…' : title, 60, 145);
-      ctx.fillStyle = mut; ctx.font = '400 26px "Public Sans",sans-serif';
-      ctx.fillText(o.t, 60, 185);
-      /* Barras X/Y/Z */
-      var bars = [['X',p.x],['Y',p.y],['Z',p.z]], by = 230;
-      for(var i=0;i<bars.length;i++){
-        var v = bars[i][1], bx = 60, bw = 620;
-        ctx.fillStyle = mut; ctx.font = '500 22px "IBM Plex Mono",monospace';
-        ctx.fillText(bars[i][0]+'  '+sign(v), bx, by-8);
-        ctx.strokeStyle = mut; ctx.lineWidth = 2; ctx.strokeRect(bx, by, bw, 22);
-        var half = bw/2, fillW = Math.abs(v)/100*half;
-        ctx.fillStyle = lensColor(p.c, dark);
-        ctx.fillRect(v<0 ? half+bx-fillW : half+bx, by, fillW, 22);
-        ctx.fillStyle = fg; ctx.fillRect(half+bx-1, by-6, 2, 34);
-        by += 78;
-      }
-      /* Top 3 */
-      ctx.fillStyle = fg; ctx.font = '700 28px "Public Sans",sans-serif';
-      ctx.fillText(t('closestH'), 740, 230);
-      ctx.font = '400 25px "Public Sans",sans-serif';
-      var ty = 272;
-      for(var j=0;j<3;j++){
-        var nm = tA(near[j].a,'n');
-        if(nm.length > 34) nm = nm.slice(0,34)+'…';
-        ctx.fillStyle = lensColor(p.c, dark); ctx.font = '800 30px Archivo,Arial,sans-serif';
-        ctx.fillText(near[j].pct+'%', 740, ty);
-        ctx.fillStyle = fg; ctx.font = '400 25px "Public Sans",sans-serif';
-        ctx.fillText(nm, 850, ty);
-        ty += 48;
-      }
-      ctx.fillStyle = mut; ctx.font = '400 22px "Public Sans",sans-serif';
-      ctx.fillText('left-wing-political-compass.vercel.app', 60, H-40);
-      ctx.fillText('Cor '+p.c+' · Forma '+p.s, 740, H-40);
-      var a = document.createElement('a');
-      a.download = 'bussola-da-esquerda.png';
-      a.href = cv.toDataURL('image/png');
-      document.body.appendChild(a); a.click();
-      setTimeout(function(){ document.body.removeChild(a); }, 500);
-      var msg = document.getElementById('copyMsg');
-      if(msg) msg.textContent = t('imgDone');
-    }catch(e){
+    var NAME_CUT = 32;
+    function fail(){
       var m2 = document.getElementById('copyMsg');
       if(m2) m2.textContent = t('imgFail');
     }
+    function finish(){
+      try{
+        var W = 1200, H = 630, cv = document.createElement('canvas');
+        cv.width = W; cv.height = H;
+        var ctx = cv.getContext('2d'), dark = isDark();
+        var bg = dark ? '#0E1113' : '#EDEFEC', fg = dark ? '#E8ECEB' : '#14181B', mut = dark ? '#99A4A9' : '#586268';
+        ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+        ctx.fillStyle = fg; ctx.fillRect(0,0,W,10);
+        ctx.fillStyle = mut; ctx.font = '500 24px "IBM Plex Mono",monospace';
+        ctx.fillText(t('siteName').toUpperCase()+' · X'+sign(p.x)+' Y'+sign(p.y)+' Z'+sign(p.z), 60, 70);
+        ctx.fillStyle = fg; ctx.font = '800 64px Archivo,Arial,sans-serif';
+        var title = o.n.toUpperCase();
+        ctx.fillText(title.length > NAME_CUT ? title.slice(0,NAME_CUT)+'…' : title, 60, 145);
+        ctx.fillStyle = mut; ctx.font = '400 26px "Public Sans",sans-serif';
+        ctx.fillText(o.t, 60, 185);
+        /* Barras X/Y/Z */
+        var bars = [['X',p.x],['Y',p.y],['Z',p.z]], by = 230;
+        for(var i=0;i<bars.length;i++){
+          var v = bars[i][1], bx = 60, bw = 620;
+          ctx.fillStyle = mut; ctx.font = '500 22px "IBM Plex Mono",monospace';
+          ctx.fillText(bars[i][0]+'  '+sign(v), bx, by-8);
+          ctx.strokeStyle = mut; ctx.lineWidth = 2; ctx.strokeRect(bx, by, bw, 22);
+          var half = bw/2, fillW = Math.abs(v)/100*half;
+          ctx.fillStyle = lensColor(p.c, dark);
+          ctx.fillRect(v<0 ? half+bx-fillW : half+bx, by, fillW, 22);
+          ctx.fillStyle = fg; ctx.fillRect(half+bx-1, by-6, 2, 34);
+          by += 78;
+        }
+        /* Top 3 */
+        ctx.fillStyle = fg; ctx.font = '700 28px "Public Sans",sans-serif';
+        ctx.fillText(t('closestH'), 740, 230);
+        ctx.font = '400 25px "Public Sans",sans-serif';
+        var ty = 272;
+        for(var j=0;j<3;j++){
+          var nm = tA(near[j].a,'n');
+          if(nm.length > NAME_CUT) nm = nm.slice(0,NAME_CUT)+'…';
+          ctx.fillStyle = lensColor(p.c, dark); ctx.font = '800 30px Archivo,Arial,sans-serif';
+          ctx.fillText(near[j].pct+'%', 740, ty);
+          ctx.fillStyle = fg; ctx.font = '400 25px "Public Sans",sans-serif';
+          ctx.fillText(nm, 850, ty);
+          ty += 48;
+        }
+        ctx.fillStyle = mut; ctx.font = '400 22px "Public Sans",sans-serif';
+        ctx.fillText('left-wing-political-compass.vercel.app', 60, H-40);
+        ctx.fillText('Cor '+p.c+' · Forma '+p.s, 740, H-40);
+        var a = document.createElement('a');
+        a.download = 'bussola-da-esquerda.png';
+        a.href = cv.toDataURL('image/png');
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ document.body.removeChild(a); }, 500);
+        var msg = document.getElementById('copyMsg');
+        if(msg) msg.textContent = t('imgDone');
+      }catch(e){ fail(); }
+    }
+    try{
+      var pf = (document.fonts && document.fonts.ready) ? document.fonts.ready : null;
+      if(pf && pf.then) pf.then(function(){ try{ finish(); }catch(e){ fail(); } });
+      else finish();
+    }catch(e){ fail(); }
   }
 
   /* ---------- Cubo 3D ---------- */
@@ -1765,20 +1781,27 @@ function shapeText(s){
       ctx.beginPath(); ctx.arc(o.p.x, o.p.y, r, 0, Math.PI*2); ctx.fillStyle = isNear ? fg : dot; ctx.fill();
       ctx.globalAlpha = 1;
     }
-    /* Rótulos das correntes */
-    for(k=0;k<order.length;k++){
-      var o2 = order[k];
-      if(showAll.checked || near.indexOf(o2.a)>=0 || cubeS.hover===o2.i){
-        label(tA(o2.a,'n'), o2.p.x+7, o2.p.y-8, 'left', fg);
-      }
+    /* Pontos você/amigo (reservam espaço antes dos rótulos das correntes) */
+    var occ = [];
+    function labBox(text, x, y, align){
+      var tw = ctx.measureText(text).width, lx = x;
+      if(align==='right') lx = x - tw; else if(align==='center') lx = x - tw/2;
+      lx = clamp(lx, 6, w - 6 - tw);
+      return {x:lx, y:y-7, w:tw, h:14};
     }
-    /* Ponto do usuário */
+    function labHits(b){
+      for(var j=0;j<occ.length;j++){ var o = occ[j];
+        if(b.x < o.x+o.w && b.x+b.w > o.x && b.y < o.y+o.h && b.y+b.h > o.y) return true; }
+      return false;
+    }
     function drawCmpPoint(pt, isFriend){
       var pp = P(pt.x/100, pt.y/100, pt.z/100), cc = lensColor(pt.c, dark), r2 = 10*pp.k;
       drawShape(ctx, pp.x, pp.y, r2+1.5, shapeLevel(pt.s), bg, bg, 4);
       if(isFriend) drawShape(ctx, pp.x, pp.y, r2, shapeLevel(pt.s), bg, cc, 3);
       else drawShape(ctx, pp.x, pp.y, r2, shapeLevel(pt.s), cc, fg, 2);
-      label(isFriend ? t('cmpFriend') : t('youW'), pp.x + r2 + 6, pp.y + 1, 'left', fg);
+      var txt = isFriend ? t('cmpFriend') : t('youW');
+      occ.push(labBox(txt, pp.x + r2 + 6, pp.y + 1, 'left'));
+      label(txt, pp.x + r2 + 6, pp.y + 1, 'left', fg);
     }
     if(cmpMode){
       drawCmpPoint(CMP.a, true);
@@ -1792,8 +1815,31 @@ function shapeText(s){
       ctx.beginPath(); ctx.arc(fl.x, fl.y, 2.4, 0, Math.PI*2); ctx.fillStyle = fg; ctx.fill();
       drawShape(ctx, up.x, up.y, rr+1.5, shapeLevel(u.s), bg, bg, 4);
       drawShape(ctx, up.x, up.y, rr, shapeLevel(u.s), col, fg, 2);
-      label(u.prov ? t('youProv') : t('youW'), up.x + rr + 6, up.y + 1, 'left', fg);
+      var ut = u.prov ? t('youProv') : t('youW');
+      occ.push(labBox(ut, up.x + rr + 6, up.y + 1, 'left'));
+      label(ut, up.x + rr + 6, up.y + 1, 'left', fg);
     }
+    /* Rótulos das correntes (anti-colisão: hover > top3 > showall) */
+    var labCands = [];
+    for(k=0;k<order.length;k++){
+      var o2 = order[k], pr = -1;
+      if(cubeS.hover===o2.i) pr = 0;
+      else if(near.indexOf(o2.a)>=0) pr = 1;
+      else if(showAll.checked) pr = 2;
+      if(pr >= 0) labCands.push({o:o2, pr:pr});
+    }
+    labCands.sort(function(a,b){ return a.pr - b.pr || b.o.p.z - a.o.p.z; });
+    var labMax = showAll.checked ? 12 : 40, labDrawn = 0, labHidden = 0, lc;
+    for(k=0;k<labCands.length;k++){
+      lc = labCands[k];
+      var isHov = lc.pr === 0;
+      if(lc.pr === 2 && labDrawn >= labMax){ labHidden++; continue; }
+      var lt = tA(lc.o.a,'n'), lb = labBox(lt, lc.o.p.x+7, lc.o.p.y-8, 'left');
+      if(!isHov && labHits(lb)){ labHidden++; continue; }
+      label(lt, lc.o.p.x+7, lc.o.p.y-8, 'left', fg);
+      occ.push(lb); labDrawn++;
+    }
+    if(showAll.checked && labHidden > 0) label('+' + labHidden, w - 8, 14, 'right', muted);
   }
   function tickAuto(){
     if(cubeS.auto){ cubeS.yaw += 0.0035; drawCube(); raf = requestAnimationFrame(tickAuto); } else raf = 0;
@@ -1802,9 +1848,30 @@ function shapeText(s){
   function stopAuto(){ cubeS.auto = false; }
 
   cv.addEventListener('pointerdown', function(e){
+    if(twS) return;
     stopAuto(); cubeS.drag = {x:e.clientX, y:e.clientY, t:e.pointerType};
     try{ cv.setPointerCapture(e.pointerId); }catch(err){}
   });
+  /* Pitch por gesto vertical com 2 dedos (1 dedo mantém o scroll da página) */
+  var twS = null;
+  cv.addEventListener('touchstart', function(e){
+    if(e.touches.length === 2){
+      twS = { y:(e.touches[0].clientY + e.touches[1].clientY)/2, p:cubeS.pitch };
+      stopAuto();
+      if(cubeS.drag) cubeS.drag = null;
+    }
+  }, {passive:true});
+  cv.addEventListener('touchmove', function(e){
+    if(twS && e.touches.length === 2){
+      try{ e.preventDefault(); }catch(err){}
+      var y = (e.touches[0].clientY + e.touches[1].clientY)/2;
+      cubeS.pitch = clamp(twS.p + (y - twS.y)*0.012, -1.4, 1.4);
+      tilt.value = Math.round(cubeS.pitch*180/Math.PI);
+      drawCubeSoon();
+    }
+  }, {passive:false});
+  cv.addEventListener('touchend', function(e){ if(e.touches.length < 2) twS = null; }, {passive:true});
+  cv.addEventListener('touchcancel', function(){ twS = null; }, {passive:true});
   var cubeRaf = 0;
   function drawCubeSoon(){
     if(cubeRaf) return;
@@ -1941,8 +2008,17 @@ function shapeText(s){
   }
   function revealCurrent(sl){
     if(!sl) return false;
+    var note = document.getElementById('anchorNote');
+    if(note) note.style.display = 'none';
     var el = document.getElementById('c-' + sl);
-    if(!el) return false;
+    if(!el){
+      var qEl = document.getElementById('catq');
+      if(note && qEl && qEl.value.trim()){
+        note.textContent = t('noAnchor');
+        note.style.display = '';
+      }
+      return false;
+    }
     try{ el.scrollIntoView({block:'center', behavior: reduce ? 'auto' : 'smooth'}); }catch(e){}
     el.style.outline = '2px solid var(--accent)';
     el.style.outlineOffset = '2px';
@@ -1968,7 +2044,7 @@ function shapeText(s){
     var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
     var qEl = document.getElementById('catq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
     for(i=0;i<ARCH.length;i++){
-      if(q && (ARCH[i].n+' '+ARCH[i].d).toLowerCase().indexOf(q) < 0) continue;
+      if(q && (tA(ARCH[i],'n')+' '+tA(ARCH[i],'d')).toLowerCase().indexOf(q) < 0) continue;
       groups[octIndex(ARCH[i])].push(ARCH[i]); shown++;
     }
     var seq = [0,2,4,6,1,3,5,7];
@@ -2016,7 +2092,7 @@ function shapeText(s){
     }
   }
   function updateViz(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); if(catSeen) renderCat(); }
-  function updateVizLight(){ renderLegend(); drawCube(); }
+  function updateVizLight(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); }
   function updateVizLazy(){ if(projsSeen) renderProj(); if(catSeen) renderCat(); }
   var projsSeen = false, catSeen = false;
   function ensureIO(){
@@ -2071,7 +2147,7 @@ function shapeText(s){
     setText('spCt', t('spC_t')); setText('spCb', t('spC_b')); setText('spCd', t('spC_d'));
     setText('spSt', t('spS_t')); setText('spSb', t('spS_b')); setText('spSd', t('spS_d'));
     setText('cubeH', t('cubeH')); setText('tiltL', t('tiltL')); setText('showAllL', t('showAllL'));
-    var rs = document.getElementById('reset'); if(rs) rs.textContent = t('resetB');
+    var rs = document.getElementById('reset'); if(rs){ rs.textContent = t('resetB'); rs.title = t('resetT'); }
     setText('legC1a', t('legC1a')); setText('legC1b', t('legC1b'));
     setText('legF1a', t('legF1a')); setText('legF1b', t('legF1b'));
     setText('dragH', t('dragH'));
@@ -2134,7 +2210,10 @@ function shapeText(s){
     var initQ = new URLSearchParams(window.location.search).get('q');
     if(initQ && catqEl) catqEl.value = initQ;
   }catch(e){}
-  catqEl.addEventListener('input', function(){ renderCat(); syncCatQuery(catqEl.value.trim()); });
+  catqEl.addEventListener('input', function(){
+    var an = document.getElementById('anchorNote'); if(an) an.style.display = 'none';
+    renderCat(); syncCatQuery(catqEl.value.trim());
+  });
   /* Deep-link (#c=) ou busca (?q=) exige catálogo renderizado de imediato; senão, lazy via IntersectionObserver */
   if(hashSlug() || (catqEl.value && catqEl.value.trim())){ projsSeen = true; catSeen = true; renderCat(); }
   ensureIO();
