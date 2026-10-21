@@ -40,7 +40,7 @@ if (coreStart < 0 || coreEnd < 0) {
   else ok('core regression (134 correntes / 60 questões / ponto de referência)');
 }
 
-for (const key of ['ctaStart', 'saveNote', 'cmpScale', 'cmpMore', 'cmpLess', 'embedB', 'openL']) {
+for (const key of ['ctaStart', 'saveNote', 'cmpScale', 'cmpMore', 'cmpLess', 'embedB', 'openL', 'themeB', 'themeT', 'themeAuto', 'themeLight', 'themeDark', 'fsB', 'fsExitB', 'fsT']) {
   const count = (html.match(new RegExp(key + ':', 'g')) || []).length;
   if (count !== 3) fail('i18n key "' + key + '": ' + count + ' definições, esperado 3 (pt/en/es)');
   else ok('i18n key "' + key + '" ×3');

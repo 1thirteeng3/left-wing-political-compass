@@ -31,7 +31,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
-<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<script>try{var th=null;try{th=localStorage.getItem('bussola-theme')}catch(e){}if(th==='light'||th==='dark')document.documentElement.dataset.theme=th}catch(e){}</script>
+</head><body>
 <style>
 /* Layout: quiz à esquerda e cubo 3D fixo à direita; projeções 2D e catálogo de correntes abaixo. */
 :root{
@@ -170,6 +172,8 @@ details.all summary{cursor:pointer;font-weight:600}
 .vizhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 .vizhead .prov{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 .cubewrap{position:relative;border:1px solid var(--line);background:var(--bg)}
+.cubewrap:fullscreen{border:0;height:100%;background:var(--bg)}
+.cubewrap:fullscreen #cube{height:100%;width:100%}
 #cube{display:block;width:100%;height:clamp(300px,52vw,430px);cursor:grab;touch-action:pan-y}
 #cube:active{cursor:grabbing}
 .ctrls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:13px}
@@ -240,6 +244,7 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
         <button class="btn small" data-lang="en" type="button">EN</button>
         <button class="btn small" data-lang="es" type="button">ES</button>
       </div>
+      <button class="btn small" id="themeB" type="button" aria-label="Tema: automático">Tema</button>
     </div>
     <h1 id="siteTitle">Bússola da Esquerda</h1>
     <p class="lead" id="lead">Um mapa só do campo da esquerda. Em vez de dividir entre economia e costumes, ele mede como você quer chegar lá, como a sociedade se coordena e o que acontece com o mercado. Duas lentes, a cor e a forma do seu ponto, mostram o horizonte produtivo e o sujeito político.</p>
@@ -268,6 +273,7 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
           <label for="tilt"><span id="tiltL">Inclinação</span> <input type="range" id="tilt" min="-80" max="80" value="22"></label>
           <label for="showall"><input type="checkbox" id="showall"> <span id="showAllL">Nomear todas as correntes</span></label>
           <button class="btn small" id="reset" type="button" aria-pressed="false" title="Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)">Resetar vista</button>
+          <button class="btn small" id="fsB" type="button" title="Tela cheia: explora o cubo na resolução da tela (Esc para sair)">Tela cheia</button>
         </div>
         <div class="legend">
           <div class="lg"><div class="ml"><span id="legC1a">Cor · Produtivista</span><span id="legC1b">Pós-crescimento</span></div><div class="track lens" id="legTrack"></div></div>
@@ -415,7 +421,7 @@ spY_t:'Eixo Y · Coordenação',spY_b:'Centralismo ↔ Autogestão',spY_d:'Vangu
 spZ_t:'Eixo Z · Economia',spZ_b:'Mercado socializado ↔ Desmercantilização',spZ_d:'Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.',
 spC_t:'Lente · Cor',spC_b:'Produtivista ↔ Pós-crescimento',spC_d:'Do vermelho-laranja ao verde.',
 spS_t:'Lente · Forma',spS_b:'Classista ↔ Interseccional',spS_d:'Do triângulo, somando lados, até o círculo.',
-cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',
+cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',themeB:'Tema',themeT:'Alternar tema: automático, claro, escuro',themeAuto:'Tema: automático (segue o sistema)',themeLight:'Tema: claro',themeDark:'Tema: escuro',fsB:'Tela cheia',fsExitB:'Sair da tela cheia',fsT:'Tela cheia: explora o cubo na resolução da tela (Esc para sair)',
 legC1a:'Cor · Produtivista',legC1b:'Pós-crescimento',legF1a:'Forma · Classista',legF1b:'Interseccional',
 dragH:'Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.',
 projH:'Projeções 2D',projP:'O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.',
@@ -445,7 +451,7 @@ spY_t:'Y axis · Coordination',spY_b:'Centralism ↔ Self-management',spY_d:'Van
 spZ_t:'Z axis · Economy',spZ_b:'Socialized market ↔ Decommodification',spZ_d:'Competing cooperatives or the end of commodity, money and wages.',
 spC_t:'Lens · Color',spC_b:'Productivist ↔ Post-growth',spC_d:'From red-orange to green.',
 spS_t:'Lens · Shape',spS_b:'Classist ↔ Intersectional',spS_d:'From the triangle, adding sides, to the circle.',
-cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',
+cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',themeB:'Theme',themeT:'Toggle theme: automatic, light, dark',themeAuto:'Theme: automatic (follows system)',themeLight:'Theme: light',themeDark:'Theme: dark',fsB:'Fullscreen',fsExitB:'Exit fullscreen',fsT:'Fullscreen: explore the cube at screen resolution (Esc to exit)',
 legC1a:'Color · Productivist',legC1b:'Post-growth',legF1a:'Shape · Classist',legF1b:'Intersectional',
 dragH:'Drag the cube to rotate. Hover a gray dot to see the current.',
 projH:'2D projections',projP:'The cube impresses but measures poorly. These three flat views show the same points with no perspective. Hover a gray dot to see the name.',
@@ -475,7 +481,7 @@ spY_t:'Eje Y · Coordinación',spY_b:'Centralismo ↔ Autogestión',spY_d:'Vangu
 spZ_t:'Eje Z · Economía',spZ_b:'Mercado socializado ↔ Desmercantilización',spZ_d:'Cooperativas compitiendo o fin de la mercancía, del dinero y del salario.',
 spC_t:'Lente · Color',spC_b:'Productivista ↔ Postcrecimiento',spC_d:'Del rojo-naranja al verde.',
 spS_t:'Lente · Forma',spS_b:'Clasista ↔ Interseccional',spS_d:'Del triángulo, sumando lados, hasta el círculo.',
-cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',
+cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',themeB:'Tema',themeT:'Alternar tema: automático, claro, oscuro',themeAuto:'Tema: automático (sigue el sistema)',themeLight:'Tema: claro',themeDark:'Tema: oscuro',fsB:'Pantalla completa',fsExitB:'Salir de pantalla completa',fsT:'Pantalla completa: explora el cubo en la resolución de la pantalla (Esc para salir)',
 legC1a:'Color · Productivista',legC1b:'Postcrecimiento',legF1a:'Forma · Clasista',legF1b:'Interseccional',
 dragH:'Arrastra el cubo para girar. Pasa el cursor sobre un punto gris para ver la corriente.',
 projH:'Proyecciones 2D',projP:'El cubo impresiona pero mide mal. Estas tres vistas planas muestran los mismos puntos sin perspectiva. Pasa el cursor sobre un punto gris para ver el nombre.',
@@ -1955,6 +1961,27 @@ function shapeText(s){
   });
   if(window.ResizeObserver){ new ResizeObserver(function(){ drawCube(); }).observe(cv); } else window.addEventListener('resize', drawCube);
 
+  /* ---------- Tela cheia do cubo ---------- */
+  var fsWrap = document.querySelector('.cubewrap'), fsB = document.getElementById('fsB');
+  function fsActive(){ try{ return document.fullscreenElement === fsWrap; }catch(e){} return false; }
+  function syncFsBtn(){
+    if(!fsB) return;
+    fsB.textContent = fsActive() ? t('fsExitB') : t('fsB');
+    fsB.title = t('fsT');
+  }
+  if(fsB){
+    try{ if(!document.fullscreenEnabled) fsB.hidden = true; }catch(e){ fsB.hidden = true; }
+    fsB.addEventListener('click', function(){
+      if(fsActive()) document.exitFullscreen();
+      else { try{ fsWrap.requestFullscreen(); }catch(e){} }
+    });
+    document.addEventListener('fullscreenchange', function(){
+      syncFsBtn();
+      if(fsActive() && cv.focus) cv.focus();
+    });
+    syncFsBtn();
+  }
+
   /* ---------- Projeções 2D ---------- */
   var PROJ = [
     {pi:0, k:'X · Y', hx:'x', hy:'y'},
@@ -2186,6 +2213,8 @@ function shapeText(s){
     setText('spSt', t('spS_t')); setText('spSb', t('spS_b')); setText('spSd', t('spS_d'));
     setText('cubeH', t('cubeH')); setText('tiltL', t('tiltL')); setText('showAllL', t('showAllL'));
     var rs = document.getElementById('reset'); if(rs){ rs.textContent = t('resetB'); rs.title = t('resetT'); }
+    syncFsBtn();
+    syncThemeBtn();
     setText('legC1a', t('legC1a')); setText('legC1b', t('legC1b'));
     setText('legF1a', t('legF1a')); setText('legF1b', t('legF1b'));
     setText('dragH', t('dragH'));
@@ -2232,6 +2261,34 @@ function shapeText(s){
     else renderQuiz();
   }
 
+  /* ---------- Tema ---------- */
+  var THEME = 'auto';
+  function themeSaved(){ try{ var v = localStorage.getItem('bussola-theme'); return (v==='light'||v==='dark') ? v : 'auto'; }catch(e){} return 'auto'; }
+  function syncThemeBtn(){
+    var b = document.getElementById('themeB'); if(!b) return;
+    var labels = {auto:t('themeAuto'), light:t('themeLight'), dark:t('themeDark')};
+    b.textContent = t('themeB');
+    b.setAttribute('aria-label', labels[THEME]);
+    b.title = t('themeT');
+  }
+  function applyTheme(s){
+    THEME = (s==='light'||s==='dark') ? s : 'auto';
+    try{
+      if(THEME==='auto') localStorage.removeItem('bussola-theme');
+      else localStorage.setItem('bussola-theme', THEME);
+    }catch(e){}
+    if(THEME==='auto') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', THEME);
+    syncThemeBtn();
+  }
+  (function(){
+    var b = document.getElementById('themeB'); if(!b) return;
+    b.addEventListener('click', function(){
+      applyTheme(THEME==='auto'?'light':(THEME==='light'?'dark':'auto'));
+      track('theme_switch', {to:THEME});
+    });
+  })();
+
   /* ---------- Início ---------- */
   COMP = parseCompareURL();
   SHARED = parseResultURL();
@@ -2247,6 +2304,7 @@ function shapeText(s){
     (function(btn){ btn.onclick = function(){ setLang(btn.getAttribute('data-lang')); }; })(langBtns[li]);
   }
   updateLensVars(); updateLensTokens();
+  applyTheme(themeSaved());
   var catqEl = document.getElementById('catq');
   try{
     var initQ = new URLSearchParams(window.location.search).get('q');
