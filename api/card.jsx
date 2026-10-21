@@ -1,57 +1,6 @@
 import { ImageResponse } from '@vercel/og';
-
+import { octIdx, OCT, LBL, hueAt } from './shared.jsx';
 export const config = { runtime: 'edge' };
-
-const OCT = {
-  pt: [
-    'Socialdemocracia estatista',
-    'Marxismo-leninismo de mercado',
-    'Democracia econômica',
-    'Mutualismo e autogestão de mercado',
-    'Planejamento democrático',
-    'Marxismo-leninismo clássico',
-    'Erosão do capitalismo',
-    'Comunismo libertário',
-  ],
-  en: [
-    'Statist social democracy',
-    'Market Marxism-Leninism',
-    'Economic democracy',
-    'Mutualism and market self-management',
-    'Democratic planning',
-    'Classical Marxism-Leninism',
-    'Erosion of capitalism',
-    'Libertarian communism',
-  ],
-  es: [
-    'Socialdemocracia estatista',
-    'Marxismo-leninismo de mercado',
-    'Democracia económica',
-    'Mutualismo y autogestión de mercado',
-    'Planificación democrática',
-    'Marxismo-leninismo clásico',
-    'Erosión del capitalismo',
-    'Comunismo libertario',
-  ],
-};
-
-const LBL = {
-  pt: { title: 'BÚSSOLA DA ESQUERDA', cta: 'Descubra sua posição · 60 afirmações · 134 correntes', site: 'left-wing-political-compass.vercel.app', full: 'Completo', fast: 'Expresso', lens: 'Cor {c} · Forma {s}', axes: '3 eixos + 2 lentes' },
-  en: { title: 'LEFT-WING COMPASS', cta: 'Find your position · 60 statements · 134 currents', site: 'left-wing-political-compass.vercel.app', full: 'Full', fast: 'Express', lens: 'Color {c} · Shape {s}', axes: '3 axes + 2 lenses' },
-  es: { title: 'BRÚJULA DE LA IZQUIERDA', cta: 'Descubre tu posición · 60 afirmaciones · 134 corrientes', site: 'left-wing-political-compass.vercel.app', full: 'Completo', fast: 'Exprés', lens: 'Color {c} · Forma {s}', axes: '3 ejes + 2 lentes' },
-};
-
-const HUES = [[0, 6], [30, 26], [55, 55], [75, 100], [100, 140]];
-function hueAt(c) {
-  c = Math.max(0, Math.min(100, c));
-  for (let i = 1; i < HUES.length; i++) {
-    if (c <= HUES[i][0]) {
-      const a = HUES[i - 1], b = HUES[i], t = (c - a[0]) / (b[0] - a[0]);
-      return a[1] + t * (b[1] - a[1]);
-    }
-  }
-  return 140;
-}
 
 function num(v, a, b, dflt) {
   const n = parseInt(v, 10);
@@ -76,8 +25,8 @@ export default function handler(req) {
     const t = LBL[lang];
     const hue = hueAt(c);
     const accent = `hsl(${Math.round(hue)},80%,46%)`;
-    const octIdx = (x >= 0 ? 1 : 0) + (y >= 0 ? 2 : 0) + (z >= 0 ? 4 : 0);
-    const oct = OCT[lang][octIdx];
+    const octIdxv = octIdx(x, y, z);
+    const oct = OCT[lang][octIdxv];
 
     return new ImageResponse(
       {
