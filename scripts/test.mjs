@@ -40,14 +40,18 @@ if (coreStart < 0 || coreEnd < 0) {
   else ok('core regression (134 correntes / 60 questões / ponto de referência)');
 }
 
-for (const key of ['ctaStart', 'saveNote', 'cmpScale', 'cmpMore', 'cmpLess', 'embedB', 'openL', 'themeB', 'themeT', 'themeAuto', 'themeLight', 'themeDark', 'fsB', 'fsExitB', 'fsT', 'expH', 'expP', 'expqL', 'expSeeCat', 'expClose']) {
+for (const key of ['ctaStart', 'saveNote', 'cmpScale', 'cmpMore', 'cmpLess', 'embedB', 'openL', 'themeB', 'themeT', 'themeAuto', 'themeLight', 'themeDark', 'fsB', 'fsExitB', 'fsT', 'expSeeCat', 'expClose']) {
   const count = (html.match(new RegExp(key + ':', 'g')) || []).length;
   if (count !== 3) fail('i18n key "' + key + '": ' + count + ' definições, esperado 3 (pt/en/es)');
   else ok('i18n key "' + key + '" ×3');
 }
 
+if (/id="expq"|id="expn"|id="expH"|id="expP"|expSeen/.test(html)) fail('explorador redundante: seção/grade/estado antigo presente (expq/expn/expH/expP/expSeen)');
+else ok('explorador redundante removido (sem grade, busca ou expSeen)');
 if (!/<dialog id="expD"/.test(html)) fail('explorador: <dialog id="expD"> ausente');
 else ok('<dialog id="expD"> presente');
+if (!/class="ani" data-i="'\+idx/.test(html) || !/\.anc,\.ani'\)/.test(html)) fail('catálogo: botões .anc/.ani ausentes em renderCat/initExplorer');
+else ok('catálogo: cartões abrem a ficha (.anc/.ani com data-i)');
 if (!/cubeS\.zoom/.test(html)) fail('zoom: cubeS.zoom ausente');
 else ok('cubeS.zoom presente (zoom na tela cheia)');
 

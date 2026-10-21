@@ -215,12 +215,13 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
 .catbar input{font:inherit;padding:.55rem .75rem;width:min(100%,340px);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:2px}
 .catbar input::placeholder{color:var(--muted)}
 .oc .empty{color:var(--muted);font-size:14px}
-/* Explorador */
-.expbtns{display:flex;flex-wrap:wrap;gap:8px;padding-top:10px}
-.expbtn{font:inherit;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:2px;cursor:pointer;text-align:left}
-.expbtn:hover{border-color:var(--fg)}
-.expbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.expbtn svg{display:block;flex:none}
+/* Botões do cartão do catálogo (abrem a ficha) */
+.anc, .ani{font:inherit;background:none;border:0;color:inherit;cursor:pointer;padding:0;text-align:left}
+.anc{font-weight:600;font-size:14px;text-decoration:none}
+.anc:hover{text-decoration:underline}
+.anc:focus-visible, .ani:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ani{display:flex;grid-row:span 3;margin-top:2px;justify-content:center}
+.ani svg{display:block}
 .expdlg{border:1px solid var(--fg);background:var(--bg);color:var(--fg);padding:0;width:min(92vw,540px);max-height:86vh;overflow:auto}
 .expdlg::backdrop{background:rgba(0,0,0,.55)}
 .exphead{display:flex;justify-content:space-between;align-items:start;gap:10px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
@@ -302,19 +303,8 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
   </section>
 
   <section class="block">
-    <h2 id="expH">Explorador de correntes</h2>
-    <p id="expP">Cada vertente em um clique: veja a pontuação de cada corrente nos três eixos e nas duas lentes. Clicar em um ponto do cubo ou das projeções abre a mesma ficha.</p>
-    <div class="catbar">
-      <label class="sr-only" for="expq" id="expqL">Buscar corrente</label>
-      <input id="expq" type="search" placeholder="Buscar corrente" autocomplete="off">
-      <span class="muted mono" id="expn" style="font-size:12px"></span>
-    </div>
-    <div class="expgrid cat" id="exp"></div>
-  </section>
-
-  <section class="block">
     <h2 id="catH">As correntes do mapa</h2>
-    <p id="catP">Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.</p>
+    <p id="catP">Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional. Clicar no nome ou no ícone abre a ficha da corrente com os três eixos e as duas lentes.</p>
     <div class="catbar">
       <label class="sr-only" for="catq" id="catqL">Buscar movimento ou vertente</label>
       <input id="catq" type="search" placeholder="Buscar movimento ou vertente" autocomplete="off">
@@ -451,11 +441,11 @@ spY_t:'Eixo Y · Coordenação',spY_b:'Centralismo ↔ Autogestão',spY_d:'Vangu
 spZ_t:'Eixo Z · Economia',spZ_b:'Mercado socializado ↔ Desmercantilização',spZ_d:'Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.',
 spC_t:'Lente · Cor',spC_b:'Produtivista ↔ Pós-crescimento',spC_d:'Do vermelho-laranja ao verde.',
 spS_t:'Lente · Forma',spS_b:'Classista ↔ Interseccional',spS_d:'Do triângulo, somando lados, até o círculo.',
-cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',themeB:'Tema',themeT:'Alternar tema: automático, claro, escuro',themeAuto:'Tema: automático (segue o sistema)',themeLight:'Tema: claro',themeDark:'Tema: escuro',fsB:'Tela cheia',fsExitB:'Sair da tela cheia',fsT:'Tela cheia: explora o cubo na resolução da tela — use a roda do mouse para dar zoom (+, − e 0 no teclado também funcionam; Esc para sair)',expH:'Explorador de correntes',expP:'Cada vertente em um clique: veja a pontuação de cada corrente nos três eixos e nas duas lentes. Clicar em um ponto do cubo ou das projeções abre a mesma ficha.',expqL:'Buscar corrente',expSeeCat:'Ver no catálogo',expClose:'Fechar',
+cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',themeB:'Tema',themeT:'Alternar tema: automático, claro, escuro',themeAuto:'Tema: automático (segue o sistema)',themeLight:'Tema: claro',themeDark:'Tema: escuro',fsB:'Tela cheia',fsExitB:'Sair da tela cheia',fsT:'Tela cheia: explora o cubo na resolução da tela — use a roda do mouse para dar zoom (+, − e 0 no teclado também funcionam; Esc para sair)',expSeeCat:'Ver no catálogo',expClose:'Fechar',
 legC1a:'Cor · Produtivista',legC1b:'Pós-crescimento',legF1a:'Forma · Classista',legF1b:'Interseccional',
 dragH:'Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.',
 projH:'Projeções 2D',projP:'O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.',
-catH:'As correntes do mapa',catP:'Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.',
+catH:'As correntes do mapa',catP:'Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional. Clicar no nome ou no ícone abre a ficha da corrente com os três eixos e as duas lentes.',
   searchPh:'Buscar movimento ou vertente',noAnchor:'A corrente do link está oculta pelo filtro de busca. Limpe a busca para vê-la.',
 note1a:'Como o resultado é calculado.',note1b:' Cada afirmação pesa em um único eixo, numa escala de cinco pontos. A pontuação de cada eixo vai de −100 a +100. As correntes mais próximas são as de menor distância euclidiana no espaço dos três eixos, e a afinidade cai com a distância. As lentes não entram na distância.',
 note2:'É um instrumento de reflexão, não um diagnóstico. Posições que parecem próximas no mapa podem divergir em história, método e prática.',note3:'Afinidade = 100·e^(−d/120), onde d é a distância euclidiana nos 3 eixos. Desempate determinístico: menor distância, depois ordem alfabética. O modo expresso usa amostra estratificada fixa (início, meio e fim de cada grupo).',
@@ -481,11 +471,11 @@ spY_t:'Y axis · Coordination',spY_b:'Centralism ↔ Self-management',spY_d:'Van
 spZ_t:'Z axis · Economy',spZ_b:'Socialized market ↔ Decommodification',spZ_d:'Competing cooperatives or the end of commodity, money and wages.',
 spC_t:'Lens · Color',spC_b:'Productivist ↔ Post-growth',spC_d:'From red-orange to green.',
 spS_t:'Lens · Shape',spS_b:'Classist ↔ Intersectional',spS_d:'From the triangle, adding sides, to the circle.',
-cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',themeB:'Theme',themeT:'Toggle theme: automatic, light, dark',themeAuto:'Theme: automatic (follows system)',themeLight:'Theme: light',themeDark:'Theme: dark',fsB:'Fullscreen',fsExitB:'Exit fullscreen',fsT:'Fullscreen: explore the cube at screen resolution — use the mouse wheel to zoom (+, − and 0 keys work too; Esc to exit)',expH:'Currents explorer',expP:'Every current in one click: see each current’s score on the three axes and the two lenses. Clicking a point on the cube or the projections opens the same card.',expqL:'Search a current',expSeeCat:'See in the catalog',expClose:'Close',
+cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',themeB:'Theme',themeT:'Toggle theme: automatic, light, dark',themeAuto:'Theme: automatic (follows system)',themeLight:'Theme: light',themeDark:'Theme: dark',fsB:'Fullscreen',fsExitB:'Exit fullscreen',fsT:'Fullscreen: explore the cube at screen resolution — use the mouse wheel to zoom (+, − and 0 keys work too; Esc to exit)',expSeeCat:'See in the catalog',expClose:'Close',
 legC1a:'Color · Productivist',legC1b:'Post-growth',legF1a:'Shape · Classist',legF1b:'Intersectional',
 dragH:'Drag the cube to rotate. Hover a gray dot to see the current.',
 projH:'2D projections',projP:'The cube impresses but measures poorly. These three flat views show the same points with no perspective. Hover a gray dot to see the name.',
-catH:'The currents on the map',catP:'Movements and strands placed on three axes and grouped into eight octants. Coordinates are interpretive: they vary by author and period, and several entries gather neighboring traditions under one point. The icon next to each name shows the current’s position on the two lenses: color runs productivist to post-growth, shape runs classist to intersectional.',
+catH:'The currents on the map',catP:'Movements and strands placed on three axes and grouped into eight octants. Coordinates are interpretive: they vary by author and period, and several entries gather neighboring traditions under one point. The icon next to each name shows the current’s position on the two lenses: color runs productivist to post-growth, shape runs classist to intersectional. Clicking the name or the icon opens the current’s card with the three axes and the two lenses.',
   searchPh:'Search a movement or strand',noAnchor:'The current from the link is hidden by the search filter. Clear the search to see it.',
 note1a:'How the result is computed.',note1b:' Each statement weighs on a single axis, on a five-point scale. Each axis scores −100 to +100. The closest currents are those with the smallest Euclidean distance in the three-axis space, and affinity falls with distance. The lenses are not part of the distance.',
 note2:'It is an instrument for reflection, not a diagnosis. Positions that look close on the map may diverge in history, method and practice.',note3:'Affinity = 100·e^(−d/120), where d is the Euclidean distance on the 3 axes. Deterministic tiebreak: smallest distance, then alphabetical order. Express mode uses a fixed stratified sample (start, middle and end of each group).',
@@ -511,11 +501,11 @@ spY_t:'Eje Y · Coordinación',spY_b:'Centralismo ↔ Autogestión',spY_d:'Vangu
 spZ_t:'Eje Z · Economía',spZ_b:'Mercado socializado ↔ Desmercantilización',spZ_d:'Cooperativas compitiendo o fin de la mercancía, del dinero y del salario.',
 spC_t:'Lente · Color',spC_b:'Productivista ↔ Postcrecimiento',spC_d:'Del rojo-naranja al verde.',
 spS_t:'Lente · Forma',spS_b:'Clasista ↔ Interseccional',spS_d:'Del triángulo, sumando lados, hasta el círculo.',
-cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',themeB:'Tema',themeT:'Alternar tema: automático, claro, oscuro',themeAuto:'Tema: automático (sigue el sistema)',themeLight:'Tema: claro',themeDark:'Tema: oscuro',fsB:'Pantalla completa',fsExitB:'Salir de pantalla completa',fsT:'Pantalla completa: explora el cubo en la resolución de la pantalla — usa la rueda del ratón para hacer zoom (las teclas +, − y 0 también funcionan; Esc para salir)',expH:'Explorador de corrientes',expP:'Cada corriente en un clic: vea la puntuación de cada corriente en los tres ejes y las dos lentes. Hacer clic en un punto del cubo o de las proyecciones abre la misma ficha.',expqL:'Buscar corriente',expSeeCat:'Ver en el catálogo',expClose:'Cerrar',
+cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',themeB:'Tema',themeT:'Alternar tema: automático, claro, oscuro',themeAuto:'Tema: automático (sigue el sistema)',themeLight:'Tema: claro',themeDark:'Tema: oscuro',fsB:'Pantalla completa',fsExitB:'Salir de pantalla completa',fsT:'Pantalla completa: explora el cubo en la resolución de la pantalla — usa la rueda del ratón para hacer zoom (las teclas +, − y 0 también funcionan; Esc para salir)',expSeeCat:'Ver en el catálogo',expClose:'Cerrar',
 legC1a:'Color · Productivista',legC1b:'Postcrecimiento',legF1a:'Forma · Clasista',legF1b:'Interseccional',
 dragH:'Arrastra el cubo para girar. Pasa el cursor sobre un punto gris para ver la corriente.',
 projH:'Proyecciones 2D',projP:'El cubo impresiona pero mide mal. Estas tres vistas planas muestran los mismos puntos sin perspectiva. Pasa el cursor sobre un punto gris para ver el nombre.',
-catH:'Las corrientes del mapa',catP:'Movimientos y vertientes ubicados en tres ejes y agrupados en ocho octantes. Las coordenadas son interpretativas: varían según autor y período, y varias entradas reúnen tradiciones vecinas bajo un mismo punto. El icono junto a cada nombre muestra la posición de la corriente en las dos lentes: el color va de productivista a postcrecimiento y la forma, de clasista a interseccional.',
+catH:'Las corrientes del mapa',catP:'Movimientos y vertientes ubicados en tres ejes y agrupados en ocho octantes. Las coordenadas son interpretativas: varían según autor y período, y varias entradas reúnen tradiciones vecinas bajo un mismo punto. El icono junto a cada nombre muestra la posición de la corriente en las dos lentes: el color va de productivista a postcrecimiento y la forma, de clasista a interseccional. Hacer clic en el nombre o el icono abre la ficha de la corriente con los tres ejes y las dos lentes.',
   searchPh:'Buscar movimiento o vertiente',noAnchor:'La corriente del enlace está oculta por el filtro de búsqueda. Borra la búsqueda para verla.',
 note1a:'Cómo se calcula el resultado.',note1b:' Cada afirmación pesa en un único eje, en escala de cinco puntos. Cada eje puntúa de −100 a +100. Las corrientes más cercanas son las de menor distancia euclidiana en el espacio de tres ejes, y la afinidad cae con la distancia. Las lentes no entran en la distancia.',
 note2:'Es un instrumento de reflexión, no un diagnóstico. Posiciones cercanas en el mapa pueden divergir en historia, método y práctica.',note3:'Afinidad = 100·e^(−d/120), donde d es la distancia euclidiana en los 3 ejes. Desempate determinista: menor distancia, luego orden alfabético. El modo exprés usa una muestra estratificada fija (inicio, medio y fin de cada grupo).',
@@ -2166,7 +2156,7 @@ function shapeText(s){
     var qn = normText(q);
     for(i=0;i<ARCH.length;i++){
       if(qn && normText(tA(ARCH[i],'n')+' '+tA(ARCH[i],'d')).indexOf(qn) < 0) continue;
-      groups[octIndex(ARCH[i])].push(ARCH[i]); shown++;
+      groups[octIndex(ARCH[i])].push(i); shown++;
     }
     var seq = [0,2,4,6,1,3,5,7];
     for(var s=0;s<seq.length;s++){
@@ -2174,8 +2164,8 @@ function shapeText(s){
       if(!groups[g].length) continue;
       h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div><ul>';
       for(i=0;i<groups[g].length;i++){
-        var a = groups[g][i], sl = slug(a.n);
-        h += '<li id="c-'+sl+'">'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span class="an"><a href="#c='+sl+'" style="color:inherit;text-decoration:none" title="Link para esta corrente">'+tA(a,'n')+'</a></span><span class="ad">'+tA(a,'d')+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span><span class="ac" style="grid-column:2"><a href="'+contestURL(a)+'" target="_blank" rel="noopener" style="color:inherit">↗ '+t('fixB')+'</a></span></li>';
+        var idx = groups[g][i], a = ARCH[idx], sl = slug(a.n);
+        h += '<li id="c-'+sl+'"><button type="button" class="ani" data-i="'+idx+'" title="'+esc(a.n)+'" aria-label="'+esc(a.n)+'">'+shapeSvg(shapeLevel(a.s),22,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'</button><span class="an"><button type="button" class="anc" data-i="'+idx+'">'+tA(a,'n')+'</button></span><span class="ad">'+tA(a,'d')+'</span><span class="ac">X '+sign(a.x)+' · Y '+sign(a.y)+' · Z '+sign(a.z)+'</span><span class="ac" style="grid-column:2"><a href="'+contestURL(a)+'" target="_blank" rel="noopener" style="color:inherit">↗ '+t('fixB')+'</a></span></li>';
       }
       h += '</ul></div>';
     }
@@ -2189,7 +2179,7 @@ function shapeText(s){
   }
 
   /* ---------- Explorador de correntes ---------- */
-  var expSeen = false, lastExp = -1;
+  var lastExp = -1;
   function lensMeters(p){
     var dark = isDark(), col = lensColor(p.c, dark), lvl = shapeLevel(p.s);
     return '<div class="two" style="margin-top:14px">'
@@ -2224,43 +2214,19 @@ function shapeText(s){
     try{ d.close(); }catch(e){ d.removeAttribute('open'); }
   }
   function reopenExplore(){ if(lastExp >= 0) openExplore(lastExp, lastExp); }
-  function renderExplore(){
-    var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
-    var qEl = document.getElementById('expq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
-    var qn = normText(q);
-    for(i=0;i<ARCH.length;i++){
-      if(qn && normText(tA(ARCH[i],'n')+' '+tA(ARCH[i],'d')).indexOf(qn) < 0) continue;
-      groups[octIndex(ARCH[i])].push(i); shown++;
-    }
-    var seq = [0,2,4,6,1,3,5,7];
-    for(var s=0;s<seq.length;s++){
-      var g = seq[s], go = octL(g);
-      if(!groups[g].length) continue;
-      h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div><div class="expbtns">';
-      for(i=0;i<groups[g].length;i++){
-        var idx = groups[g][i], a = ARCH[idx];
-        h += '<button type="button" class="expbtn" data-i="'+idx+'">'+shapeSvg(shapeLevel(a.s),16,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span>'+tA(a,'n')+'</span></button>';
-      }
-      h += '</div></div>';
-    }
-    if(!shown) h = '<p class="oc empty" style="border-top:0">'+t('noResult')+'</p>';
-    var grid = document.getElementById('exp');
-    if(grid) grid.innerHTML = h;
-    var en = document.getElementById('expn');
-    if(en) en.textContent = q ? shown+' '+t('of1')+' '+ARCH.length : ARCH.length+' '+t('withArch');
-  }
   function initExplorer(){
     var d = document.getElementById('expD'); if(!d) return;
     document.getElementById('expDX').addEventListener('click', closeExplore);
     d.addEventListener('close', function(){ lastExp = -1; });
     try{ d.addEventListener('click', function(e){ if(e.target === d) closeExplore(); }); }catch(e){}
-    var grid = document.getElementById('exp');
-    if(grid) grid.addEventListener('click', function(e){
-      var b = e.target.closest && e.target.closest('.expbtn');
-      if(b) openExplore(parseInt(b.getAttribute('data-i'),10));
-    });
-    var eq = document.getElementById('expq');
-    if(eq) eq.addEventListener('input', renderExplore);
+    /* Catálogo: clicar no nome (.anc) ou no ícone (.ani) abre a ficha */
+    var catEl = document.getElementById('cat');
+    if(catEl){
+      catEl.addEventListener('click', function(e){
+        var b = e.target.closest && e.target.closest('.anc,.ani');
+        if(b) openExplore(parseInt(b.getAttribute('data-i'),10));
+      });
+    }
     /* Projeções 2D: delegação de click + Enter/Espaço */
     var projsEl = document.getElementById('projs');
     if(projsEl){
@@ -2302,17 +2268,16 @@ function shapeText(s){
   }
   function updateViz(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); if(catSeen) renderCat(); }
   function updateVizLight(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); }
-  function updateVizLazy(){ if(projsSeen) renderProj(); if(catSeen) renderCat(); if(expSeen) renderExplore(); }
-  var projsSeen = false, catSeen = false, expSeen = false;
+  function updateVizLazy(){ if(projsSeen) renderProj(); if(catSeen) renderCat(); }
+  var projsSeen = false, catSeen = false;
   function ensureIO(){
     try{
-      if(!('IntersectionObserver' in window)){ projsSeen = catSeen = expSeen = true; return; }
+      if(!('IntersectionObserver' in window)){ projsSeen = catSeen = true; return; }
       var io = new IntersectionObserver(function(es){
         es.forEach(function(e){
           if(e.isIntersecting){
             if(e.target.id === 'projs') projsSeen = true;
             if(e.target.id === 'cat') catSeen = true;
-            if(e.target.id === 'exp') expSeen = true;
             try{ io.unobserve(e.target); }catch(err){}
             updateVizLazy();
           }
@@ -2320,8 +2285,7 @@ function shapeText(s){
       }, {rootMargin: '200px'});
       io.observe(document.getElementById('projs'));
       io.observe(document.getElementById('cat'));
-      io.observe(document.getElementById('exp'));
-    }catch(e){ projsSeen = catSeen = expSeen = true; }
+    }catch(e){ projsSeen = catSeen = true; }
   }
   function refreshTheme(){
     updateLensVars(); updateLensTokens(); updateViz();
@@ -2366,9 +2330,6 @@ function shapeText(s){
     setText('legF1a', t('legF1a')); setText('legF1b', t('legF1b'));
     setText('dragH', t('dragH'));
     setText('projH', t('projH')); setText('projP', t('projP'));
-    setText('expH', t('expH')); setText('expP', t('expP'));
-    setText('expqL', t('expqL'));
-    var eq = document.getElementById('expq'); if(eq) eq.setAttribute('placeholder', t('expqL'));
     var dx = document.getElementById('expDX'); if(dx) dx.textContent = t('expClose');
     setText('catH', t('catH')); setText('catP', t('catP'));
     setText('catqL', t('searchPh'));
