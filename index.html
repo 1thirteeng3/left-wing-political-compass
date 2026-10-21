@@ -215,6 +215,17 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
 .catbar input{font:inherit;padding:.55rem .75rem;width:min(100%,340px);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:2px}
 .catbar input::placeholder{color:var(--muted)}
 .oc .empty{color:var(--muted);font-size:14px}
+/* Explorador */
+.expbtns{display:flex;flex-wrap:wrap;gap:8px;padding-top:10px}
+.expbtn{font:inherit;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:2px;cursor:pointer;text-align:left}
+.expbtn:hover{border-color:var(--fg)}
+.expbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.expbtn svg{display:block;flex:none}
+.expdlg{border:1px solid var(--fg);background:var(--bg);color:var(--fg);padding:0;width:min(92vw,540px);max-height:86vh;overflow:auto}
+.expdlg::backdrop{background:rgba(0,0,0,.55)}
+.exphead{display:flex;justify-content:space-between;align-items:start;gap:10px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+#expDB{padding:14px 18px 18px}
+.proj .pd{cursor:pointer}
 .note{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;max-width:78ch}
 .note p{margin:0 0 8px}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}.scale label{transition:none}.skip-link{transition:none}}
@@ -291,6 +302,17 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
   </section>
 
   <section class="block">
+    <h2 id="expH">Explorador de correntes</h2>
+    <p id="expP">Cada vertente em um clique: veja a pontuação de cada corrente nos três eixos e nas duas lentes. Clicar em um ponto do cubo ou das projeções abre a mesma ficha.</p>
+    <div class="catbar">
+      <label class="sr-only" for="expq" id="expqL">Buscar corrente</label>
+      <input id="expq" type="search" placeholder="Buscar corrente" autocomplete="off">
+      <span class="muted mono" id="expn" style="font-size:12px"></span>
+    </div>
+    <div class="expgrid cat" id="exp"></div>
+  </section>
+
+  <section class="block">
     <h2 id="catH">As correntes do mapa</h2>
     <p id="catP">Movimentos e vertentes posicionados nos três eixos e agrupados em oito octantes. As coordenadas são interpretativas: variam de autor para autor e de período para período, e várias entradas reúnem tradições vizinhas sob um mesmo ponto. O ícone ao lado de cada nome mostra a posição da corrente nas duas lentes: a cor vai do produtivista ao pós-crescimento e a forma, do classista ao interseccional.</p>
     <div class="catbar">
@@ -309,6 +331,14 @@ section.block>p{max-width:66ch;color:var(--muted);margin:0 0 18px}
     <p style="font-size:12px"><a href="/privacidade" id="privL" style="color:inherit">Privacidade: o que medimos e o que não medimos</a> · <a href="/api/correntes" id="openL" style="color:inherit">Dados abertos (JSON, CC BY-SA)</a></p>
   </footer>
 </div>
+
+<dialog id="expD" class="expdlg" aria-labelledby="expDT">
+  <div class="exphead">
+    <h3 style="margin:0" id="expDT">Corrente</h3>
+    <button class="btn small" type="button" id="expDX">Fechar</button>
+  </div>
+  <div id="expDB"></div>
+</dialog>
 
 <script>
 /* Analytics (Umami Cloud, sem cookies, respeita DNT). Para ativar: crie o site em https://umami.is e cole o Website ID abaixo. Vazio = desativado. */
@@ -421,7 +451,7 @@ spY_t:'Eixo Y · Coordenação',spY_b:'Centralismo ↔ Autogestão',spY_d:'Vangu
 spZ_t:'Eixo Z · Economia',spZ_b:'Mercado socializado ↔ Desmercantilização',spZ_d:'Cooperativas competindo ou fim da mercadoria, do dinheiro e do salário.',
 spC_t:'Lente · Cor',spC_b:'Produtivista ↔ Pós-crescimento',spC_d:'Do vermelho-laranja ao verde.',
 spS_t:'Lente · Forma',spS_b:'Classista ↔ Interseccional',spS_d:'Do triângulo, somando lados, até o círculo.',
-cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',themeB:'Tema',themeT:'Alternar tema: automático, claro, escuro',themeAuto:'Tema: automático (segue o sistema)',themeLight:'Tema: claro',themeDark:'Tema: escuro',fsB:'Tela cheia',fsExitB:'Sair da tela cheia',fsT:'Tela cheia: explora o cubo na resolução da tela (Esc para sair)',
+cubeH:'O cubo',tiltL:'Inclinação',showAllL:'Nomear todas as correntes',resetB:'Resetar vista',resetT:'Resetar rotação do cubo (setas giram; tecla R reseta quando o cubo tem foco; dois dedos inclinam)',themeB:'Tema',themeT:'Alternar tema: automático, claro, escuro',themeAuto:'Tema: automático (segue o sistema)',themeLight:'Tema: claro',themeDark:'Tema: escuro',fsB:'Tela cheia',fsExitB:'Sair da tela cheia',fsT:'Tela cheia: explora o cubo na resolução da tela — use a roda do mouse para dar zoom (+, − e 0 no teclado também funcionam; Esc para sair)',expH:'Explorador de correntes',expP:'Cada vertente em um clique: veja a pontuação de cada corrente nos três eixos e nas duas lentes. Clicar em um ponto do cubo ou das projeções abre a mesma ficha.',expqL:'Buscar corrente',expSeeCat:'Ver no catálogo',expClose:'Fechar',
 legC1a:'Cor · Produtivista',legC1b:'Pós-crescimento',legF1a:'Forma · Classista',legF1b:'Interseccional',
 dragH:'Arraste o cubo para girar. Passe o cursor sobre um ponto cinza para ver a corrente.',
 projH:'Projeções 2D',projP:'O cubo é bom para impressionar e ruim para medir. Estas três vistas planas mostram os mesmos pontos sem perspectiva. Passe o cursor sobre um ponto cinza para ver o nome.',
@@ -451,7 +481,7 @@ spY_t:'Y axis · Coordination',spY_b:'Centralism ↔ Self-management',spY_d:'Van
 spZ_t:'Z axis · Economy',spZ_b:'Socialized market ↔ Decommodification',spZ_d:'Competing cooperatives or the end of commodity, money and wages.',
 spC_t:'Lens · Color',spC_b:'Productivist ↔ Post-growth',spC_d:'From red-orange to green.',
 spS_t:'Lens · Shape',spS_b:'Classist ↔ Intersectional',spS_d:'From the triangle, adding sides, to the circle.',
-cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',themeB:'Theme',themeT:'Toggle theme: automatic, light, dark',themeAuto:'Theme: automatic (follows system)',themeLight:'Theme: light',themeDark:'Theme: dark',fsB:'Fullscreen',fsExitB:'Exit fullscreen',fsT:'Fullscreen: explore the cube at screen resolution (Esc to exit)',
+cubeH:'The cube',tiltL:'Tilt',showAllL:'Label all currents',resetB:'Reset view',resetT:'Reset cube rotation (arrows rotate; R key resets when the cube has focus; two fingers tilt)',themeB:'Theme',themeT:'Toggle theme: automatic, light, dark',themeAuto:'Theme: automatic (follows system)',themeLight:'Theme: light',themeDark:'Theme: dark',fsB:'Fullscreen',fsExitB:'Exit fullscreen',fsT:'Fullscreen: explore the cube at screen resolution — use the mouse wheel to zoom (+, − and 0 keys work too; Esc to exit)',expH:'Currents explorer',expP:'Every current in one click: see each current’s score on the three axes and the two lenses. Clicking a point on the cube or the projections opens the same card.',expqL:'Search a current',expSeeCat:'See in the catalog',expClose:'Close',
 legC1a:'Color · Productivist',legC1b:'Post-growth',legF1a:'Shape · Classist',legF1b:'Intersectional',
 dragH:'Drag the cube to rotate. Hover a gray dot to see the current.',
 projH:'2D projections',projP:'The cube impresses but measures poorly. These three flat views show the same points with no perspective. Hover a gray dot to see the name.',
@@ -481,7 +511,7 @@ spY_t:'Eje Y · Coordinación',spY_b:'Centralismo ↔ Autogestión',spY_d:'Vangu
 spZ_t:'Eje Z · Economía',spZ_b:'Mercado socializado ↔ Desmercantilización',spZ_d:'Cooperativas compitiendo o fin de la mercancía, del dinero y del salario.',
 spC_t:'Lente · Color',spC_b:'Productivista ↔ Postcrecimiento',spC_d:'Del rojo-naranja al verde.',
 spS_t:'Lente · Forma',spS_b:'Clasista ↔ Interseccional',spS_d:'Del triángulo, sumando lados, hasta el círculo.',
-cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',themeB:'Tema',themeT:'Alternar tema: automático, claro, oscuro',themeAuto:'Tema: automático (sigue el sistema)',themeLight:'Tema: claro',themeDark:'Tema: oscuro',fsB:'Pantalla completa',fsExitB:'Salir de pantalla completa',fsT:'Pantalla completa: explora el cubo en la resolución de la pantalla (Esc para salir)',
+cubeH:'El cubo',tiltL:'Inclinación',showAllL:'Nombrar todas las corrientes',resetB:'Restablecer vista',resetT:'Restablecer la rotación del cubo (flechas giran; tecla R restablece cuando el cubo tiene foco; dos dedos inclinan)',themeB:'Tema',themeT:'Alternar tema: automático, claro, oscuro',themeAuto:'Tema: automático (sigue el sistema)',themeLight:'Tema: claro',themeDark:'Tema: oscuro',fsB:'Pantalla completa',fsExitB:'Salir de pantalla completa',fsT:'Pantalla completa: explora el cubo en la resolución de la pantalla — usa la rueda del ratón para hacer zoom (las teclas +, − y 0 también funcionan; Esc para salir)',expH:'Explorador de corrientes',expP:'Cada corriente en un clic: vea la puntuación de cada corriente en los tres ejes y las dos lentes. Hacer clic en un punto del cubo o de las proyecciones abre la misma ficha.',expqL:'Buscar corriente',expSeeCat:'Ver en el catálogo',expClose:'Cerrar',
 legC1a:'Color · Productivista',legC1b:'Postcrecimiento',legF1a:'Forma · Clasista',legF1b:'Interseccional',
 dragH:'Arrastra el cubo para girar. Pasa el cursor sobre un punto gris para ver la corriente.',
 projH:'Proyecciones 2D',projP:'El cubo impresiona pero mide mal. Estas tres vistas planas muestran los mismos puntos sin perspectiva. Pasa el cursor sobre un punto gris para ver el nombre.',
@@ -1722,7 +1752,7 @@ function shapeText(s){
   }
 
   /* ---------- Cubo 3D ---------- */
-  var cv = document.getElementById('cube'), cubeS = {yaw:-0.62, pitch:0.38, auto:(!reduce && !saveData), hover:-1, drag:null};
+  var cv = document.getElementById('cube'), cubeS = {yaw:-0.62, pitch:0.38, auto:(!reduce && !saveData), hover:-1, drag:null, zoom:1};
   var tilt = document.getElementById('tilt'), showAll = document.getElementById('showall'), raf = 0;
   var scr = []; /* pontos projetados das correntes, para o hover */
   var CORNERS = [];
@@ -1756,7 +1786,7 @@ function shapeText(s){
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.clearRect(0,0,w,h);
     var fg = cssv('--fg'), muted = cssv('--muted'), grid = cssv('--grid'), dot = cssv('--dot'), bg = cssv('--bg'), accent = cssv('--accent');
-    var dark = isDark(), cx = w/2, cy = h/2, S = Math.min(w,h)*0.30;
+    var dark = isDark(), cx = w/2, cy = h/2, S = Math.min(w,h)*0.30*(fsActive() ? cubeS.zoom : 1);
     var cyaw = Math.cos(cubeS.yaw), syaw = Math.sin(cubeS.yaw), cp = Math.cos(cubeS.pitch), sp = Math.sin(cubeS.pitch), D = 4.2;
     function P(x,y,z){
       var x1 = x*cyaw + z*syaw, z1 = -x*syaw + z*cyaw;
@@ -1887,7 +1917,7 @@ function shapeText(s){
 
   cv.addEventListener('pointerdown', function(e){
     if(twS) return;
-    stopAuto(); cubeS.drag = {x:e.clientX, y:e.clientY, t:e.pointerType};
+    stopAuto(); cubeS.drag = {x:e.clientX, y:e.clientY, x0:e.clientX, y0:e.clientY, t:e.pointerType, moved:false};
     try{ cv.setPointerCapture(e.pointerId); }catch(err){}
   });
   /* Pitch por gesto vertical com 2 dedos (1 dedo mantém o scroll da página) */
@@ -1920,6 +1950,7 @@ function shapeText(s){
   cv.addEventListener('pointermove', function(e){
     if(cubeS.drag){
       var dx = e.clientX - cubeS.drag.x, dy = e.clientY - cubeS.drag.y;
+      if(Math.abs(e.clientX - cubeS.drag.x0) > 5 || Math.abs(e.clientY - cubeS.drag.y0) > 5) cubeS.drag.moved = true;
       cubeS.drag.x = e.clientX; cubeS.drag.y = e.clientY;
       cubeS.yaw += dx*0.011;
       if(cubeS.drag.t !== 'touch') cubeS.pitch = clamp(cubeS.pitch + dy*0.009, -1.4, 1.4);
@@ -1934,14 +1965,24 @@ function shapeText(s){
       if(best !== cubeS.hover){ cubeS.hover = best; drawCube(); }
     }
   });
+  /* Clique/tap sem arraste abre a ficha da corrente mais próxima (raio ~16px) */
+  cv.addEventListener('pointerup', function(e){
+    var d = cubeS.drag; endDrag();
+    if(!d || d.moved) return;
+    var rect = cv.getBoundingClientRect(), mx = e.clientX - rect.left, my = e.clientY - rect.top, best = -1, bd = 16;
+    for(var i=0;i<scr.length;i++){
+      var dd = Math.hypot(scr[i].p.x-mx, scr[i].p.y-my);
+      if(dd < bd){ bd = dd; best = scr[i].i; }
+    }
+    if(best >= 0) openExplore(best);
+  });
   function endDrag(){ cubeS.drag = null; }
-  cv.addEventListener('pointerup', endDrag);
   cv.addEventListener('pointercancel', endDrag);
   cv.addEventListener('pointerleave', function(){ if(cubeS.hover !== -1){ cubeS.hover = -1; drawCube(); } });
   tilt.addEventListener('input', function(){ stopAuto(); cubeS.pitch = parseInt(tilt.value,10)*Math.PI/180; drawCubeSoon(); });
   showAll.addEventListener('change', drawCube);
   document.getElementById('reset').addEventListener('click', function(){
-    cubeS.yaw = -0.62; cubeS.pitch = 0.38; cubeS.auto = (!reduce && !saveData); tilt.value = 22; drawCube(); startAuto();
+    cubeS.yaw = -0.62; cubeS.pitch = 0.38; cubeS.zoom = 1; cubeS.auto = (!reduce && !saveData); tilt.value = 22; drawCube(); startAuto();
   });
   /* Teclado no cubo: setas giram, R reseta (o title do botão já anunciava o atalho) */
   cv.addEventListener('keydown', function(e){
@@ -1953,6 +1994,11 @@ function shapeText(s){
     else if(e.key === 'ArrowDown') cubeS.pitch = clamp(cubeS.pitch + 0.1, -1.4, 1.4);
     else if(e.key === 'r' || e.key === 'R'){ cubeS.yaw = -0.62; cubeS.pitch = 0.38; }
     else handled = false;
+    if(fsActive()){
+      if(e.key === '+' || e.key === '='){ cubeS.zoom = clamp(cubeS.zoom*ZOOM_STEP, ZOOM_MIN, ZOOM_MAX); handled = true; }
+      else if(e.key === '-' || e.key === '_'){ cubeS.zoom = clamp(cubeS.zoom/ZOOM_STEP, ZOOM_MIN, ZOOM_MAX); handled = true; }
+      else if(e.key === '0'){ cubeS.zoom = 1; handled = true; }
+    }
     if(handled){
       try{ e.preventDefault(); }catch(err){}
       tilt.value = Math.round(cubeS.pitch*180/Math.PI);
@@ -1962,6 +2008,7 @@ function shapeText(s){
   if(window.ResizeObserver){ new ResizeObserver(function(){ drawCube(); }).observe(cv); } else window.addEventListener('resize', drawCube);
 
   /* ---------- Tela cheia do cubo ---------- */
+  var ZOOM_MIN = 0.6, ZOOM_MAX = 4, ZOOM_STEP = 1.12;
   var fsWrap = document.querySelector('.cubewrap'), fsB = document.getElementById('fsB');
   function fsActive(){ try{ return document.fullscreenElement === fsWrap; }catch(e){} return false; }
   function syncFsBtn(){
@@ -1976,9 +2023,18 @@ function shapeText(s){
       else { try{ fsWrap.requestFullscreen(); }catch(e){} }
     });
     document.addEventListener('fullscreenchange', function(){
+      if(!fsActive() && cubeS.zoom !== 1){ cubeS.zoom = 1; drawCube(); }
       syncFsBtn();
       if(fsActive() && cv.focus) cv.focus();
     });
+    /* Zoom com a roda do mouse — só na tela cheia */
+    cv.addEventListener('wheel', function(e){
+      if(!fsActive()) return;
+      try{ e.preventDefault(); }catch(err){}
+      stopAuto();
+      cubeS.zoom = clamp(cubeS.zoom * (e.deltaY < 0 ? ZOOM_STEP : 1/ZOOM_STEP), ZOOM_MIN, ZOOM_MAX);
+      drawCubeSoon();
+    }, {passive:false});
     syncFsBtn();
   }
 
@@ -2021,7 +2077,7 @@ function shapeText(s){
     for(var i=0;i<ARCH.length;i++){
       var a = ARCH[i], px = X(a[pr.hx]), py = Y(a[pr.hy]), isN = near.indexOf(a) >= 0;
       var anchor = px > cxm+60 ? 'end' : 'start', tx = anchor==='end' ? -7 : 7;
-      s += '<g class="pd" tabindex="0"><title>'+esc(tA(a,'n'))+'</title><circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isN?4.6:3.3)+'" fill="'+(isN?'var(--fg)':'var(--dot)')+'" fill-opacity="'+(isN?1:.85)+'"/>';
+      s += '<g class="pd" tabindex="0" role="button" aria-label="'+esc(tA(a,'n'))+'" data-i="'+i+'"><title>'+esc(tA(a,'n'))+'</title><circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(isN?4.6:3.3)+'" fill="'+(isN?'var(--fg)':'var(--dot)')+'" fill-opacity="'+(isN?1:.85)+'"/>';
       s += '<text class="'+(isN?'t3':'')+'" x="'+(px+tx).toFixed(1)+'" y="'+(py-6).toFixed(1)+'" text-anchor="'+anchor+'">'+esc(tA(a,'n'))+'</text></g>';
     }
     if(u && !f){
@@ -2132,6 +2188,94 @@ function shapeText(s){
     for(var c=0;c<=100;c+=10) root.style.setProperty('--lens-'+c, lensColor(c,dark));
   }
 
+  /* ---------- Explorador de correntes ---------- */
+  var expSeen = false, lastExp = -1;
+  function lensMeters(p){
+    var dark = isDark(), col = lensColor(p.c, dark), lvl = shapeLevel(p.s);
+    return '<div class="two" style="margin-top:14px">'
+      + '<div class="meter"><div class="ml"><span>'+W('prod')+'</span><span>'+W('post')+'</span></div><div class="track lens" style="position:relative"><b class="mk" style="left:'+p.c+'%"></b></div><div class="mv"><b>'+p.c+'</b> · '+colorText(p.c)+'</div></div>'
+      + '<div class="meter"><div class="ml"><span>'+W('clas')+'</span><span>'+W('inter')+'</span></div><div class="ladder">'+ladder(lvl,col)+'</div><div class="mv"><b>'+p.s+'</b> · '+shapeText(p.s)+'</div></div></div>';
+  }
+  function openExplore(i, silent){
+    var a = ARCH[i]; if(!a) return;
+    var d = document.getElementById('expD'); if(!d) return;
+    var o = octL(octIndex(a)), sl = slug(a.n);
+    document.getElementById('expDT').textContent = tA(a,'n');
+    var h = '<p class="tags" style="margin:2px 0 4px">'+o.n+' — '+o.t+'</p>';
+    h += meterAxis('X', a.x)+meterAxis('Y', a.y)+meterAxis('Z', a.z);
+    h += lensMeters(a);
+    h += '<p class="muted" style="font-size:13.5px;line-height:1.5;margin:14px 0 0">'+tA(a,'d')+'</p>';
+    h += '<div class="actions" style="margin-top:16px;padding-top:12px;border-top:1px solid var(--line)">'
+      + '<a class="btn small" id="expCat" href="#c='+sl+'" style="text-decoration:none;display:inline-block">'+t('expSeeCat')+'</a>'
+      + '<a class="btn small" href="'+contestURL(a)+'" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">↗ '+t('fixB')+'</a></div>';
+    document.getElementById('expDB').innerHTML = h;
+    var link = document.getElementById('expCat');
+    if(link) link.addEventListener('click', closeExplore);
+    try{ if(d.showModal) d.showModal(); else d.setAttribute('open',''); }catch(e){}
+    var xb = document.getElementById('expDX');
+    if(xb && document.activeElement !== xb){
+      try{ xb.focus({preventScroll:true}); }catch(err){ xb.focus(); }
+    }
+    lastExp = (typeof silent === 'number') ? silent : -1;
+    if(!silent) track('explore_open', {slug: sl, lang: LANG()});
+  }
+  function closeExplore(){
+    var d = document.getElementById('expD'); if(!d) return;
+    try{ d.close(); }catch(e){ d.removeAttribute('open'); }
+  }
+  function reopenExplore(){ if(lastExp >= 0) openExplore(lastExp, lastExp); }
+  function renderExplore(){
+    var groups = [[],[],[],[],[],[],[],[]], i, h = '', shown = 0;
+    var qEl = document.getElementById('expq'), q = qEl ? qEl.value.trim().toLowerCase() : '';
+    var qn = normText(q);
+    for(i=0;i<ARCH.length;i++){
+      if(qn && normText(tA(ARCH[i],'n')+' '+tA(ARCH[i],'d')).indexOf(qn) < 0) continue;
+      groups[octIndex(ARCH[i])].push(i); shown++;
+    }
+    var seq = [0,2,4,6,1,3,5,7];
+    for(var s=0;s<seq.length;s++){
+      var g = seq[s], go = octL(g);
+      if(!groups[g].length) continue;
+      h += '<div class="oc"><h3>'+go.n+' <span class="mono muted" style="font-weight:400;font-size:12px">'+groups[g].length+'</span></h3><div class="tags">'+go.t+'</div><div class="expbtns">';
+      for(i=0;i<groups[g].length;i++){
+        var idx = groups[g][i], a = ARCH[idx];
+        h += '<button type="button" class="expbtn" data-i="'+idx+'">'+shapeSvg(shapeLevel(a.s),16,'var(--lens-'+Math.round(a.c/10)*10+',#888)','var(--fg)',1.4)+'<span>'+tA(a,'n')+'</span></button>';
+      }
+      h += '</div></div>';
+    }
+    if(!shown) h = '<p class="oc empty" style="border-top:0">'+t('noResult')+'</p>';
+    var grid = document.getElementById('exp');
+    if(grid) grid.innerHTML = h;
+    var en = document.getElementById('expn');
+    if(en) en.textContent = q ? shown+' '+t('of1')+' '+ARCH.length : ARCH.length+' '+t('withArch');
+  }
+  function initExplorer(){
+    var d = document.getElementById('expD'); if(!d) return;
+    document.getElementById('expDX').addEventListener('click', closeExplore);
+    d.addEventListener('close', function(){ lastExp = -1; });
+    try{ d.addEventListener('click', function(e){ if(e.target === d) closeExplore(); }); }catch(e){}
+    var grid = document.getElementById('exp');
+    if(grid) grid.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.expbtn');
+      if(b) openExplore(parseInt(b.getAttribute('data-i'),10));
+    });
+    var eq = document.getElementById('expq');
+    if(eq) eq.addEventListener('input', renderExplore);
+    /* Projeções 2D: delegação de click + Enter/Espaço */
+    var projsEl = document.getElementById('projs');
+    if(projsEl){
+      projsEl.addEventListener('click', function(e){
+        var g = e.target.closest && e.target.closest('g.pd');
+        if(g) openExplore(parseInt(g.getAttribute('data-i'),10));
+      });
+      projsEl.addEventListener('keydown', function(e){
+        if(e.key !== 'Enter' && e.key !== ' ') return;
+        var g = e.target.closest && e.target.closest('g.pd');
+        if(g){ try{ e.preventDefault(); }catch(err){} openExplore(parseInt(g.getAttribute('data-i'),10)); }
+      });
+    }
+  }
+
   /* ---------- Legenda e atualização geral ---------- */
   function renderLegend(){
     var u = user(), dark = isDark();
@@ -2158,16 +2302,17 @@ function shapeText(s){
   }
   function updateViz(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); if(catSeen) renderCat(); }
   function updateVizLight(){ renderLegend(); drawCube(); if(projsSeen) renderProj(); }
-  function updateVizLazy(){ if(projsSeen) renderProj(); if(catSeen) renderCat(); }
-  var projsSeen = false, catSeen = false;
+  function updateVizLazy(){ if(projsSeen) renderProj(); if(catSeen) renderCat(); if(expSeen) renderExplore(); }
+  var projsSeen = false, catSeen = false, expSeen = false;
   function ensureIO(){
     try{
-      if(!('IntersectionObserver' in window)){ projsSeen = catSeen = true; return; }
+      if(!('IntersectionObserver' in window)){ projsSeen = catSeen = expSeen = true; return; }
       var io = new IntersectionObserver(function(es){
         es.forEach(function(e){
           if(e.isIntersecting){
             if(e.target.id === 'projs') projsSeen = true;
             if(e.target.id === 'cat') catSeen = true;
+            if(e.target.id === 'exp') expSeen = true;
             try{ io.unobserve(e.target); }catch(err){}
             updateVizLazy();
           }
@@ -2175,10 +2320,12 @@ function shapeText(s){
       }, {rootMargin: '200px'});
       io.observe(document.getElementById('projs'));
       io.observe(document.getElementById('cat'));
-    }catch(e){ projsSeen = catSeen = true; }
+      io.observe(document.getElementById('exp'));
+    }catch(e){ projsSeen = catSeen = expSeen = true; }
   }
   function refreshTheme(){
     updateLensVars(); updateLensTokens(); updateViz();
+    reopenExplore();
     if(state.done) renderResult();
   }
 
@@ -2219,6 +2366,10 @@ function shapeText(s){
     setText('legF1a', t('legF1a')); setText('legF1b', t('legF1b'));
     setText('dragH', t('dragH'));
     setText('projH', t('projH')); setText('projP', t('projP'));
+    setText('expH', t('expH')); setText('expP', t('expP'));
+    setText('expqL', t('expqL'));
+    var eq = document.getElementById('expq'); if(eq) eq.setAttribute('placeholder', t('expqL'));
+    var dx = document.getElementById('expDX'); if(dx) dx.textContent = t('expClose');
     setText('catH', t('catH')); setText('catP', t('catP'));
     setText('catqL', t('searchPh'));
     var cq = document.getElementById('catq'); if(cq) cq.setAttribute('placeholder', t('searchPh'));
@@ -2249,6 +2400,7 @@ function shapeText(s){
       history.replaceState(null, '', u.toString());
     }catch(e){}
     applyStaticLang();
+    reopenExplore();
     if(changed) track('lang_switch', {lang: L});
     if(rerender !== false){ updateLensVars(); updateLensTokens(); updateViz(); refreshPane(); }
   }
@@ -2316,6 +2468,7 @@ function shapeText(s){
   });
   /* Deep-link (#c=) ou busca (?q=) exige catálogo renderizado de imediato; senão, lazy via IntersectionObserver */
   if(hashSlug() || (catqEl.value && catqEl.value.trim())){ projsSeen = true; catSeen = true; renderCat(); }
+  initExplorer();
   ensureIO();
   window.addEventListener('hashchange', function(){ revealCurrent(hashSlug()); });
   if(COMP && COMP.a && COMP.b) renderCompare(COMP.a, COMP.b);
